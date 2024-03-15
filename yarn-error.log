@@ -1,0 +1,67 @@
+Arguments: 
+  D:\Program Files\nodejs\node.exe C:\Users\theob\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add sveltekit-medusa-client
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Common Files\Autodesk Shared\;C:\Users\theob\AppData\Local\Programs\Python\Python37;C:\Users\theob\AppData\Local\Programs\Python\Python37\Scripts;C:\Program Files\Java\jdk1.8.0_241\bin;C:\Program Files\Git\cmd;D:\Program Files\nodejs\;D:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;D:\Program Files\PostgreSQL\16\lib;C:\Users\theob\.console-ninja\.bin;C:\Users\theob\AppData\Local\Microsoft\WindowsApps;D:\Users\theob\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\theob\AppData\Roaming\npm;D:\Program Files\PostgreSQL\16\bin;
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  18.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\web\marisol2\app\node_modules\@esbuild\win32-x64\esbuild.exe'
+
+npm manifest: 
+  {
+  	"name": "app",
+  	"version": "0.0.1",
+  	"scripts": {
+  		"dev": "vite dev",
+  		"build": "vite build",
+  		"preview": "vite preview",
+  		"test": "npm run test:integration && npm run test:unit",
+  		"lint": "prettier --check . && eslint .",
+  		"format": "prettier --write .",
+  		"test:integration": "playwright test",
+  		"test:unit": "vitest"
+  	},
+  	"devDependencies": {
+  		"@fontsource/fira-mono": "^4.5.10",
+  		"@neoconfetti/svelte": "^1.0.0",
+  		"@playwright/test": "^1.28.1",
+  		"@sveltejs/adapter-auto": "^3.0.0",
+  		"@sveltejs/kit": "^2.0.0",
+  		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+  		"@types/eslint": "^8.56.0",
+  		"autoprefixer": "^10.4.18",
+  		"eslint": "^8.56.0",
+  		"eslint-config-prettier": "^9.1.0",
+  		"eslint-plugin-svelte": "^2.35.1",
+  		"postcss": "^8.4.35",
+  		"prettier": "^3.1.1",
+  		"prettier-plugin-svelte": "^3.1.2",
+  		"svelte": "^4.2.7",
+  		"tailwindcss": "^3.4.1",
+  		"vite": "^5.0.3",
+  		"vitest": "^1.2.0"
+  	},
+  	"type": "module",
+  	"dependencies": {
+  		"@portabletext/to-html": "^2.0.5",
+  		"@sanity/block-content-to-html": "^2.0.0",
+  		"@sanity/client": "^6.15.3",
+  		"masonry-layout": "^4.2.2",
+  		"prettier-plugin-tailwindcss": "^0.5.12"
+  	}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
