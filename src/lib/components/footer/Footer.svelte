@@ -25,10 +25,12 @@
 			© {year} Marisol Sarrazin
 		</div>
 		<div class="mt-3 text-base">
-			Toutes les illustrations de ce site sont protégées par le droit d’auteur.
+			{$lang == 'fr'
+				? `Toutes les illustrations de ce site sont protégées par le droit d’auteur.
 			Toute reproduction ou utilisation sans permission est strictement
 			interdite. Le droit d’auteur et le droit de reproduction ne sont pas
-			transférés avec la vente d’œuvres d’art.
+			transférés avec la vente d’œuvres d’art.`
+				: `All illustrations on this website are protected by copyright. Any reproduction or use without permission is strictly prohibited. Copyright and reproduction right do not transfer with the sale of works of art.`}
 		</div>
 	</div>
 </footer>

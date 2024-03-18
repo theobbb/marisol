@@ -6,6 +6,10 @@
 	import { lang } from '$lib/store';
 
 	export let data;
+
+	const fakeSerie = data.name.fr.includes('Série');
+
+	console.log(fakeSerie);
 </script>
 
 <div class="relative flex w-full flex-col lg:flex-row">
@@ -28,7 +32,13 @@
 						?.current || data.slug.fr.current}"
 					class=" text-xl"
 				>
-					{$lang == 'fr' ? 'Voir le livre' : 'See the book'}
+					{fakeSerie
+						? $lang == 'fr'
+							? 'Voir la série'
+							: 'Show serie'
+						: $lang == 'fr'
+							? 'Voir le livre'
+							: 'See the book'}
 				</Link>
 			</div>
 		</div>

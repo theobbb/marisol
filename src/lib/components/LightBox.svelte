@@ -24,6 +24,10 @@
 				dom.dialog.showModal();
 			});
 		});
+		return () => {
+			if (dom.dialog.open) dom.dialog.close();
+			document.documentElement.style.overflowY = 'auto';
+		};
 	});
 
 	let book = null;

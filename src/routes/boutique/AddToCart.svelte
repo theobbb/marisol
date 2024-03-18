@@ -4,6 +4,7 @@
 	export let product, variant;
 
 	async function addToCart() {
+		$cart.loading = true;
 		if (!$cart) {
 			const res = await fetch('/boutique/api/cart', {
 				method: 'POST',
@@ -33,6 +34,7 @@
 		} catch (error) {
 			console.error(error);
 		}
+		$cart.loading = false;
 	}
 </script>
 

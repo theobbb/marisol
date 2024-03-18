@@ -10,6 +10,7 @@
 	export let data;
 
 	async function removeFromCart(variant) {
+		$cart.loading = true;
 		variant.loading = true;
 		try {
 			const res = await fetch('/boutique/api/cart-item', {
@@ -28,6 +29,7 @@
 			console.error(error);
 		}
 		variant.loading = false;
+		$cart.loading = false;
 	}
 </script>
 
@@ -50,7 +52,11 @@
 </div>
 
 {#if $cart?.items?.length > 0}
-	<div class="flex justify-between">
+	<div
+		class="flex justify-between {$cart.loading
+			? 'pointer-events-none opacity-50'
+			: ''}"
+	>
 		<div class="w-2/3 pr-20">
 			<div class="mb-14 border-b border-black/10 pb-3 text-4xl">
 				{$lang == 'fr' ? 'Votre panier' : 'Your cart'}

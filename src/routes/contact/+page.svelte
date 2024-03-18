@@ -2,7 +2,7 @@
 	import { lang } from '$lib/store';
 </script>
 
-<div class="m-auto text-xl md:w-[500px]">
+<div class="m-auto text-xl md:w-[600px]">
 	<div class="mb-8">
 		<div class="mb-3 text-3xl">
 			{$lang == 'fr' ? 'Contactez Marisol' : 'Contact Marisol'}
@@ -38,6 +38,7 @@
 			</div>
 			<div>
 				<textarea
+					rows="8"
 					class="w-full px-3 py-3 outline-none"
 					placeholder={$lang == 'fr' ? 'Message' : 'Message'}
 				></textarea>
