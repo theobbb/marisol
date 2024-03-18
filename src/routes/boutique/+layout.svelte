@@ -10,6 +10,8 @@
 		subtotal = 0;
 		const allProducts = data.shop.branches.flatMap((branch) => branch.products);
 
+		if (!$cart || !$cart.items?.length) return;
+
 		$cart.items.forEach((item) => {
 			const product = allProducts.find(
 				(product) => product._id === item.product_id,

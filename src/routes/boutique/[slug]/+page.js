@@ -12,12 +12,12 @@ export async function load({ params, parent }) {
 			}
 		});
 	});
-	console.log('match', match);
+
 	if (match) {
 		return {
 			match,
 		};
 	}
-	console.log('match', match);
+
 	throw redirect(307, '/boutique');
 }
