@@ -13,6 +13,7 @@
 	let n_loaded = 0;
 
 	onMount(() => {
+		/*
 		data.portfolio.children.forEach((branch) => {
 			branch.content.forEach((item) => {
 				n_total++;
@@ -29,7 +30,7 @@
 					failed = true;
 				};
 			});
-		});
+		});*/
 		setCols();
 
 		window.addEventListener('resize', onresize);
@@ -67,8 +68,7 @@
 	<title>Portfolio | Marisol Sarrazin</title>
 	<meta name="description" content="" />
 </svelte:head>
-
-{#if n_loaded == n_total && n_total > 0}
+{#if cols != 0}
 	<div>
 		{#key lastWidth}
 			{#each data.portfolio.children as branch}
@@ -88,9 +88,5 @@
 				</div>
 			{/each}
 		{/key}
-	</div>
-{:else}
-	<div class="text-4xl">
-		{Math.floor((n_loaded / n_total) * 100) || 0}%
 	</div>
 {/if}

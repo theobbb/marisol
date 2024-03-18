@@ -5,8 +5,7 @@
 	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
 	import { lang } from '$lib/store';
 
-	export let data,
-		single = false;
+	export let data;
 </script>
 
 <div class="relative flex w-full flex-col lg:flex-row">
@@ -14,10 +13,10 @@
 		<div class="top-24 flex flex-col lg:sticky lg:pr-24">
 			<Link
 				class="mb-3 !px-0 !py-0 text-4xl lg:text-5xl"
-				href="{$lang == 'fr' ? 'livres' : 'en/books'}/{data.slug[$lang]
-					.current}"
+				href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.slug[$lang]
+					?.current || data.slug.fr.current}"
 			>
-				{data.name[$lang]}
+				{data.name[$lang] || data.name.fr}
 			</Link>
 			<div class="mt-8 max-w-[600px] lg:mt-16">
 				<SanityTextBlock blocks={data.text[$lang]} />
@@ -25,8 +24,8 @@
 			<div class="mb-12 mt-8">
 				<Link
 					button
-					href="{$lang == 'fr' ? 'livres' : 'en/books'}/{data.slug[$lang]
-						.current}"
+					href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.slug[$lang]
+						?.current || data.slug.fr.current}"
 					class=" text-xl"
 				>
 					{$lang == 'fr' ? 'Voir le livre' : 'See the book'}
@@ -36,7 +35,8 @@
 	</div>
 	<div class=" flex justify-end lg:w-1/2">
 		<a
-			href="{$lang == 'fr' ? 'livres' : 'en/books'}/{data.slug[$lang].current}"
+			href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.slug[$lang]
+				?.current || data.slug.fr.current}"
 		>
 			<Img
 				src={data.images[0].asset.url}

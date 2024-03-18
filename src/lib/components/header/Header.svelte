@@ -69,7 +69,7 @@
 />
 <header
 	bind:this={dom.header}
-	style="backdrop-filter: blur(10px);"
+	style="backdrop-filter: blur(6px)"
 	class="fixed left-0 top-0 z-[200] w-full {big
 		? 'h-[160px]'
 		: 'h-[54px] shadow lg:h-[60px]'} {menuOpen
@@ -157,7 +157,7 @@
 			<div
 				class="lg:pointer-events-auto {big
 					? ''
-					: 'opacity-0 lg:translate-y-[-100%] lg:opacity-100'} {menuOpen
+					: 'opacity-0 lg:translate-y-[-42px] lg:opacity-100'} {menuOpen
 					? 'pointer-events-auto'
 					: ''} mt-24 origin-bottom transition duration-500 ease-in-out lg:mt-0"
 			>

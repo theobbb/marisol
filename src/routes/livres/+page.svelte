@@ -14,18 +14,18 @@
 		{:else if item._type == 'serie'}
 			<div
 				class="flex scroll-mt-24 flex-col lg:flex-row"
-				id={item.slug[$lang].current}
+				id={item.slug[$lang]?.current || item.slug.fr.current}
 			>
 				<div class="relative mb-6 lg:mb-0 lg:w-1/4">
 					<div
 						class="sticky top-24 flex w-full flex-wrap items-center justify-between gap-4 pr-8 lg:w-[auto] lg:flex-col lg:items-start lg:justify-start"
 					>
 						<div class="mb-4 text-4xl lg:mb-12 lg:text-5xl">
-							{item.name[$lang]}
+							{item.name[$lang] || item.name.fr}
 						</div>
 						<div class="">
 							<Link
-								href="#{item.slug[$lang].current}"
+								href="#{item.slug[$lang]?.current || item.slug.fr.current}"
 								button
 								on:click={() =>
 									(item.serieFullDisplay = !item.serieFullDisplay)}
@@ -55,9 +55,9 @@
 							<div>
 								<a
 									class="relative"
-									href="{$lang == 'fr' ? 'livres' : 'en/books'}/{book.slug[
+									href="{$lang == 'fr' ? '/livres' : '/en/books'}/{book.slug[
 										$lang
-									].current}"
+									]?.current || book.slug.fr.current}"
 								>
 									<Img
 										src={book.images[0].asset.url}

@@ -1,25 +1,56 @@
 <script>
-	import Button from '$lib/components/Button.svelte';
 	import Img from '$lib/components/Img.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { lang } from '$lib/store';
-	import LightBox from '$lib/components/LightBox.svelte';
+
 	import Carousel from './Carousel.svelte';
 	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
-
+	import { onMount } from 'svelte';
 	export let data;
 
-	console.log(data);
+	let img_loaded = false;
+
+	let bg_img = null;
+
+	onMount(() => {
+		const img = new Image();
+		img.src = data.atelier.asset.url;
+		img.onload = () => {
+			img_loaded = true;
+		};
+
+		window.addEventListener('scroll', onScroll);
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+		};
+	});
+
+	function onScroll() {
+		//console.log('scroll');
+	}
 </script>
 
-<div class="mb-4 mt-12 text-3xl md:text-5xl">
-	{$lang == 'fr' ? 'Une visite de l’atelier' : 'A visit of the workshop'}
-</div>
+<!--
 <div
-	class="bg- relative -mx-28 h-[50vh] w-[100vw] bg-fixed bg-[100%_50%] bg-no-repeat brightness-[1.1] saturate-[1.25]"
-	style="background-image: url({data.atelier.asset.url})"
+	class="relative -mx-3.5 w-[100vw] overflow-x-scroll brightness-[1.1] saturate-[1.25]
+md:-mx-8
+xl:-mx-16 2xl:-mx-28"
 >
-	<div class=""></div>
+	<div class="relative">
+		<Img
+			src={data.atelier.asset.url}
+			class="mb-4 h-full min-h-[50vh] w-full object-cover object-left"
+		/>
+	</div>
+</div>-->
+
+<div class="{img_loaded ? '' : 'opacity-0'} transition duration-500">
+	<div
+		bind:this={bg_img}
+		class=" relative -mx-3.5
+	h-[30vh] w-[100vw] bg-fixed bg-[35%_0%] bg-no-repeat brightness-[1.1] saturate-[1.25] md:-mx-8 lg:h-[50vh] xl:-mx-16 2xl:-mx-28"
+		style="background-image: url({data.atelier.asset.url})"
+	></div>
 </div>
 
 <Carousel data={data.imgs_atelier}>

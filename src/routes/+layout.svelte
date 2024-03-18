@@ -1,11 +1,16 @@
 <script>
 	import Cart from '$lib/components/header/Cart.svelte';
+	import { cart } from '$lib/store';
 	import Footer from '../lib/components/footer/Footer.svelte';
 	import Header from '../lib/components/header/Header.svelte';
 
 	import './styles.css';
 
 	export let data;
+
+	if (data.cart) $cart = data.cart;
+
+	//console.log(data);
 </script>
 
 <div class="app tracking-[0.01rem] text-stone-700">

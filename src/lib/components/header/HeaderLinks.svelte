@@ -20,16 +20,17 @@
 				};
 			});
 		}
+
 		if (link.fr.href == '/boutique') {
-			link.children = data.collections.map((collection) => {
+			link.children = data.shop.branches.map((branch) => {
 				return {
 					fr: {
-						href: `/boutique/${collection.handle}`,
-						name: collection.title,
+						href: `/boutique#${branch.slug.fr.current}`,
+						name: branch.name.fr,
 					},
 					en: {
-						href: `/en/shop/${collection.handle}`,
-						name: collection.title,
+						href: `/en/shop#${branch.slug.en.current}`,
+						name: branch.name.en,
 					},
 				};
 			});
@@ -50,7 +51,7 @@
 			>
 				{link[$lang].name}
 				{#if link.children?.length > 0}
-					<div class="mt-1 inline">
+					<div class="mt-1 hidden lg:inline">
 						<svg
 							class="h-6 w-6 -rotate-180 fill-none transition duration-300 ease-in-out group-hover:-rotate-90"
 							viewBox="0 0 24 24"
@@ -70,7 +71,7 @@
 			{#if link.children?.length > 0}
 				<div
 					style="backdrop-filter: blur(10px);"
-					class="shadow-b pointer-events-none absolute top-[100%] flex translate-y-[-10px] flex-col gap-1 rounded-md bg-white/80 px-2.5 pb-2 opacity-0 transition-all duration-500 ease-in-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 lg:pt-2.5"
+					class="shadow-b pointer-events-none absolute top-[100%] hidden translate-y-[-10px] flex-col gap-1 rounded-md bg-white/80 px-2.5 pb-2 opacity-0 transition-all duration-500 ease-in-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 lg:flex lg:pt-2.5"
 				>
 					{#each link.children as child, i}
 						<Link href={child[$lang].href}>{child[$lang].name}</Link>

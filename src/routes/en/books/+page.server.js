@@ -1,6 +1,5 @@
-import sanity from '$lib/server/sanity';
+import { load as shared } from '../../livres/+page.server.js';
 
 export async function load() {
-	const data = await sanity.fetch(`*[_type == "book"]`);
-	console.log(data);
+	return await shared();
 }

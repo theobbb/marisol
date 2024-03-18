@@ -1,53 +1,76 @@
-import medusa from '$lib/server/medusa';
-import { json } from '@sveltejs/kit';
+import { Cart } from '$lib/server/models/Cart';
+import { json, text } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
-/** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
-	const { cart_id, variant_id, quantity } = await request.json();
+	const { cart_id, variant_id, product_id } = await request.json();
 
-	if (!cart_id || !variant_id || !quantity) {
-		return new Response({ body: { message: 'Invalid request' }, status: 400 });
+	if (!cart_id || !variant_id || !product_id) {
+		return text(400, 'Invalid request');
 	}
 
 	try {
-		const { cart } = await medusa.carts.lineItems.create(cart_id, {
-			variant_id,
-			quantity,
-		});
+		const cart = await Cart.findById(cart_id);
+		if (!cart) {
+			return text(404, 'No cart found');
+		}
+		const item = cart.items.find(
+			(i) => i.variant_id === variant_id && i.product_id === product_id,
+		);
+		if (item) {
+			item.quantity += 1;
+		} else {
+			cart.items.push({ variant_id, product_id, quantity: 1 });
+		}
+
+		await cart.save();
+
 		return json(cart);
 	} catch (error) {
 		return new Response({ body: { message: 'No cart found' }, status: 200 });
 	}
 }
 export async function PUT({ request }) {
-	const { cart_id, id, quantity } = await request.json();
+	const { cart_id, item_id, quantity } = await request.json();
 
-	if (!cart_id || !id || !quantity) {
-		return new Response({ body: { message: 'Invalid request' }, status: 400 });
+	if (!cart_id || !item_id || !quantity) {
+		error(400, 'Invalid request');
 	}
 
 	try {
-		const { cart } = await medusa.carts.lineItems.update(cart_id, id, {
-			quantity,
-		});
-		console.log(cart);
+		const cart = await Cart.findById(cart_id);
+		if (!cart) {
+			return text(404, 'No cart found');
+		}
+		const item = cart.items.find((i) => i._id.toString() === item_id);
+		if (!item) {
+			return text(404, 'No item found');
+		}
+		item.quantity = quantity;
+
+		await cart.save();
+
 		return json(cart);
 	} catch (err) {
 		return error(400, 'No cart found');
 	}
 }
 export async function DELETE({ request }) {
-	const { cart_id, id } = await request.json();
+	const { cart_id, item_id } = await request.json();
 
-	if (!cart_id || !id) {
-		return new Response({ body: { message: 'Invalid request' }, status: 400 });
+	if (!cart_id || !item_id) {
+		return text(400, 'Invalid request');
 	}
 
 	try {
-		const { cart } = await medusa.carts.lineItems.delete(cart_id, id);
+		const cart = await Cart.findById(cart_id);
+		if (!cart) {
+			return text(404, 'No cart found');
+		}
+		cart.items = cart.items.filter((i) => i._id.toString() !== item_id);
+		await cart.save();
 		return json(cart);
 	} catch (error) {
-		return new Response({ body: { message: 'No cart found' }, status: 200 });
+		return text(400, 'No cart found');
 	}
 }

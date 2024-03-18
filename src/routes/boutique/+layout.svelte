@@ -3,17 +3,41 @@
 
 	export let data;
 
-	if (data.store.cart) cart.set(data.store.cart);
+	let subtotal = 0;
 
 	$: $cart, populateCart();
 	function populateCart() {
-		if ($cart?.items?.length < 1) return;
+		subtotal = 0;
+		const allProducts = data.shop.branches.flatMap((branch) => branch.products);
 
 		$cart.items.forEach((item) => {
-			const product_id = item.variant.product_id;
+			const product = allProducts.find(
+				(product) => product._id === item.product_id,
+			);
+			if (product) {
+				item.variant_name = product.variants.find(
+					(variant) => variant.variant._id === item.variant_id,
+				).variant.name;
+			}
 
-			item.item = data.store.products.find((p) => p.id === product_id)?.item;
+			if (product.isBook) {
+				product.book = data.books.find(
+					(book) => book._id === product.book_ref._ref,
+				);
+			}
+
+			item.product = product;
+			if (!product) return;
+			const variantData = product.variants.find(
+				(variant) => variant.variant._id === item.variant_id,
+			);
+
+			if (!variantData) return;
+			item.price = variantData.price;
+			item.stock = variantData.stock;
+			subtotal += item.price * item.quantity;
 		});
+		$cart.subtotal = subtotal;
 	}
 </script>
 

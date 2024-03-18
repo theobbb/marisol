@@ -8,8 +8,6 @@
 
 	$: images = [];
 
-	console.log(data);
-
 	let active = -1;
 
 	let dom = {};
@@ -147,7 +145,7 @@
 			class="pointer-events-none absolute bottom-0 left-0 flex w-full justify-center"
 		>
 			<div
-				class="pointer-events-auto flex items-baseline gap-2 text-2xl text-lg"
+				class="pointer-events-auto flex flex-col items-baseline gap-1 text-2xl text-lg md:flex-row md:gap-2"
 			>
 				{#if book}
 					<div class="text-base opacity-40">
@@ -155,19 +153,26 @@
 					</div>
 					<div class="">
 						<Link
+							on:click={() => {
+								document.documentElement.style.overflowY = 'auto';
+							}}
 							href="{$lang == 'fr' ? '/livres' : '/en/books'}/{book.slug[$lang]
-								.current}"
-							class="decoration-white/40">{book.name[$lang]}</Link
+								?.current || book.slug.fr.current}"
+							class="!px-0 decoration-white/40"
+							>{book.name[$lang] || book.name.fr}</Link
 						>
 					</div>
 					{#if serie}
-						-
+						<div class="hidden md:inline">-</div>
 						<div class="">
 							<Link
+								on:click={() => {
+									document.documentElement.style.overflowY = 'auto';
+								}}
 								href="{$lang == 'fr' ? '/livres' : '/en/books'}#{serie.slug[
 									$lang
-								].current}"
-								class="decoration-white/40">{serie.name[$lang]}</Link
+								]?.current || serie.slug.fr.current}"
+								class="!px-0 decoration-white/40">{serie.name[$lang]}</Link
 							>
 						</div>
 					{/if}

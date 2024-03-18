@@ -4,8 +4,6 @@
 	export let data;
 
 	let active = 0;
-
-	console.log(data);
 </script>
 
 <svelte:head>

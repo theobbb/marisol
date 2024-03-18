@@ -1,0 +1,552 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js"
+    ]
+  },
+  "_Cart.js": {
+    "file": "chunks/Cart.js"
+  },
+  "_Img.js": {
+    "file": "chunks/Img.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_LightBox.js": {
+    "file": "chunks/LightBox.js",
+    "imports": [
+      "_ssr.js",
+      "_store.js",
+      "_Link.js"
+    ]
+  },
+  "_Link.js": {
+    "file": "chunks/Link.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_SanityTextBlock.js": {
+    "file": "chunks/SanityTextBlock.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_Total.js": {
+    "file": "chunks/Total.js",
+    "imports": [
+      "_ssr.js",
+      "_store.js",
+      "_formatPrice.js"
+    ]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js"
+  },
+  "_formatPrice.js": {
+    "file": "chunks/formatPrice.js"
+  },
+  "_index.js": {
+    "file": "chunks/index.js"
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_private.js": {
+    "file": "chunks/private.js"
+  },
+  "_sanity.js": {
+    "file": "chunks/sanity.js"
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js"
+  },
+  "_store.js": {
+    "file": "chunks/store.js",
+    "imports": [
+      "_index2.js"
+    ]
+  },
+  "_stores.js": {
+    "file": "chunks/stores.js",
+    "imports": [
+      "_ssr.js",
+      "_exports.js"
+    ]
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-all-400-normal.woff": {
+    "file": "_app/immutable/assets/fira-mono-all-400-normal.B2mvLtSD.woff",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-all-400-normal.woff"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-cyrillic-400-normal.36-45Uyg.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-400-normal.woff2"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-ext-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-cyrillic-ext-400-normal.B04YIrm4.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-greek-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-greek-400-normal.C3zng6O6.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-greek-400-normal.woff2"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-greek-ext-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-greek-ext-400-normal.CsqI23CO.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-greek-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-latin-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-latin-400-normal.DKjLVgQi.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/fira-mono/files/fira-mono-latin-ext-400-normal.woff2": {
+    "file": "_app/immutable/assets/fira-mono-latin-ext-400-normal.D6XfiR-_.woff2",
+    "src": "node_modules/@fontsource/fira-mono/files/fira-mono-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_stores.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js",
+      "_index.js",
+      "_exports.js",
+      "_index2.js"
+    ]
+  },
+  "src/routes/+layout.server.js": {
+    "file": "entries/pages/_layout.server.js",
+    "src": "src/routes/+layout.server.js",
+    "isEntry": true,
+    "imports": [
+      "_private.js",
+      "_sanity.js",
+      "_Cart.js"
+    ]
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_stores.js",
+      "_store.js",
+      "_Link.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.CdlTOiHp.css"
+    ],
+    "assets": [
+      "_app/immutable/assets/fira-mono-cyrillic-ext-400-normal.B04YIrm4.woff2",
+      "_app/immutable/assets/fira-mono-all-400-normal.B2mvLtSD.woff",
+      "_app/immutable/assets/fira-mono-cyrillic-400-normal.36-45Uyg.woff2",
+      "_app/immutable/assets/fira-mono-greek-ext-400-normal.CsqI23CO.woff2",
+      "_app/immutable/assets/fira-mono-greek-400-normal.C3zng6O6.woff2",
+      "_app/immutable/assets/fira-mono-latin-ext-400-normal.D6XfiR-_.woff2",
+      "_app/immutable/assets/fira-mono-latin-400-normal.DKjLVgQi.woff2"
+    ]
+  },
+  "src/routes/+page.server.js": {
+    "file": "entries/pages/_page.server.js",
+    "src": "src/routes/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "_sanity.js"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js"
+    ]
+  },
+  "src/routes/a-propos/+page.server.js": {
+    "file": "entries/pages/a-propos/_page.server.js",
+    "src": "src/routes/a-propos/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "_sanity.js"
+    ]
+  },
+  "src/routes/a-propos/+page.svelte": {
+    "file": "entries/pages/a-propos/_page.svelte.js",
+    "src": "src/routes/a-propos/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_Link.js",
+      "_store.js",
+      "_LightBox.js",
+      "_SanityTextBlock.js"
+    ]
+  },
+  "src/routes/animations/+page.server.js": {
+    "file": "entries/pages/animations/_page.server.js",
+    "src": "src/routes/animations/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "_sanity.js"
+    ]
+  },
+  "src/routes/animations/+page.svelte": {
+    "file": "entries/pages/animations/_page.svelte.js",
+    "src": "src/routes/animations/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_LightBox.js",
+      "_SanityTextBlock.js",
+      "_store.js"
+    ]
+  },
+  "src/routes/boutique/+layout.svelte": {
+    "file": "entries/pages/boutique/_layout.svelte.js",
+    "src": "src/routes/boutique/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_store.js"
+    ]
+  },
+  "src/routes/boutique/+page.svelte": {
+    "file": "entries/pages/boutique/_page.svelte.js",
+    "src": "src/routes/boutique/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_store.js",
+      "_formatPrice.js"
+    ]
+  },
+  "src/routes/boutique/[slug]/+page.js": {
+    "file": "entries/pages/boutique/_slug_/_page.js",
+    "src": "src/routes/boutique/[slug]/+page.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/boutique/[slug]/+page.svelte": {
+    "file": "entries/pages/boutique/_slug_/_page.svelte.js",
+    "src": "src/routes/boutique/[slug]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_Link.js",
+      "_store.js",
+      "_SanityTextBlock.js",
+      "_formatPrice.js",
+      "_LightBox.js"
+    ]
+  },
+  "src/routes/boutique/api/cart-item/+server.js": {
+    "file": "entries/endpoints/boutique/api/cart-item/_server.js",
+    "src": "src/routes/boutique/api/cart-item/+server.js",
+    "isEntry": true,
+    "imports": [
+      "_Cart.js",
+      "_index.js"
+    ]
+  },
+  "src/routes/boutique/api/cart/+server.js": {
+    "file": "entries/endpoints/boutique/api/cart/_server.js",
+    "src": "src/routes/boutique/api/cart/+server.js",
+    "isEntry": true,
+    "imports": [
+      "_private.js",
+      "_Cart.js",
+      "_index.js"
+    ]
+  },
+  "src/routes/boutique/api/promo-code/+server.js": {
+    "file": "entries/endpoints/boutique/api/promo-code/_server.js",
+    "src": "src/routes/boutique/api/promo-code/+server.js",
+    "isEntry": true,
+    "imports": [
+      "_private.js",
+      "_index.js"
+    ]
+  },
+  "src/routes/boutique/panier/+page.svelte": {
+    "file": "entries/pages/boutique/panier/_page.svelte.js",
+    "src": "src/routes/boutique/panier/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_store.js",
+      "_Link.js",
+      "_formatPrice.js",
+      "_Total.js"
+    ]
+  },
+  "src/routes/boutique/validation/+page.svelte": {
+    "file": "entries/pages/boutique/validation/_page.svelte.js",
+    "src": "src/routes/boutique/validation/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_store.js",
+      "_Total.js"
+    ]
+  },
+  "src/routes/contact/+page.server.js": {
+    "file": "entries/pages/contact/_page.server.js",
+    "src": "src/routes/contact/+page.server.js",
+    "isEntry": true
+  },
+  "src/routes/contact/+page.svelte": {
+    "file": "entries/pages/contact/_page.svelte.js",
+    "src": "src/routes/contact/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_store.js"
+    ]
+  },
+  "src/routes/en/+page.svelte": {
+    "file": "entries/pages/en/_page.svelte.js",
+    "src": "src/routes/en/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/+page.svelte"
+    ]
+  },
+  "src/routes/en/about/+page.server.js": {
+    "file": "entries/pages/en/about/_page.server.js",
+    "src": "src/routes/en/about/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "src/routes/a-propos/+page.server.js"
+    ]
+  },
+  "src/routes/en/about/+page.svelte": {
+    "file": "entries/pages/en/about/_page.svelte.js",
+    "src": "src/routes/en/about/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/a-propos/+page.svelte"
+    ]
+  },
+  "src/routes/en/books/+page.server.js": {
+    "file": "entries/pages/en/books/_page.server.js",
+    "src": "src/routes/en/books/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "src/routes/livres/+page.server.js"
+    ]
+  },
+  "src/routes/en/books/+page.svelte": {
+    "file": "entries/pages/en/books/_page.svelte.js",
+    "src": "src/routes/en/books/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/livres/+page.svelte"
+    ]
+  },
+  "src/routes/en/books/[slug]/+page.js": {
+    "file": "entries/pages/en/books/_slug_/_page.js",
+    "src": "src/routes/en/books/[slug]/+page.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/en/books/[slug]/+page.svelte": {
+    "file": "entries/pages/en/books/_slug_/_page.svelte.js",
+    "src": "src/routes/en/books/[slug]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/livres/[slug]/+page.svelte"
+    ]
+  },
+  "src/routes/en/contact/+page.server.js": {
+    "file": "entries/pages/en/contact/_page.server.js",
+    "src": "src/routes/en/contact/+page.server.js",
+    "isEntry": true
+  },
+  "src/routes/en/contact/+page.svelte": {
+    "file": "entries/pages/en/contact/_page.svelte.js",
+    "src": "src/routes/en/contact/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/contact/+page.svelte"
+    ]
+  },
+  "src/routes/en/portfolio/+page.server.js": {
+    "file": "entries/pages/en/portfolio/_page.server.js",
+    "src": "src/routes/en/portfolio/+page.server.js",
+    "isEntry": true
+  },
+  "src/routes/en/portfolio/+page.svelte": {
+    "file": "entries/pages/en/portfolio/_page.svelte.js",
+    "src": "src/routes/en/portfolio/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/portfolio/+page.svelte"
+    ]
+  },
+  "src/routes/en/shop/+layout.svelte": {
+    "file": "entries/pages/en/shop/_layout.svelte.js",
+    "src": "src/routes/en/shop/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/boutique/+layout.svelte"
+    ]
+  },
+  "src/routes/en/shop/+page.server.js": {
+    "file": "entries/pages/en/shop/_page.server.js",
+    "src": "src/routes/en/shop/+page.server.js",
+    "isEntry": true
+  },
+  "src/routes/en/shop/+page.svelte": {
+    "file": "entries/pages/en/shop/_page.svelte.js",
+    "src": "src/routes/en/shop/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/boutique/+page.svelte"
+    ]
+  },
+  "src/routes/en/shop/[slug]/+page.js": {
+    "file": "entries/pages/en/shop/_slug_/_page.js",
+    "src": "src/routes/en/shop/[slug]/+page.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/en/shop/[slug]/+page.svelte": {
+    "file": "entries/pages/en/shop/_slug_/_page.svelte.js",
+    "src": "src/routes/en/shop/[slug]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/boutique/[slug]/+page.svelte"
+    ]
+  },
+  "src/routes/en/shop/cart/+page.svelte": {
+    "file": "entries/pages/en/shop/cart/_page.svelte.js",
+    "src": "src/routes/en/shop/cart/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/boutique/panier/+page.svelte"
+    ]
+  },
+  "src/routes/en/shop/checkout/+page.svelte": {
+    "file": "entries/pages/en/shop/checkout/_page.svelte.js",
+    "src": "src/routes/en/shop/checkout/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "src/routes/en/workshop/+page.server.js": {
+    "file": "entries/pages/en/workshop/_page.server.js",
+    "src": "src/routes/en/workshop/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "src/routes/animations/+page.server.js"
+    ]
+  },
+  "src/routes/en/workshop/+page.svelte": {
+    "file": "entries/pages/en/workshop/_page.svelte.js",
+    "src": "src/routes/en/workshop/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "src/routes/animations/+page.svelte"
+    ]
+  },
+  "src/routes/livres/+page.server.js": {
+    "file": "entries/pages/livres/_page.server.js",
+    "src": "src/routes/livres/+page.server.js",
+    "isEntry": true,
+    "imports": [
+      "_sanity.js"
+    ]
+  },
+  "src/routes/livres/+page.svelte": {
+    "file": "entries/pages/livres/_page.svelte.js",
+    "src": "src/routes/livres/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_Link.js",
+      "_store.js",
+      "_SanityTextBlock.js"
+    ]
+  },
+  "src/routes/livres/[slug]/+page.js": {
+    "file": "entries/pages/livres/_slug_/_page.js",
+    "src": "src/routes/livres/[slug]/+page.js",
+    "isEntry": true,
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "src/routes/livres/[slug]/+page.svelte": {
+    "file": "entries/pages/livres/_slug_/_page.svelte.js",
+    "src": "src/routes/livres/[slug]/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_Img.js",
+      "_LightBox.js",
+      "_SanityTextBlock.js",
+      "_store.js"
+    ]
+  },
+  "src/routes/portfolio/+page.js": {
+    "file": "entries/pages/portfolio/_page.js",
+    "src": "src/routes/portfolio/+page.js",
+    "isEntry": true
+  },
+  "src/routes/portfolio/+page.svelte": {
+    "file": "entries/pages/portfolio/_page.svelte.js",
+    "src": "src/routes/portfolio/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_store.js"
+    ]
+  }
+}

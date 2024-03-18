@@ -3,54 +3,86 @@
 	import { cart, lang } from '$lib/store';
 	import axios from 'axios';
 	import Variants from './lib/Variant.svelte';
+	import AddToCart from './AddToCart.svelte';
+	import { formatPrice } from './lib/formatPrice';
 
 	export let data;
 
-	console.log(data);
+	let hiddenVariants = [];
 </script>
 
-{#each data.store.collections as collection}
-	<div class="mb-4 text-4xl">
-		{collection.title[$lang]}
-	</div>
-	<div class="grid gap-8">
-		{#each collection.products as product}
-			<a
-				href="/{$lang == 'fr' ? 'boutique' : 'en/shop'}/{product?.item?.slug[
-					$lang
-				].current || product?.handle}"
+<div class="flex flex-col gap-44">
+	{#each data?.shop?.branches as branch}
+		<div id={branch.slug[$lang].current} class="scroll-mt-44">
+			<div
+				class="mb-12 flex w-full flex-col justify-between gap-4 border-b pb-2 lg:flex-row"
 			>
-				{#if product.type === 'book'}
-					{#if product.item}
+				<div class=" text-4xl">{branch.name[$lang] || branch.name.fr}</div>
+				<div class="flex flex-col items-end gap-4 text-xl lg:flex-row">
+					{#each branch.variants as variant}
 						<div>
-							<div>
-								<Img
-									class="max-h-[300px] max-w-[200px] rounded-sm"
-									src={product.item.images[0].asset.url}
-									alt={product.item.name[$lang]}
-								/>
-							</div>
-							<div class="text-xl">
-								{product.item.name[$lang]}
+							<button
+								on:click={() => {
+									variant.hidden = !variant.hidden;
+									hiddenVariants = branch.variants
+										.filter((v) => v.hidden)
+										.map((v) => v._id);
+								}}
+								class="rounded px-3 py-1 decoration-black/20 underline-offset-4 hover:underline {variant.hidden
+									? ''
+									: 'bg-black/10'}"
+							>
+								{variant.name[$lang] || variant.name.fr}
+							</button>
+						</div>
+					{/each}
+				</div>
+			</div>
+			<div
+				class="grid grid-cols-1 gap-20 md:grid-cols-2 md:gap-10 lg:grid-cols-3 xl:grid-cols-4 2xl:gap-20"
+			>
+				{#each branch.products as product}
+					{#if !product.variants?.some( (v) => hiddenVariants.includes(v.variant._id), )}
+						<div>
+							<a
+								class=""
+								href="/{$lang == 'fr' ? 'boutique' : 'en/shop'}/{product.slug[
+									$lang
+								]?.current || product.slug.fr.current}"
+							>
+								<div>
+									<Img
+										class="rounded-sm"
+										src={product.isBook
+											? product.book?.images[0].asset.url
+											: product.imgs[0].url}
+									/>
+								</div>
+								<div class="mt-4 border-b pb-1 text-2xl">
+									{product.name[$lang] || product.name.fr}
+								</div>
+							</a>
+							<div class="mt-4 flex flex-col gap-2">
+								{#each product.variants as variant}
+									<div class="flex w-full items-center justify-between gap-2">
+										<div class="flex gap-2">
+											<div class="w-14 font-medium">
+												{formatPrice(variant.price)}
+											</div>
+											<div class="text-black/50">
+												{variant.variant.name[$lang] || variant.variant.name.fr}
+											</div>
+										</div>
+										<div>
+											<AddToCart {product} {variant} />
+										</div>
+									</div>
+								{/each}
 							</div>
 						</div>
 					{/if}
-				{:else}
-					<div>
-						<div>
-							<Img
-								class="max-h-[300px] max-w-[200px] rounded-sm"
-								src={product.thumbnail}
-							/>
-						</div>
-						<div class="text-xl">
-							{product.title}
-						</div>
-					</div>
-				{/if}
-			</a>
-
-			<Variants {product} />
-		{/each}
-	</div>
-{/each}
+				{/each}
+			</div>
+		</div>
+	{/each}
+</div>

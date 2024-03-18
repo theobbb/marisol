@@ -19,7 +19,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	color: rgb(33, 37, 41);
 	/*
-	background-color: rgb(255, 255, 255);
+	background-color: rgba(72, 48, 38, 0.347);
 	background-image: url(https://grainy-gradients.vercel.app/noise.svg);*/
 }
 ::selection {
@@ -29,4 +29,13 @@ body {
 
 ::backdrop {
 	background-color: rgba(0, 0, 0, 0.951);
+}
+.text-block h1,
+.text-block h2,
+.text-block h3,
+.text-block h4,
+.text-block h5,
+.text-block h6 {
+	text-decoration: underline solid rgba(0, 0, 0, 0.235);
+	text-underline-offset: 4px;
 }

@@ -10,53 +10,53 @@
 			removeFromCart();
 			return;
 		}
-		newQuantity = Math.min(
-			Math.floor(newQuantity),
-			variant.variant.inventory_quantity,
-		);
+
+		newQuantity = Math.min(Math.floor(newQuantity), variant.stock);
 
 		loading = true;
-		const res = await fetch('/boutique/api/cart-item', {
-			method: 'PUT',
-			body: JSON.stringify({
-				cart_id: $cart.id,
-				id: variant.id,
-				quantity: newQuantity,
-			}),
-			headers: {
-				'content-type': 'application/json',
-			},
-		});
 
-		if (res.status == 200) {
+		try {
+			const res = await fetch('/boutique/api/cart-item', {
+				method: 'PUT',
+				body: JSON.stringify({
+					cart_id: $cart._id,
+					item_id: variant._id,
+					quantity: newQuantity,
+				}),
+				headers: {
+					'content-type': 'application/json',
+				},
+			});
+
 			const data = await res.json();
 
-			data.message =
-				$lang == 'fr' ? 'Quantité mise à jour' : 'Quantity updated';
+			$cart = data;
 			cart.set(data);
-		} else {
-			const data = await res.json();
+		} catch (error) {
+			console.error(error);
 		}
+
 		loading = false;
 	}
 	async function removeFromCart() {
 		loading = true;
-		const res = await fetch('/boutique/api/cart-item', {
-			method: 'DELETE',
-			body: JSON.stringify({
-				cart_id: $cart.id,
-				id: variant.id,
-			}),
-			headers: {
-				'content-type': 'application/json',
-			},
-		});
-
-		if (res.ok) {
+		try {
+			const res = await fetch('/boutique/api/cart-item', {
+				method: 'DELETE',
+				body: JSON.stringify({
+					cart_id: $cart._id,
+					item_id: variant._id,
+				}),
+				headers: {
+					'content-type': 'application/json',
+				},
+			});
 			const data = await res.json();
-
 			cart.set(data);
+		} catch (error) {
+			console.error(error);
 		}
+
 		loading = false;
 	}
 	let input = null;

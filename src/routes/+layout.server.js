@@ -1,7 +1,11 @@
-import medusa from '$lib/server/medusa';
-import sanity from '$lib/server/sanity.js';
+//import medusa from '$lib/server/medusa';
 
-export async function load() {
+import { MONGO_URI } from '$env/static/private';
+import sanity from '$lib/server/sanity.js';
+import mongoose from 'mongoose';
+import { Cart } from '$lib/server/models/Cart';
+
+export async function load({ cookies }) {
 	const books = await sanity.fetch(`*[_type == "book"] {
         ...,
         images[]{
@@ -43,60 +47,64 @@ export async function load() {
            
         }
             }`);
-
-	/*
-	const portfolioPage = await sanity.fetch(`*[_type == "portfolio-page"]{
+	const shop = await sanity.fetch(`*[_type == "shop-page"][0]{
         ...,
-        content[]{
+        branches[]->{
             ...,
-            img {
-                asset->{...}
-            },
-            book_ref->{
-                ...,
-            }
-
+			products[]->{
+				...,
+				variants[]{
+					...,
+					variant->{...}
+				},
+				'imgs': imgs[].asset->{
+					...
+				}
+			},
+			
+           
         }
-    }`);
-    const portfolioBranches = await sanity.fetch(`*[_type == "portfolio-branch"]{
-        ...,
-        content[]{
-            ...,
-            img {
-                asset->{...}
-            },
-            book_ref->{
-                ...,
-            }
+            }`);
+	shop.branches.forEach((branch) => {
+		const variants = [];
+		branch.products.forEach((product) => {
+			product.branch = {
+				_id: branch._id,
+				name: branch.name,
+				slug: branch.slug,
+				description: branch.description,
+			};
 
-        }
-    }`);
-    const portfolioContent = await sanity.fetch(`*[_type == "portfolio-content"]{
-        ...,
-        img {
-            asset->{...}
-        },
-        book_ref->{
-            ...,
-        }
-    }`);*/
-	/*
-	const base = portfolioPage.find((item) => item._id.includes('pagePortfolio'));
+			product.variants.forEach((variant) => {
+				if (!variants.some((v) => v._id === variant.variant._id))
+					variants.push(variant.variant);
+			});
 
-	const portfolioTree = { ...base };
-
-	findChildren(portfolioTree);
-
-	function findChildren(node) {
-		if (!node.children || !node.children.length) return;
-
-		node.children.forEach((ref, index) => {
-			const child = portfolioPage.find((item) => item._id === ref._ref);
-			node.children[index] = child;
-			findChildren(child);
+			if (!product.book_ref) return;
+			product.book = books.find((book) => book._id === product.book_ref?._ref);
 		});
-	}*/
-	const { collections } = await medusa.collections.list();
+		branch.variants = variants;
+	});
 
-	return { books, series, portfolio, collections };
+	await mongoose.connect(MONGO_URI);
+
+	let cart = null;
+	const cartId = cookies.get('cart_id');
+
+	if (cartId && cartId !== 'undefined') {
+		const retrieved = await Cart.findById(cartId);
+
+		if (retrieved) {
+			cart = JSON.parse(JSON.stringify(retrieved));
+		}
+	}
+
+	return {
+		books,
+		series,
+		portfolio,
+		cart,
+		shop,
+		//, collections
+	};
 }
