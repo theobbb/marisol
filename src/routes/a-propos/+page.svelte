@@ -11,6 +11,7 @@
 	let img_loaded = false;
 
 	let bg_img = null;
+	let bg_scroll = null;
 
 	onMount(() => {
 		const img = new Image();
@@ -18,6 +19,10 @@
 		img.onload = () => {
 			img_loaded = true;
 		};
+		if (window.innerWidth < 1024) {
+			bg_scroll.scrollTo(bg_img.offsetWidth / 2 - window.innerWidth, 0);
+		}
+		onScroll();
 
 		window.addEventListener('scroll', onScroll);
 		return () => {
@@ -26,7 +31,9 @@
 	});
 
 	function onScroll() {
-		//console.log('scroll');
+		if (window.innerWidth < 1024) return;
+		const progress = Math.min(1.5, window.scrollY / bg_img.offsetHeight);
+		bg_img.style.transform = `scale(${1 + progress * 0.1}) translateY(${progress * 200}px)`;
 	}
 </script>
 
@@ -44,11 +51,15 @@ xl:-mx-16 2xl:-mx-28"
 	</div>
 </div>-->
 
-<div class="{img_loaded ? '' : 'opacity-0'} transition duration-500">
+<div
+	bind:this={bg_scroll}
+	class="{img_loaded ? '' : 'opacity-0'} relative -mx-3.5
+ h-[30vh] w-[100vw] overflow-x-scroll transition duration-500 md:-mx-8 lg:h-[50vh] xl:-mx-16 2xl:-mx-28"
+>
 	<div
 		bind:this={bg_img}
-		class=" relative -mx-3.5
-	h-[30vh] w-[100vw] bg-fixed bg-[35%_0%] bg-no-repeat brightness-[1.1] saturate-[1.25] md:-mx-8 lg:h-[50vh] xl:-mx-16 2xl:-mx-28"
+		class=" relative
+		 h-full w-[130vh] bg-contain bg-[40%_50%] bg-no-repeat brightness-[1.1] saturate-[1.25] lg:w-full"
 		style="background-image: url({data.atelier.asset.url})"
 	></div>
 </div>

@@ -42,12 +42,16 @@
 	}
 </script>
 
-<div class="fixed bottom-3 right-3 z-[200] lg:bottom-6 lg:right-8">
+<div
+	class="fixed bottom-3 right-3 z-[200] lg:bottom-6 lg:right-8 {visible
+		? ''
+		: 'pointer-events-none'}"
+>
 	<div
 		style="backdrop-filter: blur(10px);"
 		class="rounded bg-accent/80 shadow {visible
 			? ''
-			: 'pointer-events-none translate-x-full opacity-0'} transition duration-500 ease-in-out"
+			: ' translate-x-full opacity-0'} transition duration-500 ease-in-out"
 	>
 		<a
 			href="/{$lang == 'fr' ? 'boutique/panier' : 'en/shop/cart'}"

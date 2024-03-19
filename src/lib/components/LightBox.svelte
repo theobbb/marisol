@@ -153,7 +153,7 @@
 			>
 				{#if book}
 					<div class="text-base opacity-40">
-						{$lang == 'fr' ? 'Tiré du livre' : 'From the book'}:
+						{$lang == 'fr' ? 'Tiré de' : 'From'}:
 					</div>
 					<div class="">
 						<Link

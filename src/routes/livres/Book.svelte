@@ -2,17 +2,14 @@
 	import Img from '$lib/components/Img.svelte';
 	import Link from '$lib/components/Link.svelte';
 
-	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
 	import { lang } from '$lib/store';
 
 	export let data;
 
 	const fakeSerie = data.name.fr.includes('Série');
-
-	console.log(fakeSerie);
 </script>
 
-<div class="relative flex w-full flex-col lg:flex-row">
+<div class="-lg:w-1/2 relative flex flex-col lg:flex-row">
 	<div class="relative lg:w-1/2">
 		<div class="top-24 flex flex-col lg:sticky lg:pr-24">
 			<Link
@@ -22,9 +19,7 @@
 			>
 				{data.name[$lang] || data.name.fr}
 			</Link>
-			<div class="mt-8 max-w-[600px] lg:mt-16">
-				<SanityTextBlock blocks={data.text[$lang]} />
-			</div>
+
 			<div class="mb-12 mt-8">
 				<Link
 					button
@@ -50,7 +45,7 @@
 		>
 			<Img
 				src={data.images[0].asset.url}
-				class="max-h-[54vh] rounded-sm"
+				class=" rounded-sm {fakeSerie ? 'max-h-[90vh]' : 'max-h-[64vh]'}"
 				alt="{$lang == 'fr' ? 'Livres' : 'Books'} - {data.name[$lang]}"
 			/>
 		</a>

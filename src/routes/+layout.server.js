@@ -1,5 +1,3 @@
-//import medusa from '$lib/server/medusa';
-
 import { MONGO_URI } from '$env/static/private';
 import sanity from '$lib/server/sanity.js';
 import mongoose from 'mongoose';

@@ -1,36 +1,13 @@
 <script>
-	import Img from '$lib/components/Img.svelte';
-	import LightBox from '$lib/components/LightBox.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { lang } from '$lib/store';
 	import { onMount } from 'svelte';
-	import { tick } from 'svelte';
+
 	import Masonry from '$lib/components/Masonry.svelte';
 
 	export let data;
 
-	let n_total = 0;
-	let n_loaded = 0;
-
 	onMount(() => {
-		/*
-		data.portfolio.children.forEach((branch) => {
-			branch.content.forEach((item) => {
-				n_total++;
-			});
-		});
-		data.portfolio.children.forEach((branch) => {
-			branch.content.forEach((item) => {
-				const img = new Image();
-				img.src = item.img.asset.url;
-				img.onload = () => {
-					n_loaded++;
-				};
-				img.onerror = () => {
-					failed = true;
-				};
-			});
-		});*/
 		setCols();
 
 		window.addEventListener('resize', onresize);
@@ -47,16 +24,16 @@
 		if (resizeTimeout) clearTimeout(resizeTimeout);
 		resizeTimeout = setTimeout(() => {
 			if (window.innerWidth == lastWidth) return;
-			console.log('resize');
+
 			setCols();
 			lastWidth = window.innerWidth;
 		}, 100);
 	}
 
 	function setCols() {
-		if (window.innerWidth < 640) {
+		if (window.innerWidth < 840) {
 			cols = 1;
-		} else if (window.innerWidth < 1024) {
+		} else if (window.innerWidth < 1600) {
 			cols = 2;
 		} else {
 			cols = 3;
@@ -72,7 +49,7 @@
 	<div>
 		{#key lastWidth}
 			{#each data.portfolio.children as branch}
-				<div class="scroll-mt-36" id={branch.slug[$lang].current}>
+				<div class="mb-24 scroll-mt-36" id={branch.slug[$lang].current}>
 					<div>
 						<Link
 							class="!px-0 text-3xl lg:text-4xl"
