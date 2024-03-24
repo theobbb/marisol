@@ -51,8 +51,8 @@
 </svelte:head>
 
 <div
-	class="relative -mx-3.5 -mt-44 h-[calc(100lvh-40px)] w-[100vw]
-md:-mx-8
+	class="relative -mx-3.5 -mt-44 h-[calc(100svh-30px)] w-[100vw] md:-mx-8
+lg:h-[calc(100svh-40px)]
 xl:-mx-16 2xl:-mx-28"
 >
 	<div class="relative flex h-full w-[100vw] select-none overflow-hidden">
@@ -84,7 +84,7 @@ xl:-mx-16 2xl:-mx-28"
 	</div>
 </div>
 
-<div class="relative flex w-full justify-between overflow-hidden">
+<div class="relative flex w-full flex-col justify-between lg:flex-row">
 	<div class="relative flex flex-1 gap-1 md:gap-1.5">
 		{#each data.content as item, i}
 			<button
@@ -99,7 +99,7 @@ xl:-mx-16 2xl:-mx-28"
 			</button>
 		{/each}
 	</div>
-	<div class="relative hidden w-full items-center justify-center lg:flex">
+	<div class="mt-3 hidden w-full items-center justify-center lg:mt-0 lg:flex">
 		{#each data.content as item, i}
 			{@const book = item.book}
 			{#if book}
@@ -109,7 +109,7 @@ xl:-mx-16 2xl:-mx-28"
 						: 'pointer-events-none'}"
 				>
 					<div
-						class=" left-0 flex flex-col items-baseline gap-1 text-2xl text-lg md:flex-row md:gap-2 {i ==
+						class=" left-0 flex flex-row items-baseline gap-1 text-2xl text-lg md:gap-2 {i ==
 						active
 							? ''
 							: 'translate-y-full opacity-0'}
