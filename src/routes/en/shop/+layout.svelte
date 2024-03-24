@@ -4,4 +4,6 @@
 	export let data;
 </script>
 
-<Layout {data}><slot /></Layout>
+<Layout {data}>
+	<slot />
+</Layout>

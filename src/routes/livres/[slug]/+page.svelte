@@ -6,36 +6,13 @@
 	import SerieRelated from '../SerieRelated.svelte';
 
 	export let data, slug;
+
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/livres/' + data.slug?.fr?.current,
+		en: '/books/' + (data.slug?.en?.current || data.slug?.fr?.current),
+	};
 </script>
-
-<!--
-<div>
-	<Book {data} single />
-
-	<div class="mt-12 flex">
-		<div class=" flex w-full flex-col">
-			<div class="gap-3.5" style="columns: 2; ">
-				{#each data.images as image, i}
-					{#if i != 0}
-						<div class="">
-							<Img
-								src={image.asset.url}
-								class="mb-3.5 rounded-sm"
-								alt="{$lang == 'fr' ? 'Livre' : 'Book'} - {data.name[$lang]}"
-							/>
-						</div>
-					{/if}
-				{/each}
-			</div>
-		</div>
-	</div>
-	<div class="mt-24 max-w-[800px]">
-		<SanityTextBlock
-			blocks={data.infos[$lang]}
-			class="[&_*]:text-3xl [&_p]:!mt-3 [&_p]:text-xl"
-		/>
-	</div>
-</div>-->
 
 <div>
 	<LightBox>

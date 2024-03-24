@@ -1,5 +1,11 @@
 <script>
 	import { lang } from '$lib/store';
+
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/contact',
+		en: '/contact',
+	};
 </script>
 
 <div class="m-auto text-xl md:w-[600px]">

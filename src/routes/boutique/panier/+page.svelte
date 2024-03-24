@@ -6,9 +6,12 @@
 	import Link from '$lib/components/Link.svelte';
 	import { formatPrice } from '../lib/formatPrice';
 	import Total from './Total.svelte';
-	import { onMount } from 'svelte';
 
-	export let data;
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/boutique/panier',
+		en: '/shop/cart',
+	};
 
 	async function removeFromCart(variant) {
 		$cart.loading = true;
@@ -31,30 +34,6 @@
 		}
 		variant.loading = false;
 		$cart.loading = false;
-	}
-
-	onMount(() => {
-		getTotal();
-	});
-
-	async function getTotal() {
-		//$cart.loading = true;
-		try {
-			const res = await fetch('/boutique/api/cart-total', {
-				method: 'POST',
-				body: JSON.stringify({
-					cart_id: $cart._id,
-				}),
-				headers: {
-					'content-type': 'application/json',
-				},
-			});
-			const data = await res.json();
-			//cart.set(data);
-		} catch (error) {
-			console.error(error);
-		}
-		//$cart.loading = false;
 	}
 </script>
 

@@ -5,7 +5,11 @@
 	import Countries from './Countries.svelte';
 	import { onMount } from 'svelte';
 
-	//import { loadStripe } from '@stripe/stripe-js';
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/boutique/validation',
+		en: '/shop/checkout',
+	};
 	import { loadStripe } from '@stripe/stripe-js/pure';
 
 	import Loader from '../../admin/ecoles/Loader.svelte';
@@ -22,6 +26,7 @@
 	onMount(async () => {
 		stripe = await loadStripe(
 			'pk_test_51OxX1nItENF0KQtogq7Kpz1YE8fg3AwGUdnCP2sRi8ieFJiicSumoDAjFQ3srqrj4qdZAy5YZrWEzMRvEzgaL52200LfEACkwu',
+			{ locale: $lang },
 		);
 		elements = stripe.elements({ clientSecret: data.checkout.secret });
 

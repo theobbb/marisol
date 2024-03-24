@@ -5,6 +5,12 @@
 	import Book from './Book.svelte';
 
 	export let data;
+
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/livres',
+		en: '/books',
+	};
 </script>
 
 <div class="flex flex-col gap-28 lg:gap-36">

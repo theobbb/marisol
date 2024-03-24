@@ -6,6 +6,12 @@
 
 	export let data;
 
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/',
+		en: '',
+	};
+
 	let active = 0;
 
 	let timeout;
@@ -49,7 +55,7 @@
 md:-mx-8
 xl:-mx-16 2xl:-mx-28"
 >
-	<div class="relative flex h-full w-full select-none overflow-hidden">
+	<div class="relative flex h-full w-[100vw] select-none overflow-hidden">
 		{#each visible as img, i}
 			<div
 				bind:this={img.node}
@@ -77,7 +83,8 @@ xl:-mx-16 2xl:-mx-28"
 		/>
 	</div>
 </div>
-<div class="flex w-full justify-between">
+
+<div class="relative flex w-full justify-between overflow-hidden">
 	<div class="relative flex flex-1 gap-1 md:gap-1.5">
 		{#each data.content as item, i}
 			<button
@@ -137,7 +144,9 @@ transition duration-[2000ms] ease-in-out"
 			{/if}
 		{/each}
 	</div>
-	<div class="pointer-events-none relative flex flex-1 gap-2 opacity-0">
+	<div
+		class="pointer-events-none relative flex hidden flex-1 gap-2 opacity-0 lg:flex"
+	>
 		{#each data.content as item, i}
 			<div class="h-3 w-3"></div>
 		{/each}

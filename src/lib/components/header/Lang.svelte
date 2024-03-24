@@ -1,5 +1,5 @@
 <script>
-	import { lang } from '$lib/store';
+	import { lang, lang_href } from '$lib/store';
 	import Link from '../Link.svelte';
 	import { page } from '$app/stores';
 	import { links } from './links';
@@ -26,6 +26,6 @@
 </script>
 
 <div class="flex gap-6 text-2xl lg:text-xl">
-	<Link href={fr_href} active={$lang == 'fr'}>Fr</Link>
-	<Link href="/en{en_href}" active={$lang == 'en'}>En</Link>
+	<Link href={$lang_href?.fr} active={$lang == 'fr'}>Fr</Link>
+	<Link href="/en{$lang_href?.en}" active={$lang == 'en'}>En</Link>
 </div>

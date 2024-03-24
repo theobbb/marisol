@@ -1,7 +1,7 @@
 <script>
 	import Img from '$lib/components/Img.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { lang } from '$lib/store';
+	import { lang, lang_href } from '$lib/store';
 
 	import Carousel from './Carousel.svelte';
 	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
@@ -12,6 +12,11 @@
 
 	let bg_img = null;
 	let bg_scroll = null;
+
+	$lang_href = {
+		fr: '/a-propos',
+		en: '/about',
+	};
 
 	onMount(() => {
 		const img = new Image();
@@ -36,20 +41,6 @@
 		bg_img.style.transform = `scale(${1 + progress * 0.1}) translateY(${progress * 200}px)`;
 	}
 </script>
-
-<!--
-<div
-	class="relative -mx-3.5 w-[100vw] overflow-x-scroll brightness-[1.1] saturate-[1.25]
-md:-mx-8
-xl:-mx-16 2xl:-mx-28"
->
-	<div class="relative">
-		<Img
-			src={data.atelier.asset.url}
-			class="mb-4 h-full min-h-[50vh] w-full object-cover object-left"
-		/>
-	</div>
-</div>-->
 
 <div
 	bind:this={bg_scroll}

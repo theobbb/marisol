@@ -7,6 +7,12 @@
 
 	export let data;
 
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/portfolio',
+		en: '/portfolio',
+	};
+
 	onMount(() => {
 		setCols();
 

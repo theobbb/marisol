@@ -12,6 +12,13 @@
 
 	let loading = false;
 
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/boutique/' + data.match.slug?.fr?.current,
+		en:
+			'/shop/' + (data.match.slug?.en?.current || data.match.slug?.fr?.current),
+	};
+
 	async function addToCart(variant) {
 		if (!variant) return;
 		loading = true;

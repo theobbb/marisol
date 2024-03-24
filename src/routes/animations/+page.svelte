@@ -5,9 +5,11 @@
 	import { lang } from '$lib/store';
 	export let data;
 
-	let grid = null;
-
-	console.log(data);
+	import { lang_href } from '$lib/store';
+	$lang_href = {
+		fr: '/animations',
+		en: '/workshop',
+	};
 </script>
 
 <div
