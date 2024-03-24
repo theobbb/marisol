@@ -73,7 +73,7 @@
 </script>
 
 <div
-	class="flex rounded-sm border border-black/10 py-1 {loading
+	class="flex flex-row rounded-sm border border-black/10 py-1 {loading
 		? 'pointer-events-none opacity-50'
 		: ''}"
 >

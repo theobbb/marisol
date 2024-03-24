@@ -4,6 +4,16 @@
 	export let product, variant;
 
 	async function addToCart() {
+		if ($cart == null) {
+			const res = await fetch('/boutique/api/cart', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const data = await res.json();
+			$cart = data;
+		}
 		$cart.loading = true;
 		if (!$cart) {
 			const res = await fetch('/boutique/api/cart', {

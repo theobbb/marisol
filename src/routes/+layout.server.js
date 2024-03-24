@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Cart } from '$lib/server/models/Cart';
 
 export async function load({ cookies }) {
+	mongoose.models = {};
 	const books = await sanity.fetch(`*[_type == "book"] {
         ...,
         images[]{

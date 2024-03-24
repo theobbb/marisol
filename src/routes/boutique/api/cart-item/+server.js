@@ -1,4 +1,5 @@
 import { Cart } from '$lib/server/models/Cart';
+import sanity from '$lib/server/sanity.js';
 import { json, text } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
@@ -20,7 +21,15 @@ export async function POST({ request }) {
 		if (item) {
 			item.quantity += 1;
 		} else {
-			cart.items.push({ variant_id, product_id, quantity: 1 });
+			const product = await sanity.fetch(
+				`*[_type == "product" && _id == "${product_id}"][0]`,
+			);
+			const price = product?.variants.find(
+				(v) => v.variant._ref === variant_id,
+			).price;
+
+			const item = { variant_id, product_id, quantity: 1, price };
+			cart.items.push(item);
 		}
 
 		await cart.save();

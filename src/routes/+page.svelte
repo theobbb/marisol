@@ -3,28 +3,39 @@
 	import Link from '$lib/components/Link.svelte';
 	import { lang } from '$lib/store';
 	import { onMount } from 'svelte';
-	import { sineInOut } from 'svelte/easing';
-	import { fade } from 'svelte/transition';
 
 	export let data;
 
 	let active = 0;
+
 	let timeout;
 
+	let mounted = false;
 	onMount(() => {
-		loop();
+		mounted = true;
+		onActive();
 		return () => {
 			if (timeout) clearInterval(timeout);
 		};
 	});
 
-	function loop() {
+	let visible = [];
+
+	$: active, onActive();
+
+	function onActive() {
+		if (!mounted) return;
+
+		let newVisible = [...visible];
+
+		newVisible = [...newVisible, { ...data.content[active] }];
+		visible = newVisible;
+
 		if (timeout) clearInterval(timeout);
 
 		timeout = setTimeout(() => {
 			active = active === data.content.length - 1 ? 0 : active + 1;
-			loop();
-		}, 4000);
+		}, 7000);
 	}
 </script>
 
@@ -34,32 +45,35 @@
 </svelte:head>
 
 <div
-	class="relative -mx-3.5 h-[calc(100lvh-220px)] w-[100vw]
+	class="relative -mx-3.5 -mt-44 h-[calc(100lvh-40px)] w-[100vw]
 md:-mx-8
 xl:-mx-16 2xl:-mx-28"
 >
 	<div class="relative flex h-full w-full select-none overflow-hidden">
-		{#each data.content as img, i}
+		{#each visible as img, i}
 			<div
 				bind:this={img.node}
-				class="absolute left-0 top-0 h-full w-full {i == active
-					? 'scale-[1]'
-					: 'scale-[2] opacity-0'} transition duration-[3s] ease-in-out"
+				class="absolute left-0 top-0 h-full w-full"
+				style=" animation: fadeIn 10s ease-in-out forwards; transform-origin: {Math.round(
+					img.img.hotspot?.x * 100,
+				)}% {Math.round(img.img.hotspot?.y * 100)}%;"
 			>
 				<Img
 					src={img.img.asset.url}
 					style="object-position: {Math.round(
 						img.img.hotspot?.x * 100,
 					)}% {Math.round(img.img.hotspot?.y * 100)}%;"
-					class="pointer-events-none h-full w-full object-cover"
+					class="pointer-events-none h-full w-full object-cover transition duration-500"
 				/>
 			</div>
 		{/each}
+
+		<div class="absolute left-0 top-0 z-20 flex h-[260px] w-full flex-col">
+			<div class="left-0 top-0 h-1/2 w-full bg-white/80" />
+			<div class="h-1/2 w-full bg-gradient-to-t from-transparent to-white/80" />
+		</div>
 		<div
-			class="absolute left-0 top-0 h-[20%] w-full bg-gradient-to-t from-transparent to-white"
-		/>
-		<div
-			class="absolute bottom-0 left-0 h-[15%] w-full bg-gradient-to-b from-transparent to-white md:h-[20%]"
+			class="absolute bottom-0 left-0 z-20 h-[15%] w-full bg-gradient-to-b from-transparent to-white md:h-[20%]"
 		/>
 	</div>
 </div>
@@ -73,7 +87,6 @@ xl:-mx-16 2xl:-mx-28"
 					: 'bg-black/20'}"
 				on:click={() => {
 					active = i;
-					loop();
 				}}
 			>
 			</button>
@@ -130,3 +143,30 @@ transition duration-[2000ms] ease-in-out"
 		{/each}
 	</div>
 </div>
+
+<style>
+	@keyframes -global-fadeIn {
+		0% {
+			opacity: 0;
+			transform: scale(1);
+		}
+		20% {
+			opacity: 1;
+		}
+		60% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+			transform: scale(1.3);
+		}
+	}
+	@keyframes -global-fadeOut {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+</style>

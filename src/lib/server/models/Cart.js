@@ -6,11 +6,13 @@ const cartSchema = new mongoose.Schema({
 			product_id: String,
 			quantity: Number,
 			variant_id: String,
-			subtotal: Number,
-			total: Number,
+			price: Number,
 		},
 	],
+
+	subtotal: Number,
+	total: Number,
 	created_at: { type: Date, default: Date.now },
 });
 
-export const Cart = mongoose.models.Cart || mongoose.model('Cart', cartSchema);
+export const Cart = mongoose.models?.Cart || mongoose.model('Cart', cartSchema);

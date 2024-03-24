@@ -6,6 +6,7 @@
 	import Link from '$lib/components/Link.svelte';
 	import { formatPrice } from '../lib/formatPrice';
 	import Total from './Total.svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -31,6 +32,30 @@
 		variant.loading = false;
 		$cart.loading = false;
 	}
+
+	onMount(() => {
+		getTotal();
+	});
+
+	async function getTotal() {
+		//$cart.loading = true;
+		try {
+			const res = await fetch('/boutique/api/cart-total', {
+				method: 'POST',
+				body: JSON.stringify({
+					cart_id: $cart._id,
+				}),
+				headers: {
+					'content-type': 'application/json',
+				},
+			});
+			const data = await res.json();
+			//cart.set(data);
+		} catch (error) {
+			console.error(error);
+		}
+		//$cart.loading = false;
+	}
 </script>
 
 <div class="mb-10">
@@ -53,23 +78,23 @@
 
 {#if $cart?.items?.length > 0}
 	<div
-		class="flex justify-between {$cart.loading
+		class="flex flex-col justify-between gap-24 lg:flex-row lg:gap-0 {$cart.loading
 			? 'pointer-events-none opacity-50'
 			: ''}"
 	>
-		<div class="w-2/3 pr-20">
+		<div class="lg:w-2/3 lg:pr-20">
 			<div class="mb-14 border-b border-black/10 pb-3 text-4xl">
 				{$lang == 'fr' ? 'Votre panier' : 'Your cart'}
 			</div>
-			<table class="w-full">
+			<table class="flex w-full flex-col lg:table">
 				{#each $cart.items as variant}
 					<tr
-						class="w-full gap-5 border-b border-black/10 pt-2 {variant.loading
+						class="flex w-full flex-wrap gap-5 border-b border-black/10 pt-2 lg:table-row {variant.loading
 							? 'pointer-events-none opacity-40'
 							: ''}"
 					>
 						{#if variant.product}
-							<td class=" h-[80px] w-[80px] py-4">
+							<td class="h-[80px] w-[80px] min-w-[80px] pt-2 lg:py-4 lg:pt-4">
 								<a
 									href="{$lang == 'fr' ? '/boutique' : '/en/shop'}/{variant
 										.product.slug[$lang]?.current ||
@@ -82,7 +107,7 @@
 									/></a
 								>
 							</td>
-							<td class="px-6 text-xl lg:w-2/5">
+							<td class="w-[calc(100%-100px)] text-xl lg:w-2/5 lg:px-6">
 								<a
 									href="{$lang == 'fr' ? '/boutique' : '/en/shop'}/{variant
 										.product.slug[$lang]?.current ||
@@ -94,17 +119,23 @@
 								</div>
 							</td>
 
-							<td class="pr-6 text-right">
-								{formatPrice(variant.price)}
+							<td
+								class="w-full pl-[100px] lg:w-[auto] lg:pl-0 lg:pr-6 lg:text-right"
+							>
+								{#if variant.quantity > 1}
+									{formatPrice(variant.price)}
+								{/if}
 							</td>
-							<td class="w-20">
+							<td class="w-[full] pl-[100px] lg:w-20 lg:pl-0">
 								<div><Quantity {variant} /></div>
 							</td>
 
-							<td class="text-right">
+							<td
+								class="w-[full] pl-[100px] lg:w-20 lg:w-[auto] lg:pl-0 lg:text-right"
+							>
 								{formatPrice(variant.price * variant.quantity)}
 							</td>
-							<td class="text-right">
+							<td class="w-full pb-4 text-right lg:w-[auto] lg:pb-0">
 								<button
 									on:click={() => removeFromCart(variant)}
 									class="mt-[-5px] text-2xl"
@@ -117,7 +148,7 @@
 				{/each}
 			</table>
 		</div>
-		<div class="w-[400px] text-base">
+		<div class="text-base lg:w-[400px]">
 			<div class="mb-14 border-b pb-3 text-4xl">Total</div>
 			<div class="divide-y">
 				<div class="flex w-full justify-between pb-8">

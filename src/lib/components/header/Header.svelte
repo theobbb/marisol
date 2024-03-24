@@ -69,7 +69,7 @@
 />
 <header
 	bind:this={dom.header}
-	style="backdrop-filter: blur(6px);"
+	style={!topPage ? 'backdrop-filter: blur(6px);' : ''}
 	class="fixed left-0 top-0 z-[200] w-full {big
 		? 'h-[160px]'
 		: 'h-[54px] shadow lg:h-[60px]'} {menuOpen

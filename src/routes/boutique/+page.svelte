@@ -1,8 +1,6 @@
 <script>
 	import Img from '$lib/components/Img.svelte';
-	import { cart, lang } from '$lib/store';
-	import axios from 'axios';
-	import Variants from './lib/Variant.svelte';
+	import { lang } from '$lib/store';
 	import AddToCart from './AddToCart.svelte';
 	import { formatPrice } from './lib/formatPrice';
 

@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import Img from './Img.svelte';
 	import LightBox from './LightBox.svelte';
-	import { lang } from '$lib/store';
 	export let data,
 		imgs,
 		cols = 3;
