@@ -46,7 +46,6 @@
 		}
 		loading = false;
 	}
-	console.log(data);
 </script>
 
 <div class="mb-8">
@@ -68,7 +67,7 @@
 	</Link>
 </div>
 <div class="border-b pb-10">
-	<div class="relative flex">
+	<div class="relative flex flex-col gap-12 lg:flex-row lg:gap-0">
 		<div class="relative lg:w-1/2">
 			<div class="sticky top-36">
 				<div class="text-4xl">
@@ -103,7 +102,11 @@
 						{/if}
 					</div>
 				</div>
-				<div class="mt-32 {loading ? 'pointer-events-none opacity-30' : ''}">
+				<div
+					class="mt-12 lg:mt-32 {loading
+						? 'pointer-events-none opacity-30'
+						: ''}"
+				>
 					{#each data.match.variants as variant}
 						<div class="mb-12">
 							<div class="text-lg">
