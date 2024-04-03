@@ -1,13 +1,23 @@
 <script>
-	export let name, placeholder;
+	import { onMount } from 'svelte';
+
+	export let name,
+		placeholder,
+		error = 'Invalide',
+		type = 'text';
 
 	let empty = false;
 
 	let value = '';
 
-	function init(e) {
-		empty = e.value === '';
-	}
+	let elem = null;
+
+	onMount(() => {
+		empty = elem.value === '';
+	});
+
+	let invalid = false;
+
 	/*
 	empty = value === '';
 
@@ -16,16 +26,23 @@
 
 <div class="relative max-w-[500px]">
 	<input
-		use:init
+		bind:this={elem}
 		class="w-full rounded border-b text-xl outline-none"
-		type="text"
+		{type}
 		id={name}
-		on:focus={() => (empty = false)}
+		on:focus={() => {
+			empty = false;
+			invalid = false;
+		}}
 		on:blur={(e) => {
 			console.log(e.target?.value);
 			empty = e.target?.value === '';
 		}}
 		on:change={(e) => (empty = value === '')}
+		on:invalid|preventDefault={() => {
+			invalid = true;
+			window.scrollTo({ top: elem.offsetTop, behavior: 'smooth' });
+		}}
 		{name}
 		{...$$restProps}
 	/>
@@ -36,4 +53,7 @@
 	>
 		{placeholder}
 	</div>
+	{#if invalid}
+		<div class="absolute -bottom-5 left-0 text-base text-red-600">{error}</div>
+	{/if}
 </div>

@@ -1,32 +1,26 @@
 <script>
-	import { page } from '$app/stores';
-	import Cart from '$lib/components/header/Cart.svelte';
-	import { cart } from '$lib/store';
-	import Footer from '../lib/components/footer/Footer.svelte';
-	import Header from '../lib/components/header/Header.svelte';
-
 	import './styles.css';
+	import NProgress from 'nprogress';
 
-	export let data;
+	import './style-progress.css';
+	import { navigating } from '$app/stores';
+	import { progress } from '$lib/store';
 
-	if (data.cart) $cart = data.cart;
+	$progress = NProgress.configure({
+		// Full list: https://github.com/rstacruz/nprogress#configuration
+		minimum: 0.16,
+		easing: 'ease',
+		template: '<div class="bar" role="bar"><div class="peg"></div></div>',
+	});
 
-	$: simple = $page.url.pathname.includes('/admin');
-
-	//console.log(data);
+	$: {
+		if ($navigating) {
+			NProgress.start();
+		}
+		if (!$navigating) {
+			NProgress.done();
+		}
+	}
 </script>
 
-<div class="app tracking-[0.01rem] text-stone-700">
-	{#if !simple}
-		<Header {data} />
-	{/if}
-	<Cart />
-	<main
-		class="mx-3.5 mb-44 mt-44 min-h-[100lvh] font-light md:mx-8 lg:mt-44 xl:mx-16 2xl:mx-28 min-[2000px]:mx-auto min-[2000px]:max-w-[2000px]"
-	>
-		<slot />
-	</main>
-	{#if !simple}
-		<Footer />
-	{/if}
-</div>
+<div class="font-light tracking-[0.01rem] text-stone-700"><slot /></div>

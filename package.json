@@ -43,6 +43,7 @@
 		"image-layout": "^0.4.1",
 		"masonry-layout": "^4.2.2",
 		"mongoose": "^8.2.2",
+		"nprogress": "^0.2.0",
 		"prettier-plugin-tailwindcss": "^0.5.12",
 		"stripe": "^14.22.0",
 		"svelte-bricks": "^0.2.1",

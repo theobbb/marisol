@@ -41,15 +41,19 @@
 		const formatted = `${Math.floor(duree / 60)}h${duree % 60}`;
 		horaire_duree = formatted;
 	}
+
+	let horaire_error = false;
+	let groupes_error = false;
 </script>
 
 <input type="hidden" name="_id" id="_id" value={db._id} />
-<div class="flex flex-col gap-12">
+<div class="flex flex-col gap-14">
 	<TextInput
 		name="responsable_nom"
 		placeholder="Nom du responsable *"
 		required
 		value={db.responsable_nom}
+		error="Veuillez entrer le nom du responsable"
 	/>
 	<TextInput
 		type="email"
@@ -57,6 +61,7 @@
 		placeholder="Adresse courriel du responsable *"
 		required
 		value={db.responsable_email}
+		error="Veuillez entrer une adresse courriel valide"
 	/>
 	<TextInput
 		type="email"
@@ -64,6 +69,7 @@
 		placeholder="Adresse courriel personnelle du responsable *"
 		required
 		value={db.responsable_email}
+		error="Veuillez entrer une adresse courriel valide"
 	/>
 	{#if !admin}
 		<div class="mb-12 mt-6 max-w-[800px]">
@@ -78,6 +84,7 @@
 		placeholder="Numéro de téléphone du responsable *"
 		required
 		value={db.responsable_tel}
+		error="Veuillez entrer un numéro de téléphone valide"
 	/>
 	<TextInput
 		value={db.ecole}
@@ -125,7 +132,6 @@
 					id="horaire_debut"
 					name="horaire_debut"
 					on:change={calculateHoraire}
-					required
 					value={db.horaire_debut}
 				/>
 			</div>
@@ -139,7 +145,6 @@
 					name="horaire_fin"
 					on:change={calculateHoraire}
 					value={db.horaire_fin}
-					required
 				/>
 			</div>
 		</div>
@@ -228,7 +233,7 @@
 			rows="6"
 			name="message"
 			value={db.message || ''}
-			class="rounded border px-3 py-3 outline-none md:w-[500px]"
+			class="w-full rounded border px-3 py-3 outline-none"
 			placeholder="Message (facultatif)"
 		></textarea>
 	</div>

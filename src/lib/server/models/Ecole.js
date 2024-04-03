@@ -13,7 +13,7 @@ const ecoleSchema = new mongoose.Schema({
 	secretaire: String,
 
 	created_at: { type: Date, default: Date.now },
-	updated_at: { type: Date, default: Date.now },
+	updated_at: Date,
 
 	horaire_debut: String,
 	horaire_fin: String,
