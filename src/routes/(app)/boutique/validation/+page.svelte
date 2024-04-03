@@ -11,8 +11,8 @@
 		en: '/shop/checkout',
 	};
 	import { loadStripe } from '@stripe/stripe-js/pure';
+	import Loader from '$lib/components/Loader.svelte';
 
-	import Loader from '../../admin/ecoles/Loader.svelte';
 	export let data;
 
 	let elements = null;
