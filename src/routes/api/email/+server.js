@@ -1,4 +1,4 @@
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT } from '$env/static/private';
+import { EMAIL_HOST, EMAIL_PASSWORD } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
@@ -10,7 +10,7 @@ export async function POST({ request }) {
 		smtpTransport({
 			name: 'hostgator',
 			host: EMAIL_HOST,
-			port: EMAIL_PORT,
+			port: '465',
 			secure: true, // true for 465, false for other ports
 			auth: {
 				user: from,

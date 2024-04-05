@@ -8,5 +8,4 @@
     MONGO_URI="mongodb+srv://theobbb:d7E0vTDITY0QFMZe@cluster0.cyfvzya.mongodb.net/marisol"
     MONGO_DB="marisol"
     EMAIL_HOST="mail.marisolsarrazin.com"
-    EMAIL_PORT=465
     EMAIL_PASSWORD="Webmail2323"
