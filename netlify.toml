@@ -7,3 +7,6 @@
     STRIPE_API_KEY="sk_test_51OxX1nItENF0KQtorVpfebtAaKISXbuteyMlDJPFqcJM1mUFFk5sPW9PlkZd7UEjoWUmzyzielKDhLxtmUQ4QqTw00AhslbWxY"
     MONGO_URI="mongodb+srv://theobbb:d7E0vTDITY0QFMZe@cluster0.cyfvzya.mongodb.net/marisol"
     MONGO_DB="marisol"
+    EMAIL_HOST="mail.marisolsarrazin.com"
+    EMAIL_PORT=465
+    EMAIL_PASSWORD="Webmail2323"
