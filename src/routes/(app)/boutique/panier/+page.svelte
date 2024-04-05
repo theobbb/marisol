@@ -1,7 +1,7 @@
 <script>
 	import Img from '$lib/components/Img.svelte';
 	import Quantity from './Quantity.svelte';
-	import { cart, lang } from '$lib/store';
+	import { cart, lang, progress } from '$lib/store';
 	import Promo from './Promo.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { formatPrice } from '../lib/formatPrice';
@@ -14,6 +14,7 @@
 	};
 
 	async function removeFromCart(variant) {
+		$progress.start();
 		$cart.loading = true;
 		variant.loading = true;
 		try {
@@ -34,6 +35,7 @@
 		}
 		variant.loading = false;
 		$cart.loading = false;
+		$progress.done();
 	}
 </script>
 

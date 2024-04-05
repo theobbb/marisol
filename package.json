@@ -43,6 +43,8 @@
 		"image-layout": "^0.4.1",
 		"masonry-layout": "^4.2.2",
 		"mongoose": "^8.2.2",
+		"nodemailer": "^6.9.13",
+		"nodemailer-smtp-transport": "^2.7.4",
 		"nprogress": "^0.2.0",
 		"prettier-plugin-tailwindcss": "^0.5.12",
 		"stripe": "^14.22.0",

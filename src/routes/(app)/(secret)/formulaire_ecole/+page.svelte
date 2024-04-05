@@ -2,8 +2,8 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import Loader from '$lib/components/Loader.svelte';
+	import { email_apres_formulaire } from '$lib/emails/apres-formulaire';
 	import Form from '../../../(admin)/admin/ecoles/Form.svelte';
-
 	export let form;
 
 	function generate() {
@@ -28,11 +28,49 @@
 	}
 	let submitted = false;
 
-	$: console.log(form);
 	$: if (form?.success) {
 		console.log('success');
 		submitted = false;
+		sendEmail();
 		goto('/formulaire_ecole/merci');
+	}
+
+	async function sendEmail() {
+		const body = JSON.parse(form.body);
+		return;
+
+		fetch('/admin/api/email', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				to: body.responsable_email,
+				from: 'info@marisolsarrazin.com',
+				subject: 'Demande bien reçue',
+				html: email_apres_formulaire,
+			}),
+		});
+
+		const html_for_marisol = `
+			<h1>Une nouvelle demande de soumission a été reçue! &#128521; &#x1F609;</h1>
+			<p>École: ${body.ecole}</p>
+			<p>Responsable: ${body.responsable_nom}</p>
+			<p></p>
+			<a href="https://marisolsarrazin.com/admin/ecoles/${body._id}">Voir la demande</a>
+		`;
+		fetch('/admin/api/email', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				to: 'theobaillargeon@hotmail.com',
+				from: 'info@marisolsarrazin.com',
+				subject: `Nouvelle demande de soumission - ${body.ecole}`,
+				html: html_for_marisol,
+			}),
+		});
 	}
 </script>
 

@@ -14,6 +14,7 @@ export async function load() {
                     'h': metadata.dimensions.height
                 }
             },
+            'images_en': {...images_en, 'asset': images_en.asset->{...}},
 			books[]->{
 				...,
 			images[]{

@@ -50,14 +50,8 @@
 	<meta name="description" content="" />
 </svelte:head>
 
-<div
-	class="relative -mx-3.5 h-[calc(100svh-30px)] w-[100vw] md:-mx-8
-lg:h-[calc(100svh-40px)]
-xl:-mx-16 2xl:-mx-28"
->
-	<div
-		class="relative flex h-[calc(100%-300px)] h-full w-[calc(100%-500px)] select-none overflow-hidden"
-	>
+<div class="fixed left-0 top-0 h-[100svh] w-full">
+	<div class="relative flex h-full w-full select-none overflow-hidden">
 		{#each visible as img, i}
 			<div
 				bind:this={img.node}
@@ -75,26 +69,29 @@ xl:-mx-16 2xl:-mx-28"
 				/>
 			</div>
 		{/each}
-		<!--
-			<div class="absolute left-0 top-0 z-20 flex h-[260px] w-full flex-col">
-				<div class="left-0 top-0 h-1/2 w-full bg-black/20" />
-				<div class="h-1/2 w-full bg-gradient-to-t from-transparent to-black/20" />
-			</div>
+
+		<div class="absolute left-0 top-0 z-20 flex h-[260px] w-full flex-col">
 			<div
-				class="absolute bottom-0 left-0 z-20 h-[15%] w-full bg-gradient-to-b from-transparent to-black md:h-[20%]"
+				class="h-full w-full bg-gradient-to-t from-transparent to-black/60"
 			/>
-			-->
+		</div>
+
+		<div
+			class="absolute bottom-0 left-0 z-20 h-[90px] w-full bg-gradient-to-b from-transparent to-black/60 md:h-[20%]"
+		/>
 	</div>
+</div>
+<div class="fixed bottom-4 left-0 w-full">
 	<div
-		class="relative flex w-[calc(100%-500px)] flex-col justify-between py-4 lg:flex-row"
+		class="relative mx-3.5 flex flex-col items-start justify-between md:mx-8 lg:flex-row xl:mx-16 2xl:mx-28"
 	>
 		<div class="relative ml-3 flex w-fit gap-1 md:gap-1.5">
 			{#each data.content as item, i}
 				<button
-					class="h-3 w-3 rounded-full transition-colors hover:bg-black/50 {active ==
+					class="h-3 w-3 rounded-full transition-colors hover:bg-white/50 {active ==
 					i
-						? 'bg-black/50'
-						: 'bg-black/20'}"
+						? 'bg-white/50'
+						: 'bg-white/20'}"
 					on:click={() => {
 						active = i;
 					}}
@@ -102,7 +99,9 @@ xl:-mx-16 2xl:-mx-28"
 				</button>
 			{/each}
 		</div>
-		<div class="mt-3 hidden w-1/2 items-center justify-end lg:mt-0 lg:flex">
+		<div
+			class="mt-3 hidden w-full items-center justify-end text-white lg:mt-0 lg:flex"
+		>
 			{#each data.content as item, i}
 				{@const book = item.book}
 				{#if book}
@@ -116,7 +115,7 @@ xl:-mx-16 2xl:-mx-28"
 							active
 								? ''
 								: 'translate-y-full opacity-0'}
-	transition duration-[2000ms] ease-in-out"
+		transition duration-[2000ms] ease-in-out"
 						>
 							<div class="text-base opacity-40">
 								{$lang == 'fr' ? 'Tiré de' : 'From'}:

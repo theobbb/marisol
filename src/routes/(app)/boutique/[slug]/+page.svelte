@@ -1,7 +1,7 @@
 <script>
 	import Img from '$lib/components/Img.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import { cart, lang } from '$lib/store';
+	import { cart, lang, progress } from '$lib/store';
 	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
 	import { formatPrice } from '../lib/formatPrice';
 	import LightBox from '$lib/components/LightBox.svelte';
@@ -20,8 +20,9 @@
 	};
 
 	async function addToCart(variant) {
+		$progress.start();
 		if (!variant) return;
-		loading = true;
+		//loading = true;
 		if (!$cart) {
 			const res = await fetch('/boutique/api/cart', {
 				method: 'POST',
@@ -51,7 +52,8 @@
 		} catch (error) {
 			console.error(error);
 		}
-		loading = false;
+		//loading = false;
+		$progress.done();
 	}
 </script>
 

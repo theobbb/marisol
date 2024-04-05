@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const ecoleSchema = new mongoose.Schema({
+	pin: Number,
 	ecole: String,
 	groupe: String,
 	tel: String,

@@ -19,7 +19,7 @@
 			<Book data={item} />
 		{:else if item._type == 'serie'}
 			<div
-				class="flex scroll-mt-24 flex-col lg:flex-row"
+				class="flex scroll-mt-24 flex-col gap-8 lg:flex-row"
 				id={item.slug[$lang]?.current || item.slug.fr.current}
 			>
 				<div class="relative mb-6 lg:mb-0 lg:w-1/4">
@@ -42,8 +42,8 @@
 										? '- Réduire la série'
 										: '+ Afficher la série'
 									: item.serieFullDisplay
-										? '- Reduce the serie'
-										: '+ Show the serie'}
+										? '- Reduce the series'
+										: '+ Show the series'}
 							</Link>
 						</div>
 					</div>

@@ -48,6 +48,7 @@
 		<table class="">
 			<tr class="border-b">
 				<td>École</td>
+				<td>Pin</td>
 				<td>Date</td>
 				<td>Responsable</td>
 				<td>Coordonnées responsable</td>
@@ -56,14 +57,15 @@
 				<td>Payé</td>
 			</tr>
 			{#each data.ecoles as ecole}
-				<tr
-					class="cursor-pointer hover:bg-black/10"
-					on:click={() => {
-						goto(`/admin/ecoles/${ecole._id}`);
-					}}
+				<a
+					href="/admin/ecoles/{ecole._id}"
+					class="table-row cursor-pointer hover:bg-black/10"
 				>
 					<td>
 						{ecole.ecole}
+					</td>
+					<td>
+						{ecole.pin}
 					</td>
 					<td> Date </td>
 					<td>
@@ -90,7 +92,7 @@
 							}}
 						/>
 					</td>
-				</tr>
+				</a>
 			{/each}
 		</table>
 	{:else}

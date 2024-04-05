@@ -1,9 +1,10 @@
 <script>
-	import { cart } from '$lib/store';
+	import { cart, progress } from '$lib/store';
 
 	export let product, variant;
 
 	async function addToCart() {
+		$progress.start();
 		if ($cart == null) {
 			const res = await fetch('/boutique/api/cart', {
 				method: 'POST',
@@ -45,6 +46,7 @@
 			console.error(error);
 		}
 		$cart.loading = false;
+		$progress.done();
 	}
 </script>
 

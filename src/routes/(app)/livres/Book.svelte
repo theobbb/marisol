@@ -7,6 +7,8 @@
 	export let data;
 
 	const fakeSerie = data.name.fr.includes('Série');
+
+	console.log(data);
 </script>
 
 <div class="-lg:w-1/2 relative flex flex-col lg:flex-row">
@@ -44,7 +46,9 @@
 				?.current || data.slug.fr.current}"
 		>
 			<Img
-				src={data.images[0].asset.url}
+				src={$lang == 'en' && data.different_img_en
+					? data.images_en?.asset?.url
+					: data.images[0].asset.url}
 				class=" rounded-sm {fakeSerie ? 'max-h-[90vh]' : 'max-h-[64vh]'}"
 				alt="{$lang == 'fr' ? 'Livres' : 'Books'} - {data.name[$lang]}"
 			/>

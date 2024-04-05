@@ -20,13 +20,24 @@ export async function POST({ request }) {
 
 	const req = JSON.parse(JSON.stringify(Object.fromEntries(data)));
 
+	let created = null;
 	try {
 		if (!req._id || req._id == 'undefined') {
 			delete req._id;
 
 			if (req.culture_a_ecole === 'on') req.culture_a_ecole = true;
 			else req.culture_a_ecole = false;
-			await Ecole.create(req);
+			let pin = Math.floor(1000 + Math.random() * 9000);
+			const exists = await Ecole.findOne({ pin });
+			if (exists) {
+				pin = Math.floor(1000 + Math.random() * 9000);
+				const exists = await Ecole.findOne({ pin });
+				if (exists) {
+					pin = Math.floor(1000 + Math.random() * 9000);
+				}
+			}
+			req.pin = pin;
+			created = await Ecole.create(req);
 		} else {
 			const { _id, ...rest } = req;
 			console.log(req);
@@ -36,6 +47,9 @@ export async function POST({ request }) {
 		console.error(err);
 		return json({ success: false });
 	}
-	return json({ success: true });
+	return json({
+		success: true,
+		body: created ? JSON.stringify(created) : JSON.stringify(req),
+	});
 	//throw redirect(307, '/formulaire_ecole/merci');
 }
