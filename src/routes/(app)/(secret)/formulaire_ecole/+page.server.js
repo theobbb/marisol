@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
 
 export async function load() {
-	throw redirect(307, 'https://marisolsarrazin.com/formulaire_ecole/');
+	throw redirect(307, 'https://ecoles/marisolsarrazin.com/formulaire_ecole/');
 }
