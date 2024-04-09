@@ -14,13 +14,14 @@
 				>{$lang == 'fr' ? 'Autres livres de' : 'Other books from'}</span
 			>
 			<a
+				data-sveltekit-replacestate
 				href="{$lang == 'fr' ? '/livres' : '/en/books'}#{serie.slug[$lang]
 					?.current || serie.slug.fr.current}"
 				>{serie.name[$lang] || serie.name.fr}</a
 			>
 		</div>
 		<div
-			class=" relative h-[100px] overflow-y-hidden overflow-x-scroll md:h-[200px]"
+			class=" relative h-[200px] overflow-x-auto overflow-y-hidden md:h-[200px]"
 		>
 			<div
 				class="absolute left-0 top-0 flex h-full w-full"
