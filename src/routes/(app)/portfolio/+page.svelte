@@ -51,6 +51,19 @@
 	<title>Portfolio | Marisol Sarrazin</title>
 	<meta name="description" content="" />
 </svelte:head>
+
+<div class="-mt-12 mb-12 block md:hidden">
+	<div class="mb-2">{$lang == 'fr' ? 'Sur cette page' : 'On this page'}:</div>
+	<div class="flex flex-col gap-1">
+		{#each data.portfolio.children as branch}
+			<a
+				class="rounded bg-black/5 px-3 py-2"
+				href="#{branch.slug[$lang].current}"
+				>{branch.name[$lang] || branch.name.fr}</a
+			>
+		{/each}
+	</div>
+</div>
 {#if cols != 0}
 	<div>
 		{#key lastWidth}

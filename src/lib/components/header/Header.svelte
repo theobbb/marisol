@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import HeaderLinks from './HeaderLinks.svelte';
 	import Lang from './Lang.svelte';
-	import { lang } from '$lib/store';
+	import { lang, invert } from '$lib/store';
 	import { navigating, page } from '$app/stores';
 	import { links } from './links';
 
@@ -12,8 +12,11 @@
 
 	let dom = {};
 
-	$: home = $page.url.pathname == '/' || $page.url.pathname == '/en';
+	let mobileMenuOpen = false;
+	$: $invert =
+		($page.url.pathname == '/' || $page.url.pathname == '/en') && !menuOpen;
 
+	$: console.log($invert);
 	onMount(() => {
 		window.addEventListener('scroll', onScroll);
 		window.addEventListener('resize', onResize);
@@ -37,14 +40,14 @@
 			topPage = true;
 		}
 	}
-
+	let mobile = false;
 	let lastWidth;
 	function onResize() {
 		if (!dom.header || !dom.header.offsetWidth) return;
 		if (dom.header.offsetWidth == lastWidth) return;
 
 		lastWidth = dom.header.offsetWidth;
-
+		mobile = dom.header.offsetWidth < 1120;
 		menuOpen = false;
 	}
 
@@ -77,7 +80,7 @@
 		? '!h-[100%] bg-white/80 '
 		: topPage
 			? ''
-			: 'bg-white/80'} {home
+			: 'bg-white/80'} {$invert
 		? 'text-white'
 		: ''} pointer-events-none transition-all duration-500 ease-in-out"
 >
@@ -96,7 +99,7 @@
 			>
 				<a
 					href={$lang == 'fr' ? '/' : '/en'}
-					class="flex flex-col gap-1 whitespace-nowrap pt-3 min-[1120px]:gap-2 min-[1120px]:pt-5 {home
+					class="flex flex-col gap-1 whitespace-nowrap pt-3 min-[1120px]:gap-2 min-[1120px]:pt-5 {$invert
 						? 'brightness-[1.2]'
 						: ''}"
 				>
@@ -120,7 +123,7 @@
 					href={$lang == 'fr' ? '/' : '/en'}
 					class="relative mr-2 w-[80px] select-none transition duration-500 ease-in-out min-[1120px]:mr-0 2xl:w-[100px] {big
 						? ''
-						: '-translate-y-[120%] rotate-[-20deg] scale-[0.7] opacity-0'}  {home
+						: '-translate-y-[120%] rotate-[-20deg] scale-[0.7] opacity-0'}  {$invert
 						? ''
 						: ''}"
 				>
@@ -175,7 +178,7 @@
 					? ''
 					: 'min-[1120px]:scale-[0] min-[1120px]:opacity-0'} {menuOpen
 					? 'pointer-events-auto'
-					: ''} {home
+					: ''} {$invert
 					? 'invert-[0.9]'
 					: ''} order-[3] origin-top-right transition duration-500 ease-in-out"
 			>

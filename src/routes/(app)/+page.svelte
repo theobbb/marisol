@@ -149,6 +149,17 @@
 	</div>
 </div>
 
+<div class="fixed bottom-20 left-20">
+	<video
+		autoplay
+		loop
+		muted
+		class="h-[300px] w-[300px] overflow-hidden rounded-full object-cover object-bottom shadow-2xl"
+		src="https://cdn.sanity.io/files/m60p6rsb/production/49e81aa10249a13f203e0dd88b8da7fe3b1fe48f.mov"
+	>
+	</video>
+</div>
+
 <style>
 	@keyframes -global-fadeIn {
 		0% {
