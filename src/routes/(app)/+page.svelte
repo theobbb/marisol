@@ -43,6 +43,12 @@
 			active = active === data.content.length - 1 ? 0 : active + 1;
 		}, 7000);
 	}
+
+	function initVideo(el) {
+		el.playbackRate = data.speed;
+		el.play();
+	}
+	let ended = false;
 </script>
 
 <svelte:head>
@@ -149,12 +155,19 @@
 	</div>
 </div>
 
-<div class="fixed bottom-20 left-20">
+<div
+	class="fixed bottom-20 left-4 lg:left-20 {ended
+		? '-opacity-0'
+		: ''} transition duration-500"
+>
 	<video
-		autoplay
-		loop
+		use:initVideo
+		autoplayy
+		on:ended={() => {
+			ended = true;
+		}}
 		muted
-		class="h-[300px] w-[300px] overflow-hidden rounded-full object-cover object-bottom shadow-2xl"
+		class="h-[160px] w-[160px] overflow-hidden rounded-full object-cover object-bottom shadow-2xl sm:h-[220px] sm:w-[220px] lg:h-[300px] lg:w-[300px]"
 		src="https://cdn.sanity.io/files/m60p6rsb/production/49e81aa10249a13f203e0dd88b8da7fe3b1fe48f.mov"
 	>
 	</video>
