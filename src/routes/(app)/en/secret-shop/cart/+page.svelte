@@ -1,5 +1,5 @@
 <script>
-	import Page from '../../../boutique/panier/+page.svelte';
+	import Page from '../../../boutique-secrete/panier/+page.svelte';
 
 	export let data;
 </script>

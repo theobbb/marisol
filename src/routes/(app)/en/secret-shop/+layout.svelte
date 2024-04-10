@@ -1,5 +1,5 @@
 <script>
-	import Layout from '../../boutique/+layout.svelte';
+	import Layout from '../../boutique-secrete/+layout.svelte';
 
 	export let data;
 </script>
