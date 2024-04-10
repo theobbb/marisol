@@ -157,7 +157,7 @@
 
 <div
 	class="fixed bottom-20 left-4 lg:left-20 {ended
-		? '-opacity-0'
+		? 'opacity-0'
 		: ''} transition duration-500"
 >
 	<video
