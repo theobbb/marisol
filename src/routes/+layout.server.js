@@ -76,11 +76,14 @@ export async function load({ cookies }) {
 			};
 
 			if (product.category) {
-				product.variants.forEach((variant) => {
+				product.variants?.forEach((variant) => {
 					if (variant.price) return;
-					variant.price = cats.find(
+
+					const price = cats.find(
 						(c) => c._id === product.category._id,
 					)?.category_price;
+					console.log('variant', price);
+					variant.price = price;
 				});
 
 				if (!cats.some((c) => c._id === product.category._id))

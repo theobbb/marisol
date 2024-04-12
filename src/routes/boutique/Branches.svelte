@@ -4,7 +4,7 @@
 	export let data;
 </script>
 
-<div class="m-auto flex w-fit flex-col gap-4 md:flex-row md:gap-16">
+<div class="m-auto flex w-fit flex-col gap-4 pt-20 md:flex-row md:gap-16">
 	{#each data?.shop?.branches as branch}
 		<a
 			class="group rounded border px-4 py-3"

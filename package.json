@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@google-analytics/data": "^4.4.0",
 		"@medusajs/medusa-js": "^6.1.7",
 		"@portabletext/to-html": "^2.0.5",
 		"@sanity/block-content-to-html": "^2.0.0",

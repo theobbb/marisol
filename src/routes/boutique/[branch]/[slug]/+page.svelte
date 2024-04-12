@@ -8,18 +8,15 @@
 
 	export let data;
 
-	console.log(data);
-
 	$: match = data.match;
 
 	let loading = false;
 
 	import { lang_href } from '$lib/store';
 	import { page } from '$app/stores';
-	$lang_href = {
-		fr: '/boutique/' + data.match.slug?.fr?.current,
-		en:
-			'/shop/' + (data.match.slug?.en?.current || data.match.slug?.fr?.current),
+	$: $lang_href = {
+		fr: `/boutique/${data.match?.branch.slug.fr?.current}/${data.match?.slug?.fr?.current}`,
+		en: `/shop/${data.match?.branch.slug.en?.current}/${data.match?.slug?.en?.current || data.match?.slug?.fr?.current}`,
 	};
 
 	async function addToCart(variant) {
@@ -83,7 +80,7 @@
 		<div class="relative lg:w-1/2">
 			<div class="sticky top-36">
 				<div class="text-4xl">
-					{#if data.match.isBook}
+					{#if data.match?.isBook}
 						<Link
 							class="!p-0"
 							href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.match.book
@@ -119,26 +116,30 @@
 						? 'pointer-events-none opacity-30'
 						: ''}"
 				>
-					{#each data.match.variants as variant}
-						<div class="mb-12">
-							<div class="text-lg">
-								<div class=" font-medium">
-									{formatPrice(variant?.price)}
+					{#if data.match.variants}
+						{#each data.match.variants as variant}
+							<div class="mb-12">
+								<div class="text-lg">
+									<div class=" font-medium">
+										{formatPrice(variant?.price)}
+									</div>
+									<div class="text-black/50">
+										{variant?.variant.name
+											? variant?.variant?.name[$lang] ||
+												variant?.variant?.name.fr ||
+												''
+											: ''}
+									</div>
+									<button
+										on:click={() => addToCart(variant)}
+										class="mt-2 rounded rounded-sm bg-accent px-3 py-1.5 text-lg font-medium text-white decoration-white/50 underline-offset-4 hover:underline"
+									>
+										{$lang == 'fr' ? 'Ajouter au panier' : 'Add to cart'}
+									</button>
 								</div>
-								<div class="text-black/50">
-									{variant?.variant?.name[$lang] ||
-										variant?.variant?.name.fr ||
-										''}
-								</div>
-								<button
-									on:click={() => addToCart(variant)}
-									class="mt-2 rounded rounded-sm bg-accent px-3 py-1.5 text-lg font-medium text-white decoration-white/50 underline-offset-4 hover:underline"
-								>
-									{$lang == 'fr' ? 'Ajouter au panier' : 'Add to cart'}
-								</button>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -147,13 +148,13 @@
 				<div class="mb-4">
 					<Img
 						class="rounded-sm"
-						src={data.match.isBook
+						src={data.match?.isBook
 							? data.match.book?.images[0].asset.url
 							: data.match.imgs[0].url}
 					/>
 				</div>
 				<div class="columns-2 gap-4">
-					{#each data.match.isBook ? data.match.book?.images : data.match.imgs as img, i}
+					{#each data.match?.isBook ? data.match.book?.images : data.match.imgs as img, i}
 						{#if i != 0}
 							<div class="mb-4">
 								<Img class="rounded-sm" src={img.url} />

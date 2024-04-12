@@ -95,9 +95,11 @@
 										variant.product.slug.fr.current}"
 									>{variant.product.name[$lang] || variant.product.name.fr}</a
 								>
-								<div class="text-base opacity-60">
-									{variant.variant_name[$lang]}
-								</div>
+								{#if variant.variant_name}
+									<div class="text-base opacity-60">
+										{variant.variant_name[$lang]}
+									</div>
+								{/if}
 							</td>
 
 							<td
