@@ -87,7 +87,7 @@
 						<Link
 							class="!p-0"
 							href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.match.book
-								.slug[$lang]?.current || data.match.book.slug.fr.current}"
+								.slug[$lang]?.current || data.match.book.slug.fr?.current}"
 							>{data.match.name[$lang] || data.match.name.fr}</Link
 						>
 					{:else}
@@ -175,7 +175,7 @@
 				<div class="mt-4">
 					<a
 						href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.match.book
-							.slug[$lang].current}"
+							.slug[$lang]?.current || data.match.book.slug.fr.current}"
 						><div class="mb-2">{data.match.book.name[$lang]}</div>
 						<div class="w-[200px]">
 							<Img

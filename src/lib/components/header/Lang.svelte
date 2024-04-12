@@ -2,9 +2,6 @@
 	import { lang, lang_href } from '$lib/store';
 	import Link from '../Link.svelte';
 	import { page } from '$app/stores';
-	import { links } from './links';
-
-	export let activeLinkIndex;
 
 	$: $lang =
 		$page.url.pathname.includes('/en/') || $page.url.pathname == '/en'

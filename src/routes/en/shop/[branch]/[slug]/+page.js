@@ -1,5 +1,3 @@
-import { redirect } from '@sveltejs/kit';
-
 export async function load({ params, parent }) {
 	const { shop } = await parent();
 
@@ -7,7 +5,8 @@ export async function load({ params, parent }) {
 
 	shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
-			if (product.slug.fr.current === params.slug) {
+			const slug = product.slug?.en?.current || product.slug?.fr?.current;
+			if (slug === params.slug) {
 				match = product;
 			}
 		});
@@ -18,6 +17,4 @@ export async function load({ params, parent }) {
 			match,
 		};
 	}
-
-	//throw redirect(307, '/boutique');
 }
