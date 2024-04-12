@@ -1,21 +1,16 @@
 <script>
+	import Img from '$lib/components/Img.svelte';
 	import { lang } from '$lib/store';
+	export let data;
 
 	import { lang_href } from '$lib/store';
+	import Branches from './Branches.svelte';
 	$lang_href = {
 		fr: '/boutique',
 		en: '/shop',
 	};
 </script>
 
-<div class="m-auto max-w-[600px] pt-24">
-	<div class="mb-4 text-4xl">
-		{$lang == 'fr' ? `Boutique à venir` : ` Shop coming soon`}
-	</div>
-	<div class="text-lg">
-		{$lang == 'fr'
-			? `La boutique ouvrira au printemps 2024. Vous pourrez y trouver livres, affiches
-		et reproductions de mes originaux. À bientôt!`
-			: `The shop will open in spring 2024. You will find books, posters and reproductions of my originals. See you soon!`}
-	</div>
+<div class="pt-20">
+	<Branches {data} />
 </div>

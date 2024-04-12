@@ -19,5 +19,5 @@ export async function load({ params, parent }) {
 		};
 	}
 
-	throw redirect(307, '/boutique');
+	//throw redirect(307, '/boutique');
 }

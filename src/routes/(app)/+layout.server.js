@@ -56,6 +56,7 @@ export async function load({ cookies }) {
 					...,
 					variant->{...}
 				},
+				category->{...},
 				'imgs': imgs[].asset->{
 					...
 				}
@@ -65,7 +66,7 @@ export async function load({ cookies }) {
         }
             }`);
 	shop.branches.forEach((branch) => {
-		const variants = [];
+		const cats = [];
 		branch.products.forEach((product) => {
 			product.branch = {
 				_id: branch._id,
@@ -74,15 +75,29 @@ export async function load({ cookies }) {
 				description: branch.description,
 			};
 
-			product.variants.forEach((variant) => {
-				if (!variants.some((v) => v._id === variant.variant._id))
-					variants.push(variant.variant);
-			});
+			if (product.category) {
+				product.variants.forEach((variant) => {
+					if (variant.price) return;
+					variant.price = cats.find(
+						(c) => c._id === product.category._id,
+					)?.category_price;
+				});
+
+				if (!cats.some((c) => c._id === product.category._id))
+					cats.push(product.category);
+			}
+
+			/*
+			product.c?.forEach((variant) => {
+				if (!variant.variant) return;
+				if (!cats.some((v) => v._id === variant.variant._id))
+					cats.push(variant.variant);
+			});*/
 
 			if (!product.book_ref) return;
 			product.book = books.find((book) => book._id === product.book_ref?._ref);
 		});
-		branch.variants = variants;
+		branch.cats = cats;
 	});
 
 	await mongoose.connect(MONGO_URI);

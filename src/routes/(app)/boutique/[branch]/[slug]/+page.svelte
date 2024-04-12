@@ -3,16 +3,19 @@
 	import Link from '$lib/components/Link.svelte';
 	import { cart, lang, progress } from '$lib/store';
 	import SanityTextBlock from '$lib/components/SanityTextBlock.svelte';
-	import { formatPrice } from '../lib/formatPrice';
+	import { formatPrice } from '../../lib/formatPrice';
 	import LightBox from '$lib/components/LightBox.svelte';
 
 	export let data;
+
+	console.log(data);
 
 	$: match = data.match;
 
 	let loading = false;
 
 	import { lang_href } from '$lib/store';
+	import { page } from '$app/stores';
 	$lang_href = {
 		fr: '/boutique/' + data.match.slug?.fr?.current,
 		en:
@@ -60,7 +63,7 @@
 <div class="mb-8">
 	<Link
 		class="flex items-center gap-2 !px-0 !py-0"
-		href={$lang == 'fr' ? '/boutique' : '/en/shop'}
+		href="{$lang == 'fr' ? '/boutique' : '/en/shop'}/{$page.params.branch}"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -120,10 +123,12 @@
 						<div class="mb-12">
 							<div class="text-lg">
 								<div class=" font-medium">
-									{formatPrice(variant.price)}
+									{formatPrice(variant?.price)}
 								</div>
 								<div class="text-black/50">
-									{variant.variant.name[$lang] || variant.variant.name.fr}
+									{variant?.variant?.name[$lang] ||
+										variant?.variant?.name.fr ||
+										''}
 								</div>
 								<button
 									on:click={() => addToCart(variant)}
@@ -151,7 +156,7 @@
 					{#each data.match.isBook ? data.match.book?.images : data.match.imgs as img, i}
 						{#if i != 0}
 							<div class="mb-4">
-								<Img class="rounded-sm" src={img.asset.url} />
+								<Img class="rounded-sm" src={img.url} />
 							</div>
 						{/if}
 					{/each}
