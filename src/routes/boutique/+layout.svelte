@@ -16,10 +16,12 @@
 			const product = allProducts.find(
 				(product) => product._id === item.product_id,
 			);
+			console.log(product.variants);
+			return;
 			if (product) {
-				item.variant_name = product.variants.find(
-					(variant) => variant.variant._id === item.variant_id,
-				).variant.name;
+				item.variant_name = product.variants?.find(
+					(variant) => variant?.variant?._id === item.variant_id,
+				).variant?.name;
 			}
 
 			if (product.isBook) {
@@ -31,7 +33,7 @@
 			item.product = product;
 			if (!product) return;
 			const variantData = product.variants.find(
-				(variant) => variant.variant._id === item.variant_id,
+				(variant) => variant?.variant?._id === item.variant_id,
 			);
 
 			if (!variantData) return;

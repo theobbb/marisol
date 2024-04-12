@@ -65,6 +65,7 @@ export async function load({ cookies }) {
            
         }
             }`);
+
 	shop.branches.forEach((branch) => {
 		const cats = [];
 		branch.products.forEach((product) => {
@@ -75,21 +76,6 @@ export async function load({ cookies }) {
 				description: branch.description,
 			};
 
-			if (product.category) {
-				product.variants?.forEach((variant) => {
-					if (variant.price) return;
-
-					const price = cats.find(
-						(c) => c._id === product.category._id,
-					)?.category_price;
-					console.log('variant', price);
-					variant.price = price;
-				});
-
-				if (!cats.some((c) => c._id === product.category._id))
-					cats.push(product.category);
-			}
-
 			/*
 			product.c?.forEach((variant) => {
 				if (!variant.variant) return;
@@ -99,6 +85,26 @@ export async function load({ cookies }) {
 
 			if (!product.book_ref) return;
 			product.book = books.find((book) => book._id === product.book_ref?._ref);
+
+			if (product.category) {
+				if (!cats.some((c) => c._id === product.category._id))
+					cats.push(product.category);
+
+				product.variants?.forEach((variant) => {
+					console.log(variant);
+					if (variant.price) return;
+
+					if (variant?.variant?.variant_price) {
+						variant.price = variant.variant.variant_price;
+						return;
+					}
+					const price = cats.find(
+						(c) => c._id === product.category._id,
+					)?.category_price;
+					console.log('variant', price);
+					variant.price = price;
+				});
+			}
 		});
 		branch.cats = cats;
 	});

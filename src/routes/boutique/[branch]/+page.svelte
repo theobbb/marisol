@@ -17,7 +17,7 @@
 		en: `/shop/${data.branch.cat_display ? data.branch.cat.slug.en.current : data.branch.slug.en?.current || data.branch.slug.fr?.current}`,
 	};
 
-	$: console.log(branch.products);
+	$: console.log(data);
 </script>
 
 <div class="flex flex-col gap-44">

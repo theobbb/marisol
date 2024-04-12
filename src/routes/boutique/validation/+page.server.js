@@ -36,6 +36,11 @@ export async function load({ cookies }) {
 		currency: 'cad',
 	});
 
+	const shippingRates = await stripe.shippingRates.list({
+		limit: 3,
+	});
+	console.log('shippingRates', shippingRates);
+
 	return {
 		checkout: {
 			secret: paymentIntent.client_secret,
