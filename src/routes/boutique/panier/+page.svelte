@@ -8,10 +8,89 @@
 	import Total from './Total.svelte';
 
 	import { lang_href } from '$lib/store';
+	import { onMount } from 'svelte';
 	$lang_href = {
 		fr: '/boutique/panier',
 		en: '/shop/cart',
 	};
+	let address = {};
+
+	let mounted = false;
+	onMount(async () => {
+		const res = await fetch(
+			'https://api.geoapify.com/v1/ipinfo?&apiKey=d17169cfe2ce4af09b078c21e271b9c2',
+			{
+				headers: {
+					Accept: 'application/json',
+				},
+			},
+		);
+		const data = await res.json();
+
+		$cart.currency = data.country.currency;
+
+		const codes = {
+			Canada: 'CA',
+			'United States': 'US',
+			Quebec: 'QC',
+			Ontario: 'ON',
+			'British Columbia': 'BC',
+			Alberta: 'AB',
+			Manitoba: 'MB',
+			Saskatchewan: 'SK',
+			'Nova Scotia': 'NS',
+			'New Brunswick': 'NB',
+			'Newfoundland and Labrador': 'NL',
+			'Prince Edward Island': 'PE',
+			'Northwest Territories': 'NT',
+			Nunavut: 'NU',
+			Yukon: 'YT',
+		};
+		const country = codes[data.country.name];
+		const state = codes[data.state.name];
+
+		address = {
+			country,
+			state,
+		};
+		mounted = true;
+		calculateTotal();
+	});
+	let calculating = false;
+	let lastTotal = 0;
+	$: $cart, shouldCalculateTotal();
+
+	function shouldCalculateTotal() {
+		if (!mounted || !$cart) return;
+		let total = 0;
+		$cart.items?.forEach((item) => {
+			total += item.price * item.quantity;
+		});
+		if (total !== lastTotal && !calculating) {
+			lastTotal = total;
+			console.log('calculating total', total);
+			calculateTotal();
+		}
+	}
+
+	async function calculateTotal() {
+		calculating = true;
+		try {
+			const res = await fetch('/boutique/api/cart-address', {
+				method: 'POST',
+				body: JSON.stringify({ address }),
+				headers: {
+					'content-type': 'application/json',
+				},
+			});
+			const data = await res.json();
+
+			cart.set(data);
+		} catch (error) {
+			console.error(error);
+		}
+		calculating = false;
+	}
 
 	async function removeFromCart(variant) {
 		$progress.start();
@@ -89,17 +168,22 @@
 								>
 							</td>
 							<td class="w-[calc(100%-100px)] text-xl lg:w-2/5 lg:px-6">
-								<a
-									href="{$lang == 'fr' ? '/boutique' : '/en/shop'}/{variant
-										.product.slug[$lang]?.current ||
-										variant.product.slug.fr.current}"
+								<a href={variant.product.constr_slug[$lang]}
 									>{variant.product.name[$lang] || variant.product.name.fr}</a
 								>
-								{#if variant.variant_name}
-									<div class="text-base opacity-60">
-										{variant.variant_name[$lang]}
-									</div>
-								{/if}
+								<div class="flex gap-1 text-base opacity-60">
+									<div>{variant.product.branch.name[$lang]}</div>
+									{#if variant.product.category && variant.product.category.name}
+										<div class="">
+											- {variant.product.category.name[$lang]}
+										</div>
+									{/if}
+									{#if variant.variant_name && variant.variant_name.fr != ''}
+										<div class="">
+											- {variant.variant_name[$lang]}
+										</div>
+									{/if}
+								</div>
 							</td>
 
 							<td
@@ -134,9 +218,11 @@
 		<div class="text-base lg:w-[400px]">
 			<div class="mb-14 border-b pb-3 text-4xl">Total</div>
 			<div class="divide-y">
+				<!--
 				<div class="flex w-full justify-between pb-8">
 					<Promo {formatPrice} />
 				</div>
+				-->
 				<Total />
 			</div>
 			<div class="mt-14">

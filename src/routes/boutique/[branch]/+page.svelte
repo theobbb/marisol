@@ -17,7 +17,7 @@
 		en: `/shop/${data.branch.cat_display ? data.branch.cat.slug.en.current : data.branch.slug.en?.current || data.branch.slug.fr?.current}`,
 	};
 
-	$: console.log(data);
+	//$: console.log(data);
 </script>
 
 <div class="flex flex-col gap-44">
@@ -127,16 +127,17 @@
 				<div>{$lang == 'fr' ? 'Retour' : 'Back'}</div>
 			</Link>
 		</div>
+	{:else}
+		<Branches
+			data={{
+				...data,
+				shop: {
+					...data.shop,
+					branches: [...data.shop.branches].filter(
+						(b) => b._id != data.branch._id,
+					),
+				},
+			}}
+		/>
 	{/if}
-	<Branches
-		data={{
-			...data,
-			shop: {
-				...data.shop,
-				branches: [...data.shop.branches].filter(
-					(b) => b._id != data.branch._id,
-				),
-			},
-		}}
-	/>
 </div>

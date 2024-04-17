@@ -3,8 +3,7 @@ import sanity from '$lib/server/sanity.js';
 import mongoose from 'mongoose';
 import { Cart } from '$lib/server/models/Cart';
 
-export async function load({ cookies }) {
-	mongoose.models = {};
+export async function load({ cookies, locals }) {
 	const books = await sanity.fetch(`*[_type == "book"] {
         ...,
         images[]{
@@ -61,13 +60,25 @@ export async function load({ cookies }) {
 					...
 				}
 			},
-			
-           
-        }
-            }`);
+        	}
+        }`);
 
 	shop.branches.forEach((branch) => {
 		const cats = [];
+		branch.products = branch.products.filter((product) => {
+			if (!product.variants?.length) return true;
+			let hasQuantity = false;
+
+			product.variants = product.variants.filter((v) => {
+				if (v.stock == null || v.stock > 0) {
+					hasQuantity = true;
+					return true;
+				} else {
+					return false;
+				}
+			});
+			return hasQuantity;
+		});
 		branch.products.forEach((product) => {
 			product.branch = {
 				_id: branch._id,
@@ -76,38 +87,63 @@ export async function load({ cookies }) {
 				description: branch.description,
 			};
 
-			/*
-			product.c?.forEach((variant) => {
-				if (!variant.variant) return;
-				if (!cats.some((v) => v._id === variant.variant._id))
-					cats.push(variant.variant);
-			});*/
+			product.constr_slug = {
+				fr: `/boutique/${
+					product.category?.slug?.fr.current || product.branch.slug.fr.current
+				}/${product.slug.fr?.current}`,
+				en: `/en/shop/${product.category?.slug?.en.current || product.branch.slug.en.current}/${
+					product.slug.en?.current || product.slug.fr.current
+				}`,
+			};
 
-			if (!product.book_ref) return;
-			product.book = books.find((book) => book._id === product.book_ref?._ref);
-
+			if (product.book_ref) {
+				product.book = books.find(
+					(book) => book._id === product.book_ref?._ref,
+				);
+			}
+			if (product.variants?.length) {
+				product.variants.forEach((variant) => {
+					if (variant.price) {
+						if (!variant.variant) {
+							variant.variant = {
+								name: { fr: '', en: '' },
+								_id: product._id,
+							};
+						}
+					} else {
+						if (variant?.variant?.variant_price) {
+							variant.price = variant.variant.variant_price;
+							return;
+						}
+						variant.variant = {
+							name: { fr: '', en: '' },
+							_id: product._id,
+						};
+						variant.price = product.category.category_price;
+					}
+				});
+			} else {
+				product.variants = [
+					{
+						variant: {
+							name: { fr: '', en: '' },
+							_id: product._id,
+						},
+						price: product.category.category_price,
+					},
+				];
+			}
 			if (product.category) {
 				if (!cats.some((c) => c._id === product.category._id))
 					cats.push(product.category);
-
-				product.variants?.forEach((variant) => {
-					console.log(variant);
-					if (variant.price) return;
-
-					if (variant?.variant?.variant_price) {
-						variant.price = variant.variant.variant_price;
-						return;
-					}
-					const price = cats.find(
-						(c) => c._id === product.category._id,
-					)?.category_price;
-					console.log('variant', price);
-					variant.price = price;
-				});
 			}
+			/*
+			const v = product.variants.map((v) => v.variant?._id);
+			console.log(product.name.fr, ...v);*/
 		});
 		branch.cats = cats;
 	});
+	locals.test = 'ff';
 
 	await mongoose.connect(MONGO_URI);
 
@@ -121,6 +157,8 @@ export async function load({ cookies }) {
 			cart = JSON.parse(JSON.stringify(retrieved));
 		}
 	}
+
+	console.log('cart', cart);
 
 	return {
 		books,

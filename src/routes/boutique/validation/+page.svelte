@@ -12,6 +12,8 @@
 	};
 	import { loadStripe } from '@stripe/stripe-js/pure';
 	import Loader from '$lib/components/Loader.svelte';
+	import { updated } from '$app/stores';
+	import Link from '$lib/components/Link.svelte';
 
 	export let data;
 
@@ -23,14 +25,15 @@
 
 	let errorMessage = '';
 
+	let taxes = 0;
+	let shipping = 0;
+
 	onMount(async () => {
 		stripe = await loadStripe(
 			'pk_test_51OxX1nItENF0KQtogq7Kpz1YE8fg3AwGUdnCP2sRi8ieFJiicSumoDAjFQ3srqrj4qdZAy5YZrWEzMRvEzgaL52200LfEACkwu',
 			{ locale: $lang },
 		);
 		elements = stripe.elements({ clientSecret: data.checkout.secret });
-
-		console.log(elements);
 
 		const paymentElementOptions = {
 			layout: 'tabs',
@@ -47,7 +50,74 @@
 		emailElement.mount('#email-element');
 		paymentElement.mount('#payment-element');
 		addressElement.mount('#address-element');
+
+		addressElement.on('change', (event) => {
+			if (event.complete) {
+				console.log(event.value);
+				// Extract potentially complete address
+
+				address(event.value.address);
+			}
+		});
+
+		const res = await fetch(
+			'https://api.geoapify.com/v1/ipinfo?&apiKey=d17169cfe2ce4af09b078c21e271b9c2',
+			{
+				headers: {
+					Accept: 'application/json',
+				},
+			},
+		);
+		const loc = await res.json();
+
+		$cart.currency = loc.country.currency;
+
+		const codes = {
+			Canada: 'CA',
+			'United States': 'US',
+			Quebec: 'QC',
+			Ontario: 'ON',
+			'British Columbia': 'BC',
+			Alberta: 'AB',
+			Manitoba: 'MB',
+			Saskatchewan: 'SK',
+			'Nova Scotia': 'NS',
+			'New Brunswick': 'NB',
+			'Newfoundland and Labrador': 'NL',
+			'Prince Edward Island': 'PE',
+			'Northwest Territories': 'NT',
+			Nunavut: 'NU',
+			Yukon: 'YT',
+		};
+		const country = codes[loc.country.name];
+		const state = codes[loc.state.name];
+
+		address({
+			country,
+			state,
+		});
 	});
+
+	$: console.log($cart);
+	async function address(address) {
+		try {
+			const res = await fetch('/boutique/api/cart-address', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					address,
+					ID: data.checkout.ID,
+				}),
+			});
+			const new_cart = await res.json();
+			console.log(new_cart);
+			$cart = new_cart;
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -111,6 +181,27 @@
 		}, 4000);
 	}
 </script>
+
+<div class="mb-10">
+	<div class="mt-2 flex items-center gap-2 text-base">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			height="20"
+			viewBox="0 0 24 24"
+			width="20"
+			class="opacity-40"
+			><path d="M0 0h24v24H0z" fill="none" /><path
+				d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+			/></svg
+		>
+		<Link
+			class="!p-0"
+			href={$lang == 'fr' ? '/boutique/panier' : '/en/shop/cart'}
+		>
+			{$lang == 'fr' ? 'Retour à au panier' : 'Back to cart'}</Link
+		>
+	</div>
+</div>
 
 {#if loading}
 	<Loader />

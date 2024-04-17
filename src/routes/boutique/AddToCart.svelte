@@ -5,29 +5,19 @@
 
 	async function addToCart() {
 		$progress.start();
-		if ($cart == null) {
-			const res = await fetch('/boutique/api/cart', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			const data = await res.json();
-			$cart = data;
-		}
-		$cart.loading = true;
-		if (!$cart) {
-			const res = await fetch('/boutique/api/cart', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			const data = await res.json();
-			$cart = data;
-		}
 
 		try {
+			if (!$cart) {
+				const post_cart = await fetch('/boutique/api/cart', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+				const posted = await post_cart.json();
+				if (posted?._id) $cart = posted;
+			}
+			if (!$cart?._id || !product?._id || !variant?.variant?._id) return;
 			const res = await fetch('/boutique/api/cart-item', {
 				method: 'POST',
 				headers: {
@@ -40,12 +30,11 @@
 				}),
 			});
 			const data = await res.json();
-
-			$cart = data;
+			if (data?._id) $cart = data;
 		} catch (error) {
 			console.error(error);
 		}
-		$cart.loading = false;
+
 		$progress.done();
 	}
 </script>

@@ -1,6 +1,4 @@
 <script>
-	import Img from '$lib/components/Img.svelte';
-	import { lang } from '$lib/store';
 	export let data;
 
 	import { lang_href } from '$lib/store';

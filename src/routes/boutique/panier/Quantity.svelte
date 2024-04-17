@@ -10,8 +10,9 @@
 			removeFromCart();
 			return;
 		}
-
-		newQuantity = Math.min(Math.floor(newQuantity), variant.stock);
+		console.log(newQuantity);
+		const stock = variant?.stock == null ? 10000 : variant?.stock;
+		newQuantity = Math.min(Math.floor(newQuantity), stock);
 
 		loading = true;
 

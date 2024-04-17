@@ -16,15 +16,14 @@
 			const product = allProducts.find(
 				(product) => product._id === item.product_id,
 			);
-			console.log(product.variants);
-			return;
+
 			if (product) {
 				item.variant_name = product.variants?.find(
 					(variant) => variant?.variant?._id === item.variant_id,
 				).variant?.name;
 			}
 
-			if (product.isBook) {
+			if (product?.isBook) {
 				product.book = data.books.find(
 					(book) => book._id === product.book_ref._ref,
 				);
@@ -39,9 +38,9 @@
 			if (!variantData) return;
 			item.price = variantData.price;
 			item.stock = variantData.stock;
-			subtotal += item.price * item.quantity;
+			//subtotal += item.price * item.quantity;
 		});
-		$cart.subtotal = subtotal;
+		//$cart.subtotal = subtotal;
 	}
 </script>
 
