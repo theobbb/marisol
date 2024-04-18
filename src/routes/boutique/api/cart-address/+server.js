@@ -3,6 +3,8 @@ import sanity from '$lib/server/sanity.js';
 import stripe from '$lib/server/stripe.js';
 import { error, json } from '@sveltejs/kit';
 
+// commentaire
+
 export async function POST({ request, cookies }) {
 	const { ID, address } = await request.json();
 
