@@ -3,6 +3,7 @@ import stripe from '$lib/server/stripe.js';
 import { json } from 'stream/consumers';
 
 export async function POST({ request }) {
+	
 	const { cart_id } = await request.json();
 
 	const cart = await Cart.findById(cart_id);
