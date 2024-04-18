@@ -22,7 +22,7 @@
 			{$lang == 'fr' ? 'Livraison' : 'Shipping'}
 		</div>
 		<div class="font-medium">
-			{formatPrice(0)}
+			{formatPrice($cart.shipping)}
 		</div>
 	</div>
 	<div class="flex w-full flex-col justify-between py-3">

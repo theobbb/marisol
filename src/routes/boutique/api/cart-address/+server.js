@@ -39,6 +39,7 @@ export async function POST({ request, cookies }) {
         }`);
 
 	const shipping_classes = await sanity.fetch(`*[_type == "shipping"]`);
+
 	console.log('shop', shipping_classes);
 	shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
@@ -49,41 +50,61 @@ export async function POST({ request, cookies }) {
 							i.variant_id == variant?.variant?._id &&
 							i.product_id === product._id,
 					);
-					if (item) {
-						/*
-						console.log(
-							product.name.fr,
-							branch.branch_shipping,
-							product.category?.category_shipping,
-							variant?.shipping,
-						);*/
-						const shipping_key =
-							variant?.shipping ||
-							product.category?.category_shipping ||
-							variant?.variant?.shipping ||
-							branch.branch_shipping;
-						if (shipping_key) {
-							const shipping_class = shipping_classes.find(
-								(s) => s._id === shipping_key._ref,
-							);
-							const price =
-								shipping_class?.price[country] ||
-								shipping_class?.price.rest ||
-								0;
-							shipping = Math.max(shipping, price);
-							console.log(shipping);
-						} else {
-							console.log(product.name.fr, shipping_key);
-						}
-						console.log(product.name.fr, shipping_key);
-					}
+					if (!item) return;
+					const shipping_key =
+						variant?.shipping ||
+						product.category?.category_shipping ||
+						variant?.variant?.shipping ||
+						branch.branch_shipping;
+					if (!shipping_key) return;
+					const price = findShippingClass(shipping_key);
+
+					shipping = Math.max(shipping, price);
+					console.log(shipping);
 				});
 			} else {
-				console.log('product', product.name.fr);
+				const item = cart.items.find((i) => i.product_id === product._id);
+				if (!item) return;
+
+				const shipping_key =
+					product.category?.category_shipping || branch.branch_shipping;
+				if (!shipping_key) return;
+				const price = findShippingClass(shipping_key);
+				console.log(product.name.fr, price);
 			}
 			//console.log(product.name.fr, product.shipping);
 		});
 	});
+
+	function findShippingClass(key) {
+		const shipping_class = shipping_classes.find((s) => s._id === key._ref);
+		return shipping_class?.price[country] || shipping_class?.price.rest || 0;
+	}
+	let shipping_total = shipping;
+	console.log('shipping', shipping);
+	if (country === 'CA') {
+		if (state == 'QC') {
+			push('TPS', 0.05, shipping);
+			push('TVQ', 0.09975, shipping);
+			shipping_total *= 1.14975;
+		} else if (state == 'ON') {
+			push('HST', 0.13, shipping);
+			shipping_total *= 1.13;
+		} else if (
+			state == 'NS' ||
+			state == 'NB' ||
+			state == 'NL' ||
+			state == 'PE'
+		) {
+			push('HST', 0.15, shipping);
+			shipping_total *= 1.15;
+		} else {
+			push('GST', 0.05, shipping);
+			shipping_total *= 1.05;
+		}
+	}
+
+	total += shipping_total;
 
 	cart.items.forEach((item) => {
 		let amount = item.quantity * item.price * 100;
@@ -92,8 +113,8 @@ export async function POST({ request, cookies }) {
 			if (state == 'QC') {
 				push('TPS', 0.05, amount);
 				if (!item.is_book) {
-					push('TVQ', 0.09075, amount);
-					amount *= 1.14075;
+					push('TVQ', 0.09975, amount);
+					amount *= 1.14975;
 				} else {
 					amount *= 1.05;
 				}
@@ -117,7 +138,7 @@ export async function POST({ request, cookies }) {
 	});
 
 	function push(code, rate, amount) {
-		const formatted = `${code} (${rate * 100}%)`;
+		const formatted = `${code} (${Math.round(rate * 100000) / 1000}%)`;
 		const exists = taxes.find((tax) => tax.code === formatted);
 		if (exists) exists.amount += amount * rate;
 		else
@@ -134,7 +155,7 @@ export async function POST({ request, cookies }) {
 	await cart.save();
 
 	if (!ID) return json(cart);
-	const paymentIntent = await stripe.paymentIntents.update(ID, {
+	await stripe.paymentIntents.update(ID, {
 		amount: Math.round(cart.total),
 	});
 	return json(cart);
