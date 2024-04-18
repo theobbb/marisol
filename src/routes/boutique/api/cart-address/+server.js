@@ -6,6 +6,8 @@ import { error, json } from '@sveltejs/kit';
 console.log("ici");
 
 export async function POST({ request, cookies }) {
+
+	console.log('post');
 	const { ID, address } = await request.json();
 
 	if (!address) return error(400, 'Invalid request');
