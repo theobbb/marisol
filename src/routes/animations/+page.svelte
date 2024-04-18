@@ -10,6 +10,7 @@
 		fr: '/animations',
 		en: '/workshop',
 	};
+	console.log('dans animation');
 </script>
 
 <div
