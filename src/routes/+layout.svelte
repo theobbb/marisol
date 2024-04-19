@@ -27,7 +27,7 @@
 	}
 
 	if (data.cart?._id) $cart = data.cart;
-	$: console.log($cart);
+	//$: console.log($cart);
 
 	$: home = $page.url.pathname == '/' || $page.url.pathname == '/en';
 </script>

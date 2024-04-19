@@ -3,11 +3,10 @@ import sanity from '$lib/server/sanity.js';
 import stripe from '$lib/server/stripe.js';
 import { error, json } from '@sveltejs/kit';
 
-console.log("ici");
-
 export async function POST({ request, cookies }) {
 
-	console.log('post');
+	for (let i = 0; i < 5; i++) {console.log('');}
+
 	const { ID, address } = await request.json();
 
 	if (!address) return error(400, 'Invalid request');
@@ -44,7 +43,7 @@ export async function POST({ request, cookies }) {
 
 	const shipping_classes = await sanity.fetch(`*[_type == "shipping"]`);
 
-	console.log('shop', shipping_classes);
+	//console.log('shop', shipping_classes);
 	shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
 			if (product.variants && product.variants.length) {
@@ -74,7 +73,7 @@ export async function POST({ request, cookies }) {
 					product.category?.category_shipping || branch.branch_shipping;
 				if (!shipping_key) return;
 				const price = findShippingClass(shipping_key);
-				console.log(product.name.fr, price);
+				//console.log(product.name.fr, price);
 			}
 			//console.log(product.name.fr, product.shipping);
 		});
@@ -84,64 +83,19 @@ export async function POST({ request, cookies }) {
 		const shipping_class = shipping_classes.find((s) => s._id === key._ref);
 		return shipping_class?.price[country] || shipping_class?.price.rest || 0;
 	}
-	let shipping_total = shipping;
-	console.log('shipping', shipping);
-	if (country === 'CA') {
-		if (state == 'QC') {
-			push('TPS', 0.05, shipping);
-			push('TVQ', 0.09975, shipping);
-			shipping_total *= 1.14975;
-		} else if (state == 'ON') {
-			push('HST', 0.13, shipping);
-			shipping_total *= 1.13;
-		} else if (
-			state == 'NS' ||
-			state == 'NB' ||
-			state == 'NL' ||
-			state == 'PE'
-		) {
-			push('HST', 0.15, shipping);
-			shipping_total *= 1.15;
-		} else {
-			push('GST', 0.05, shipping);
-			shipping_total *= 1.05;
-		}
-	}
 
+	let shipping_total = 100*shipping + taxe(100*shipping, false);
+	
 	total += shipping_total;
 
 	cart.items.forEach((item) => {
 		let amount = item.quantity * item.price * 100;
 		subtotal += amount;
-		if (country === 'CA') {
-			if (state == 'QC') {
-				push('TPS', 0.05, amount);
-				if (!item.is_book) {
-					push('TVQ', 0.09975, amount);
-					amount *= 1.14975;
-				} else {
-					amount *= 1.05;
-				}
-			} else if (state == 'ON') {
-				push('HST', 0.13, amount);
-				amount *= 1.13;
-			} else if (
-				state == 'NS' ||
-				state == 'NB' ||
-				state == 'NL' ||
-				state == 'PE'
-			) {
-				push('HST', 0.15, amount);
-				amount *= 1.15;
-			} else {
-				push('GST', 0.05, amount);
-				amount *= 1.05;
-			}
-		}
-		total += amount;
+		total += amount + taxe(amount, item.is_book);
 	});
 
-	function push(code, rate, amount) {
+	function push(code, amount) {
+		let rate = 1;
 		const formatted = `${code} (${Math.round(rate * 100000) / 1000}%)`;
 		const exists = taxes.find((tax) => tax.code === formatted);
 		if (exists) exists.amount += amount * rate;
@@ -151,6 +105,47 @@ export async function POST({ request, cookies }) {
 				code: formatted,
 			});
 	}
+	function taxe(amount, isLivre) {
+
+		let tx = 0;
+		let tpsTaux = 0.05;
+		let tvqTaux = 0.0975;
+		let hstTauxOnt = 0.13;
+		let hstTauxMar = 0.15;
+		console.log('state: ' + state);
+		if (country === 'CA') {
+			if (state == 'QC') {
+				let xx = amount * tpsTaux;
+				let tps = arrondi(amount * tpsTaux);
+				console.log('xx: ' + xx);
+				push('TPS', tps);
+				let tvq = 0;
+				if (!isLivre) {
+					tvq = arrondi(tvqTaux * amount);
+					push('TVQ', tvq);
+				}
+				tx = tps + tvq;
+			} else if (state == 'ON') {
+				tx = arrondi(hstTauxOnt * amount);
+				push('HST', tx);
+			} else if (
+				state == 'NS' ||
+				state == 'NB' ||
+				state == 'NL' ||
+				state == 'PE'
+			) {
+				tx = arrondi(hstTauxMar * amount);
+				push('HST', tx);
+			} else {
+				tx = arrondi(tpsTaux * amount);
+				push('GST', tx);
+			}
+		}
+		console.log('montant: ' + amount + '  tx: ' + tx);
+
+		return tx;
+	}
+	function arrondi(x) {return Math.round(100*x)/100;}
 
 	cart.subtotal = subtotal;
 	cart.taxes = taxes;

@@ -22,7 +22,7 @@ export async function load({ cookies }) {
 	const products = await sanity.fetch(`*[_type == "product"]`);
 
 	let amount = 0;
-	console.log(cart);
+	//console.log(cart);
 
 	cart.items.forEach((item) => {
 		amount += item.quantity * item.price * 100;

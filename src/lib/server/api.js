@@ -10,7 +10,7 @@ export const API = {
 
 async function req(method, route, request = {}) {
 	const url = API_URL + route;
-	console.log(method, url);
+	//console.log(method, url);
 	try {
 		const res = await fetch(url, {
 			method,

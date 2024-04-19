@@ -16,7 +16,7 @@ export async function POST({ request }) {
 				},
 			],
 		});
-		console.log(cart);
+		//console.log(cart);
 		return json(cart);
 	} catch (error) {
 		console.log(error.message);

@@ -16,7 +16,7 @@ export async function POST({ request }) {
 	const taxes = await stripe.prices.list({
 		lookup_keys: items.map((item) => item.variant_id),
 	});
-	console.log('cart_id', taxes);
+	//console.log('cart_id', taxes);
 
 	return json({ total: 1400 });
 }
