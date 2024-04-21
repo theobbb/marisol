@@ -68,7 +68,7 @@
 		});
 		if (total !== lastTotal && !calculating) {
 			lastTotal = total;
-			console.log('calculating total', total);
+			//console.log('calculating total', total);
 			calculateTotal();
 		}
 	}

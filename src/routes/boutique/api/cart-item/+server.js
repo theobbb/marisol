@@ -57,7 +57,7 @@ export async function POST({ request, locals }) {
 				}
 			}
 
-			console.log('price', product);
+			// .log('price', product);
 
 			const item = {
 				variant_id,
