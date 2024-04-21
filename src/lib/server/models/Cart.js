@@ -8,9 +8,10 @@ const cartSchema = new mongoose.Schema({
 			variant_id: String,
 			price: Number,
 			is_book: Boolean,
+			discount: Number,
 		},
 	],
-
+	discount: Number,
 	subtotal: Number,
 	taxes: [{ code: String, amount: Number }],
 	shipping: Number,

@@ -138,8 +138,9 @@
 
 {#if $cart?.items?.length > 0}
 	<div
-		class="flex flex-col justify-between gap-24 lg:flex-row lg:gap-0 {$cart.loading
-			? 'pointer-events-none opacity-50'
+		class="flex flex-col justify-between gap-24 lg:flex-row lg:gap-0 {$cart.loading ||
+		calculating
+			? 'pointer-events-none animate-pulse opacity-50'
 			: ''}"
 	>
 		<div class="lg:w-2/3 lg:pr-20">
@@ -148,6 +149,7 @@
 			</div>
 			<table class="flex w-full flex-col lg:table">
 				{#each $cart.items as variant}
+					{@const price = variant.price * (1 - (variant.discount || 0))}
 					<tr
 						class="flex w-full flex-wrap gap-5 border-b border-black/10 pt-2 lg:table-row {variant.loading
 							? 'pointer-events-none opacity-40'
@@ -190,7 +192,12 @@
 								class="w-full pl-[100px] lg:w-[auto] lg:pl-0 lg:pr-6 lg:text-right"
 							>
 								{#if variant.quantity > 1}
-									{formatPrice(variant.price)}
+									{#if price != variant.price}
+										<span class="mr-4 line-through decoration-red-500"
+											>{formatPrice(variant.price)}</span
+										>
+									{/if}
+									{formatPrice(price)}
 								{/if}
 							</td>
 							<td class="w-[full] pl-[100px] lg:w-20 lg:pl-0">
@@ -200,7 +207,7 @@
 							<td
 								class="w-[full] pl-[100px] lg:w-20 lg:w-[auto] lg:pl-0 lg:text-right"
 							>
-								{formatPrice(variant.price * variant.quantity)}
+								{formatPrice(price * variant.quantity)}
 							</td>
 							<td class="w-full pb-4 text-right lg:w-[auto] lg:pb-0">
 								<button
