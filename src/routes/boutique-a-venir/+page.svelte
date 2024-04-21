@@ -3,8 +3,8 @@
 
 	import { lang_href } from '$lib/store';
 	$lang_href = {
-		fr: '/boutique',
-		en: '/shop',
+		fr: '/boutique-a-venir',
+		en: '/shop-coming-soon',
 	};
 </script>
 

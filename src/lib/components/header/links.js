@@ -2,61 +2,61 @@ export const links = [
 	{
 		fr: {
 			name: 'Portfolio',
-			href: '/portfolio'
+			href: '/portfolio',
 		},
 		en: {
 			name: 'Portfolio',
-			href: '/portfolio'
-		}
+			href: '/portfolio',
+		},
 	},
 	{
 		fr: {
 			name: 'Livres',
-			href: '/livres'
+			href: '/livres',
 		},
 		en: {
 			name: 'Books',
-			href: '/books'
-		}
+			href: '/books',
+		},
 	},
 	{
 		fr: {
 			name: 'Animations',
-			href: '/animations'
+			href: '/animations',
 		},
 		en: {
 			name: 'Workshop',
-			href: '/workshop'
-		}
+			href: '/workshop',
+		},
 	},
 	{
 		fr: {
 			name: 'À propos',
-			href: '/a-propos'
+			href: '/a-propos',
 		},
 		en: {
 			name: 'About',
-			href: '/about'
-		}
+			href: '/about',
+		},
 	},
 	{
 		fr: {
 			name: 'Boutique',
-			href: '/boutique'
+			href: '/boutique-a-venir',
 		},
 		en: {
 			name: 'Shop',
-			href: '/shop'
-		}
+			href: '/shop-coming-soon',
+		},
 	},
 	{
 		fr: {
 			name: 'Contact',
-			href: '/contact'
+			href: '/contact',
 		},
 		en: {
 			name: 'Contact',
-			href: '/contact'
-		}
-	}
+			href: '/contact',
+		},
+	},
 ];
