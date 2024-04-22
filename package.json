@@ -34,14 +34,12 @@
 	"type": "module",
 	"dependencies": {
 		"@google-analytics/data": "^4.4.0",
-		"@medusajs/medusa-js": "^6.1.7",
 		"@portabletext/to-html": "^2.0.5",
 		"@sanity/block-content-to-html": "^2.0.0",
 		"@sanity/client": "^6.15.3",
 		"@stripe/stripe-js": "^3.0.10",
 		"@sveltejs/adapter-netlify": "^4.1.0",
 		"axios": "^1.6.7",
-		"firebase": "^10.11.0",
 		"image-layout": "^0.4.1",
 		"masonry-layout": "^4.2.2",
 		"mongoose": "^8.2.2",
@@ -50,7 +48,6 @@
 		"nprogress": "^0.2.0",
 		"prettier-plugin-tailwindcss": "^0.5.12",
 		"stripe": "^14.22.0",
-		"svelte-bricks": "^0.2.1",
-		"sveltekit-medusa-client": "^3.1.2"
+		"svelte-bricks": "^0.2.1"
 	}
 }
