@@ -196,6 +196,3 @@
 		</div>
 	{/if}
 </dialog>
-
-<style>
-</style>

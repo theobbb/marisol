@@ -158,8 +158,6 @@ export async function load({ cookies, locals }) {
 		}
 	}
 
-	console.log('cart', cart);
-
 	return {
 		books,
 		series,
