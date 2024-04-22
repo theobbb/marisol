@@ -143,7 +143,6 @@ export async function load({ cookies, locals }) {
 		});
 		branch.cats = cats;
 	});
-	locals.test = 'ff';
 
 	await mongoose.connect(MONGO_URI);
 

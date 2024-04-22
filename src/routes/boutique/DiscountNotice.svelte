@@ -1,7 +1,5 @@
 <script>
 	import { cart, lang } from '$lib/store';
-
-	$: console.log($cart.n_discount);
 </script>
 
 <div class="m-auto mb-10 w-fit rounded py-2">
@@ -19,12 +17,12 @@
 			>
 		</span>
 		<span class="inline-block">
-			{#if !$cart.n_discount}
+			{#if !$cart?.n_discount}
 				{$lang == 'fr'
 					? `Achetez un livre et bénéficiez d'un rabais de 10% sur une impression
 					en carton!`
 					: `Buy a book and get a 10% discount on a cardboard print!`}
-			{:else if $cart.n_discount == 1}
+			{:else if $cart?.n_discount == 1}
 				{$lang == 'fr'
 					? `Achetez un livre et bénéficiez d'un rabais de 20% sur vos impressions en carton!`
 					: `Buy a book and get a 20% discount on your cardboard prints!`}

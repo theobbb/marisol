@@ -67,8 +67,6 @@
 		$cart.n_discount = n_books > 0 ? n_affiches : 0;
 		//$cart.subtotal = subtotal;
 	}
-
-	$: console.log(n_books, n_affiches, $cart.n_discount);
 </script>
 
 <svelte:head>
