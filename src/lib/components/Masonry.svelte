@@ -19,8 +19,6 @@
 	let totalH = 0;
 
 	function init() {
-		console.log('cols: ' + cols);
-
 		if (!container || !container.offsetWidth) return;
 
 		const fullW = container.offsetWidth;

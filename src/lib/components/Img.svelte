@@ -9,23 +9,18 @@
 
 	let dom;
 
-	let observer;
-
 	onMount(() => {
 		const img = new Image();
-		img.src = src;
 
 		if (lazy) {
-			observer = new IntersectionObserver((entries) => {
+			const observer = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting) {
+					img.src = src;
 					if (img.complete) {
 						loaded = true;
 					} else {
 						img.onload = () => {
 							loaded = true;
-						};
-						img.onerror = () => {
-							failed = true;
 						};
 					}
 				}
@@ -34,6 +29,7 @@
 
 			return;
 		}
+		img.src = src;
 		img.onload = () => {
 			loaded = true;
 		};
@@ -45,8 +41,8 @@
 
 <img
 	bind:this={dom}
-	{src}
 	{alt}
+	{src}
 	{...$$restProps}
 	class="{loaded
 		? 'opacity-100'

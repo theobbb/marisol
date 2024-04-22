@@ -191,7 +191,7 @@
 							<td
 								class="w-full pl-[100px] lg:w-[auto] lg:pl-0 lg:pr-6 lg:text-right"
 							>
-								{#if variant.quantity > 1}
+								{#if variant.quantity > 1 || price != variant.price}
 									{#if price != variant.price}
 										<span class="mr-4 line-through decoration-red-500"
 											>{formatPrice(variant.price)}</span
@@ -230,7 +230,7 @@
 					<Promo {formatPrice} />
 				</div>
 				-->
-				<Total />
+				<Total iscart />
 			</div>
 			<div class="mt-14">
 				<a

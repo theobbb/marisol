@@ -1,7 +1,7 @@
 import sanity from '$lib/server/sanity';
-
+export const prerender = false;
 export async function load() {
-	const data = await sanity.fetch(`*[_type == "books-page"][0] {
+	return sanity.fetch(`*[_type == "books-page"][0] {
 		content[]-> {
 			...,
 			images[]{
@@ -30,10 +30,4 @@ export async function load() {
 			}
 		}
 	}`);
-
-	if (!data) {
-		return { status: 404 };
-	}
-
-	return data;
 }

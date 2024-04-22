@@ -6,8 +6,24 @@
 
 	let subtotal = 0;
 
+	const affiches_ids = [];
+
+	data.shop.branches.forEach((branch) => {
+		branch.products.forEach((product) => {
+			if (product?.category?.slug?.fr?.current == 'impression-sur-carton') {
+				affiches_ids.push(product._id);
+			}
+		});
+	});
+
+	let n_affiches = 0;
+	let n_books = 0;
+
 	$: $cart, populateCart();
 	function populateCart() {
+		n_affiches = 0;
+		n_books = 0;
+		console.log('populateCart');
 		subtotal = 0;
 		const allProducts = data.shop.branches.flatMap((branch) => branch.products);
 
@@ -17,6 +33,13 @@
 			const product = allProducts.find(
 				(product) => product._id === item.product_id,
 			);
+
+			if (product?.isBook) {
+				n_books += item.quantity;
+			} else if (affiches_ids.includes(product._id)) {
+				console.log('affiche', product);
+				n_affiches += item.quantity;
+			}
 
 			if (product) {
 				item.variant_name = product.variants?.find(
@@ -43,6 +66,7 @@
 		});
 		//$cart.subtotal = subtotal;
 	}
+	$: $cart.n_discount = n_books > 0 ? n_affiches : 0;
 </script>
 
 <svelte:head>
@@ -64,8 +88,27 @@
 			>
 		</span>
 		<span class="inline-block">
+			{#if $lang == 'fr'}
+				{#if $cart.n_discount == 0}
+					Achetez un livre et bénéficiez d'un rabais de 10% sur une impression
+					en carton!
+				{:else if $cart.n_discount == 1}
+					20% de rabais sur votre deuxième impression en carton!
+				{:else if $cart.n_discount == 2}
+					30% de rabais sur votre deuxième impression en carton!
+				{/if}
+
+				{#if $cart.n_discount == 2}
+					Achetez un livre et bénéficiez d'un rabais de 10% sur une impression
+					en carton!
+				{/if}
+				{$cart.n_discount > 1 ? 30 : $cart.n_discount == 1 ? 20 : 10}% sur {$cart.n_discount >
+				0
+					? 'vos impressions'
+					: 'une impression'} en carton!
+			{/if}
 			{$lang == 'fr'
-				? `Acheter un livre et bénéficier d'un rabais de 10% en achetant une impression en carton!`
+				? `Achetez un livre et bénéficiez d'un rabais de 10% sur une impression en carton!`
 				: `Buy a book and get a 10% discount on a cardboard print!`}
 		</span>
 	</div>

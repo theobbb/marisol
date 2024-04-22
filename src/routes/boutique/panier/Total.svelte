@@ -3,6 +3,7 @@
 	import { formatPrice } from '../lib/formatPrice';
 	import { lang } from '$lib/store';
 
+	export let iscart = false;
 	$: taxesTotal = $cart.taxes.reduce((acc, tax) => acc + tax.amount, 0);
 
 	$: multipleTaxes = $cart.taxes?.length > 1;
@@ -17,9 +18,20 @@
 			{formatPrice($cart.subtotal / 100)}
 		</div>
 	</div>
+	{#if $cart.discount}
+		<div class="flex w-full justify-between py-3">
+			<div>
+				{$lang == 'fr' ? 'Rabais' : 'Discounts'}
+			</div>
+			<div class="font-medium text-accent">
+				{formatPrice($cart.discount / 100)}
+			</div>
+		</div>
+	{/if}
 	<div class="flex w-full justify-between py-3">
 		<div>
 			{$lang == 'fr' ? 'Livraison' : 'Shipping'}
+			{iscart ? ($lang == 'fr' ? ' (estimée)' : ' (estimated)') : ''}
 		</div>
 		<div class="font-medium">
 			{formatPrice($cart.shipping)}
@@ -41,7 +53,11 @@
 			</div>
 		{/if}
 		<div class="flex items-baseline justify-between gap-4 pt-6">
-			<div>Taxes</div>
+			<div>
+				Taxes
+				{iscart ? ($lang == 'fr' ? ' (estimées)' : ' (estimated)') : ''}
+			</div>
+
 			{#if !multipleTaxes}
 				<div class="text-sm">
 					{$cart.taxes[0]?.code || ''}

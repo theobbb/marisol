@@ -102,10 +102,9 @@ export async function POST({ request, cookies }) {
 		if (item.is_book) n_books += item.quantity;
 		if (affiches_ids.includes(item.product_id)) n_affiches += item.quantity;
 	});
-	console.log('total', n_books, n_affiches);
+
 	let affiche_discount = 0;
-	if (n_books > 0) {
-		if (n_affiches < 1) return;
+	if (n_books > 0 && n_affiches > 0) {
 		if (n_affiches == 1) {
 			affiche_discount = 0.1;
 		} else if (n_affiches == 2) {
@@ -127,12 +126,13 @@ export async function POST({ request, cookies }) {
 		const disc = item.discount || 0;
 		const price = item.price * (1 - disc) * 100;
 
-		discount += item.price * 100 - price;
-
+		discount += (item.price * 100 - price) * item.quantity;
+		console.log(item.price * 100 - price);
 		let amount = item.quantity * price;
 		subtotal += amount;
 		total += amount + taxe(amount, item.is_book);
 	});
+
 	console.log(discount);
 
 	function push(code, amount) {
@@ -188,6 +188,7 @@ export async function POST({ request, cookies }) {
 	}
 
 	cart.subtotal = subtotal;
+	cart.discount = discount;
 	cart.taxes = taxes;
 	cart.shipping = shipping;
 	cart.total = total;
