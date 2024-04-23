@@ -129,7 +129,7 @@ export async function load({ cookies, locals }) {
 							name: { fr: '', en: '' },
 							_id: product._id,
 						},
-						price: product.category.category_price,
+						price: product?.category?.category_price,
 					},
 				];
 			}
