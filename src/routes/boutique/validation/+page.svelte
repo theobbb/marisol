@@ -98,7 +98,6 @@
 		});
 	});
 
-	$: console.log($cart);
 	async function address(address) {
 		try {
 			const res = await fetch('/boutique/api/cart-address', {
@@ -112,7 +111,7 @@
 				}),
 			});
 			const new_cart = await res.json();
-			console.log(new_cart);
+
 			$cart = new_cart;
 		} catch (error) {
 			console.error(error);
@@ -137,10 +136,11 @@
 			errorMessage = 'An unexpected error occurred.';
 		}
 
-		console.log(error);
+		console.log('success');
 
 		loading = false;
 	}
+	/*
 	// Fetches the payment intent status after payment submission
 	async function checkStatus() {
 		const clientSecret = new URLSearchParams(window.location.search).get(
@@ -179,7 +179,7 @@
 			messageContainer.classList.add('hidden');
 			messageContainer.textContent = '';
 		}, 4000);
-	}
+	}*/
 </script>
 
 <div class="mb-10">
