@@ -10,7 +10,6 @@
 		fr: '/animations',
 		en: '/workshop',
 	};
-	console.log('dans animation');
 </script>
 
 <div
@@ -37,7 +36,7 @@
 <LightBox>
 	<div class="columns-[2] gap-4 md:columns-[3] xl:columns-[4]">
 		{#each data.imgs as img}
-			<div class="grid-item mb-4">
+			<div class="grid-item relative mb-4">
 				<Img lazy src={img.asset.url} class="rounded-sm" />
 			</div>
 		{/each}

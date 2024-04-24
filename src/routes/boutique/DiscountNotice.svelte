@@ -1,5 +1,7 @@
 <script>
 	import { cart, lang } from '$lib/store';
+
+	let active_i = 0;
 </script>
 
 <div class="m-auto mb-10 w-fit rounded py-2">
@@ -17,27 +19,36 @@
 			>
 		</span>
 		<span class="inline-block">
-			{#if !$cart?.n_discount}
-				{$lang == 'fr'
-					? `Achetez un livre et bénéficiez d'un rabais de 10% sur une impression
-					en carton!`
-					: `Buy a book and get a 10% discount on a cardboard print!`}
-			{:else if $cart?.n_discount == 1}
-				{$lang == 'fr'
-					? `Achetez un livre et bénéficiez d'un rabais de 20% sur vos impressions en carton!`
-					: `Buy a book and get a 20% discount on your cardboard prints!`}
+			{#if $lang == 'fr'}
+				À l'achat d'un <a href="/boutique/livres">livre</a>, vous bénéficiez
+				d'un rabais de <strong>10%</strong> sur une
+				<a href="/boutique/impression-sur-papier-cartonne"
+					>impression sur papier cartonnée</a
+				> !
 			{:else}
-				{$lang == 'fr'
-					? `Achetez un livre et bénéficiez d'un rabais de 30% sur vos impressions en carton!`
-					: `Buy a book and get a 30% discount on your cardboard prints!`}
+				Buy a <a href="/en/shop/books">book</a> and get a <strong>10%</strong>
+				discount on a <a href="/en/shop/print-on-cardboard">cardboard print</a>!
 			{/if}
 		</span>
 	</div>
+
 	<div class="mt-1">
 		<a
-			href="/{$lang == 'fr' ? 'boutique/rabais' : 'shop/discounts'}"
-			class="!p-0 decoration-black/40 underline-offset-4 opacity-60 hover:underline"
-			>Voir tous les rabais en cours</a
+			href="/{$lang == 'fr' ? 'boutique/rabais' : 'en/shop/discounts'}"
+			class="others !p-0 font-normal decoration-black/40 underline-offset-4 opacity-60 hover:underline"
 		>
+			{$lang == 'fr'
+				? 'Voir tous les rabais en cours'
+				: 'See all current discounts'}
+		</a>
 	</div>
 </div>
+
+<style>
+	a:not(.others) {
+		@apply text-accent;
+	}
+	a:not(.others):hover {
+		@apply underline decoration-accent underline-offset-4;
+	}
+</style>

@@ -41,10 +41,12 @@ export async function POST({ request, cookies }) {
 
 	const shipping_classes = await sanity.fetch(`*[_type == "shipping"]`);
 
-	const affiches_ids = [];
+	const print_ids = [];
 	function checkIfDiscounted(product) {
-		if (product?.category?.slug?.fr?.current == 'impression-sur-carton') {
-			affiches_ids.push(product._id);
+		if (
+			product?.category?.slug?.fr?.current == 'impression-sur-papier-cartonne'
+		) {
+			print_ids.push(product._id);
 		}
 	}
 
@@ -96,44 +98,39 @@ export async function POST({ request, cookies }) {
 	total += shipping_total;
 
 	let n_books = 0;
-	let n_affiches = 0;
+	let n_prints = 0;
 
 	cart.items.forEach((item) => {
 		if (item.is_book) n_books += item.quantity;
-		if (affiches_ids.includes(item.product_id)) n_affiches += item.quantity;
+		if (print_ids.includes(item.product_id)) n_prints += item.quantity;
 	});
 
-	let affiche_discount = 0;
-	if (n_books > 0 && n_affiches > 0) {
-		if (n_affiches == 1) {
-			affiche_discount = 0.1;
-		} else if (n_affiches == 2) {
-			affiche_discount = 0.2;
-		} else {
-			affiche_discount = 0.3;
+	let print_discount = 0;
+	if (n_prints > 0) {
+		if (n_prints >= 3) {
+			print_discount = 0.3;
+		} else if (n_prints == 2) {
+			print_discount = 0.2;
+		} else if (n_books > 0) {
+			print_discount = 0.1;
 		}
 	}
 
-	console.log('item', affiche_discount);
 	cart.items.forEach((item) => {
-		if (affiche_discount > 0) {
-			console.log('item', item.discount);
-			if (affiches_ids.includes(item.product_id)) {
-				item.discount = affiche_discount;
-				console.log('item', item.discount);
-			}
+		if (print_ids.includes(item.product_id)) {
+			item.discount = print_discount;
+		} else {
+			item.discount = 0;
 		}
-		const disc = item.discount || 0;
-		const price = item.price * (1 - disc) * 100;
+
+		const price = item.price * (1 - item.discount) * 100;
 
 		discount += (item.price * 100 - price) * item.quantity;
-		console.log(item.price * 100 - price);
+
 		let amount = item.quantity * price;
 		subtotal += amount;
 		total += amount + taxe(amount, item.is_book);
 	});
-
-	console.log(discount);
 
 	function push(code, amount) {
 		let rate = 1;

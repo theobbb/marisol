@@ -10,47 +10,78 @@
 	$: print = $lang == 'fr' ? 'impression en carton' : 'cardboard print';
 </script>
 
-<div class="m-auto max-w-[680px] pt-16 text-lg">
+<div class="m-auto max-w-[520px] pt-16 text-lg">
 	<div class="mb-1.5 text-4xl">
 		{$lang == 'fr' ? 'Rabais en cours' : 'Discounts'}
 	</div>
 	<div class="text-lg">
 		{$lang == 'fr'
-			? "Acheter un livre et des impressions en carton vous permet d'économiser!"
+			? "Acheter plusieurs produits vous permet d'économiser! Le rabais le plus avantageux s'applique automatiquement au panier."
 			: 'Buying a book and cardboard prints saves you money!'}
 	</div>
-	<div class="mt-16 border-b pb-1">
-		{$lang == 'fr' ? `À l'achat d'un livre...` : 'When you buy a book...'}
+
+	<div class="mt-28 w-full">
+		<div class="flex w-full items-center justify-center">
+			<div class="size-32 rotate-[-10deg] rounded bg-sky-400/30"></div>
+
+			<div
+				class="size-32 -translate-x-16 rotate-[-20deg] rounded bg-teal-400/30"
+			></div>
+		</div>
+		<div class="mt-8">
+			À l'achat d'un <a href="/boutique/livres">livre</a>, vous bénéficiez d'un
+			rabais de <strong>10%</strong> sur une
+			<a href="/boutique/impression-sur-papier-cartonne"
+				>impression sur papier cartonnée</a
+			>.
+		</div>
 	</div>
-	<div class="mt-6 w-full md:table">
-		<tr class="">
-			<td>10%</td>
-			<td>{rabais}</td>
-			<td>{$lang == 'fr' ? 'la 1ere' : 'the 1st'}</td>
-			<td>{$lang == 'fr' ? 'impression en carton' : 'cardboard print'}</td>
-		</tr>
-		<tr class="">
-			<td>20%</td>
-			<td class="opacity-20">{rabais}</td>
-			<td>2</td>
-			<td class="opacity-20"
-				>{$lang == 'fr' ? 'impressions en carton' : 'cardboard prints'}</td
-			>
-		</tr>
-		<tr class="">
-			<td>30%</td>
-			<td class="opacity-20">{rabais}</td>
-			<td>{$lang == 'fr' ? '3 et +' : '3 +'}</td>
-			<td class="opacity-20"
-				>{$lang == 'fr' ? 'impressions en carton' : 'cardboard prints'}</td
-			>
-		</tr>
+
+	<div class="mt-28">
+		<div class="flex w-full items-center justify-center">
+			<div class="size-32 rotate-[-10deg] rounded bg-teal-400/30"></div>
+
+			<div
+				class="size-32 -translate-x-16 rotate-[-20deg] rounded bg-teal-400/30"
+			></div>
+		</div>
+		<div class="mt-8">
+			Achetez <a href="/boutique/impression-sur-papier-cartonne"
+				>2 impressions sur papier cartonnée</a
+			>et bénéficiez d'un rabais de <strong>20%</strong>.
+		</div>
+	</div>
+
+	<div class="mt-28">
+		<div class="flex w-full items-center justify-center">
+			<div class="size-24 rotate-[10deg] rounded bg-teal-400/30"></div>
+
+			<div
+				class="size-24 -translate-x-8 translate-y-6 rotate-[0deg] rounded bg-teal-400/30"
+			></div>
+			<div
+				class="size-24 -translate-x-16 rotate-[-10deg] rounded bg-teal-400/30"
+			></div>
+			<div class="-translate-x-8 text-4xl">+</div>
+		</div>
+		<div class="mt-10">
+			Achetez <a href="/boutique/impression-sur-papier-cartonne"
+				>3 impressions sur papier cartonnée ou plus
+			</a>et bénéficiez d'un rabais de <strong>20%</strong>.
+		</div>
 	</div>
 </div>
 
 <style>
-	td {
-		padding: 6px 0;
-		padding-right: 12px;
+	a {
+		font-weight: 600;
+	}
+	a:hover {
+		text-decoration: underline;
+		text-decoration-color: rgba(0, 0, 0, 0.26);
+		@apply underline-offset-2;
+	}
+	strong {
+		font-weight: 600;
 	}
 </style>

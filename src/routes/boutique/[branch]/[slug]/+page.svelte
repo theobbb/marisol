@@ -55,6 +55,7 @@
 		//loading = false;
 		$progress.done();
 	}
+	$: console.log(data.match);
 </script>
 
 <div class="mb-8">
@@ -92,12 +93,24 @@
 					{/if}
 				</div>
 				<div class="mt-2">
-					<Link
-						class="!p-0"
-						href={data.match.branch.slug[$lang]?.current ||
-							data.match.branch.slug.fr.current}
-						>{data.match.branch.name[$lang] || data.match.branch.name.fr}</Link
-					>
+					{#if data.match.category?._id}
+						<Link
+							class="!p-0"
+							href="/{$lang == 'fr' ? 'boutique' : 'en/shop'}/{data.match
+								.category.slug[$lang]?.current ||
+								data.match.category.slug.fr.current}"
+							>{data.match.category.name[$lang] ||
+								data.match.category.name[$lang]}</Link
+						>
+					{:else}
+						<Link
+							class="!p-0"
+							href="/{data.match.branch.slug[$lang]?.current ||
+								data.match.branch.slug.fr.current}"
+							>{data.match.branch.name[$lang] ||
+								data.match.branch.name.fr}</Link
+						>
+					{/if}
 				</div>
 
 				<div class="mt-16">
@@ -111,6 +124,19 @@
 						{/if}
 					</div>
 				</div>
+				{#if match.category?._id}
+					<div class="mt-16">
+						<div>
+							{#if match.category.description?.fr}
+								<SanityTextBlock
+									class=""
+									blocks={data.match.category.description[$lang] ||
+										data.match.category.description?.fr}
+								/>
+							{/if}
+						</div>
+					</div>
+				{/if}
 				<div
 					class="mt-12 lg:mt-32 {loading
 						? 'pointer-events-none opacity-30'
@@ -174,17 +200,20 @@
 					{$lang == 'fr' ? 'Tiré du livre' : 'From the book'}
 				</div>
 				<div class="mt-4">
-					<a
+					<Link
+						class="!p-0"
 						href="{$lang == 'fr' ? '/livres' : '/en/books'}/{data.match.book
 							.slug[$lang]?.current || data.match.book.slug.fr.current}"
-						><div class="mb-2">{data.match.book.name[$lang]}</div>
+						><div class="mb-2">
+							{data.match.book.name[$lang] || data.match.book.name.fr}
+						</div>
 						<div class="w-[200px]">
 							<Img
 								class="rounded-sm"
 								src={data.match.book.images[0].asset.url}
 							/>
 						</div>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

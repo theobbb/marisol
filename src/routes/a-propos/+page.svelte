@@ -99,6 +99,7 @@
 			: 'h-[180px] brightness-[1.3] contrast-[0.8] grayscale lg:h-[auto]'}
 	>
 		<Img
+			lazy
 			src={data.bio.img.asset.url}
 			class="max-h-full  max-w-full rounded-lg "
 		/>

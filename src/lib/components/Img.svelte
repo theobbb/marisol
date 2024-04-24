@@ -9,10 +9,16 @@
 
 	let dom = null;
 
+	let observer = null;
+
 	let mounted = false;
 	onMount(() => {
 		mounted = true;
 		init();
+
+		return () => {
+			if (observer) observer.disconnect();
+		};
 	});
 
 	$: src, init();
@@ -23,7 +29,7 @@
 		const img = new Image();
 
 		if (lazy) {
-			const observer = new IntersectionObserver((entries) => {
+			observer = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting) {
 					img.src = src;
 					dom.src = src;
