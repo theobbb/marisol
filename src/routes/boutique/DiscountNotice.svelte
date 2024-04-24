@@ -23,11 +23,11 @@
 				À l'achat d'un <a href="/boutique/livres">livre</a>, vous bénéficiez
 				d'un rabais de <strong>10%</strong> sur une
 				<a href="/boutique/impression-sur-papier-cartonne"
-					>impression sur papier cartonnée</a
+					>impression sur papier cartonné</a
 				> !
 			{:else}
 				Buy a <a href="/en/shop/books">book</a> and get a <strong>10%</strong>
-				discount on a <a href="/en/shop/print-on-cardboard">cardboard print</a>!
+				discount on a <a href="/en/shop/print-on-cardstock">print on cardstock</a>!
 			{/if}
 		</span>
 	</div>

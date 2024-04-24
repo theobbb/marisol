@@ -11,7 +11,7 @@
 
 	data.shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
-			if (product?.category?.slug?.fr?.current == 'impression-sur-carton') {
+			if (product?.category?.slug?.fr?.current == 'impression-sur-papier-cartonne') {
 				affiches_ids.push(product._id);
 			}
 		});
