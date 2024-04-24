@@ -40,6 +40,7 @@
 		"@stripe/stripe-js": "^3.0.10",
 		"@sveltejs/adapter-netlify": "^4.1.0",
 		"axios": "^1.6.7",
+		"handlebars": "^4.7.8",
 		"image-layout": "^0.4.1",
 		"masonry-layout": "^4.2.2",
 		"mongoose": "^8.2.2",

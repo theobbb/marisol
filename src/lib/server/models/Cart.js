@@ -11,6 +11,8 @@ const cartSchema = new mongoose.Schema({
 			discount: Number,
 		},
 	],
+	status: String,
+	stripe_id: String,
 	discount: Number,
 	subtotal: Number,
 	taxes: [{ code: String, amount: Number }],

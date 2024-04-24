@@ -73,7 +73,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-{#if $lang_href.fr != '/boutique/rabais' && $lang_href.fr != '/shop/validation'}
+{#if $lang_href.fr != '/boutique/rabais' && $lang_href.fr != '/boutique/validation' && $lang_href.fr != '/boutique/validation/success'}
 	<DiscountNotice />
 {/if}
 

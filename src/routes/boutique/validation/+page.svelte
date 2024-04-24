@@ -120,25 +120,44 @@
 
 	async function handleSubmit(e) {
 		e.preventDefault();
+		console.log('submit');
 		loading = true;
 		//setLoading(true);
-		const { error } = await stripe.confirmPayment({
+		const res = await stripe.confirmPayment({
 			elements: elements,
 			confirmParams: {
 				// Make sure to change this to your payment completion page
-				return_url: 'http://localhost:5173/boutique/validation/success',
+				return_url:
+					'http://localhost:5173/boutique/validation/success?cart_id=' +
+					$cart._id,
 			},
 		});
-
+		const { error, data } = res;
+		console.log(error);
 		if (error.type === 'card_error' || error.type === 'validation_error') {
 			errorMessage = error.message;
 		} else {
 			errorMessage = 'An unexpected error occurred.';
 		}
-
-		console.log('success');
+		console.log('submit');
+		onSuccess();
 
 		loading = false;
+	}
+
+	async function onSuccess() {
+		const res = await fetch('/boutique/api/success', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				stripe_id: data.checkout.ID,
+				cart_id: $cart._id,
+			}),
+		});
+		console.log('submit');
+		console.log(res);
 	}
 	/*
 	// Fetches the payment intent status after payment submission
