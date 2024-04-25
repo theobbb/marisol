@@ -1,5 +1,5 @@
 <script>
-	import { invert, lang_href } from '$lib/store';
+	import { invert } from '$lib/store';
 
 	export let href = '',
 		active,

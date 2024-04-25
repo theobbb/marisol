@@ -11,6 +11,7 @@
 	export let data;
 
 	let dom = {};
+
 	$: $invert =
 		($page.url.pathname == '/' || $page.url.pathname == '/en') && !menuOpen;
 
@@ -170,7 +171,6 @@
 			>
 				<HeaderLinks {activeLinkIndex} {data} />
 			</div>
-
 			<div
 				class="min-[1120px]:pointer-events-auto {big
 					? ''
@@ -200,8 +200,12 @@
 					class=""
 					href="https://www.instagram.com/marisolsarrazin/"
 					target="_blank"
-					><img class="h-[26px] w-[26px]" src="/instagram.png" /></a
-				>
+					><img
+						class="h-[26px] w-[26px]"
+						alt="instagram"
+						src="/instagram.png"
+					/>
+				</a>
 			</div>
 		</div>
 	</div>
