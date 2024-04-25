@@ -30,7 +30,7 @@
 
 	onMount(async () => {
 		stripe = await loadStripe(
-			'pk_test_51OxX1nItENF0KQtogq7Kpz1YE8fg3AwGUdnCP2sRi8ieFJiicSumoDAjFQ3srqrj4qdZAy5YZrWEzMRvEzgaL52200LfEACkwu',
+			'pk_live_51OxX1nItENF0KQtoR9KZO4pKXyrc0KdWOLc5FPwYoagoJZORFCSWummzo3JX2s8gM8hFQv6Wic8NIjBnOLlBQ3gd00F7Oh1nna',
 			{ locale: $lang },
 		);
 		elements = stripe.elements({ clientSecret: data.checkout.secret });
