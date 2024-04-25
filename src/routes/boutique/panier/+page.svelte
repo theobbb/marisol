@@ -13,6 +13,8 @@
 		fr: '/boutique/panier',
 		en: '/shop/cart',
 	};
+	export let data;
+	$: console.log(data);
 
 	let address = {};
 

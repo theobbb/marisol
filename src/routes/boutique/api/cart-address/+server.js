@@ -56,6 +56,14 @@ export async function POST({ request, cookies }) {
 
 			if (product.variants && product.variants.length) {
 				product.variants.forEach((variant) => {
+					const item = cart.items.find(
+						(i) =>
+							i.product_id === product._id &&
+							(i.variant_id == variant?.variant?._id ||
+								i.variant_id == i.product_id),
+					);
+
+					if (!item) return;
 					const shipping_key =
 						variant?.shipping ||
 						product.category?.category_shipping ||
@@ -74,7 +82,7 @@ export async function POST({ request, cookies }) {
 					product.category?.category_shipping || branch.branch_shipping;
 				if (!shipping_key) return;
 				const price = findShippingClass(shipping_key);
-				console.log(price);
+
 				//console.log(product.name.fr, price);
 				shipping = Math.max(shipping, price);
 			}
