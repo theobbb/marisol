@@ -4,7 +4,7 @@
 [build.environment]
     PUBLIC_SANITY_DATASET="production"
     PUBLIC_SANITY_PROJECT_ID="m60p6rsb"
-    STRIPE_API_KEY="sk_test_51OxX1nItENF0KQtorVpfebtAaKISXbuteyMlDJPFqcJM1mUFFk5sPW9PlkZd7UEjoWUmzyzielKDhLxtmUQ4QqTw00AhslbWxY"
+    STRIPE_API_KEY="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"
     MONGO_URI="mongodb+srv://theobbb:d7E0vTDITY0QFMZe@cluster0.cyfvzya.mongodb.net/marisol"
     MONGO_DB="marisol"
     EMAIL_HOST="mail.marisolsarrazin.com"
