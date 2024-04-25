@@ -13,6 +13,7 @@
 		fr: '/boutique/panier',
 		en: '/shop/cart',
 	};
+	export let data;
 	let address = {};
 
 	let mounted = false;
@@ -54,7 +55,7 @@
 			state,
 		};
 		mounted = true;
-		calculateTotal();
+		//calculateTotal();
 	});
 	let calculating = false;
 	let lastTotal = 0;
@@ -72,8 +73,10 @@
 			calculateTotal();
 		}
 	}
+	$: console.log(data);
 
 	async function calculateTotal() {
+		console.log(address);
 		calculating = true;
 		try {
 			const res = await fetch('/boutique/api/cart-address', {

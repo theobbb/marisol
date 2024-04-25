@@ -5,7 +5,6 @@
 
 	export let activeLinkIndex, data;
 
-	$: console.log($invert);
 	const maped = links.map((link, i) => {
 		if (link.fr.href == '/portfolio') {
 			link.children = data.portfolio.children.map((branch) => {
@@ -21,21 +20,21 @@
 				};
 			});
 		}
-		/*
+
 		if (link.fr.href == '/boutique') {
 			link.children = data.shop.branches.map((branch) => {
 				return {
 					fr: {
-						href: `/boutique#${branch.slug.fr.current}`,
+						href: `/boutique/${branch.slug.fr.current}`,
 						name: branch.name.fr,
 					},
 					en: {
-						href: `/en/shop#${branch.slug.en.current}`,
+						href: `/en/shop/${branch.slug.en.current}`,
 						name: branch.name.en,
 					},
 				};
 			});
-		}*/
+		}
 		return link;
 	});
 </script>

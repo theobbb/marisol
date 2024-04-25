@@ -38,17 +38,12 @@ export async function load({ cookies }) {
 		amount += variant.price * item.quantity * 100;
 	});*/
 
-	const taxRate = await stripe.taxRates.create({
-		display_name: 'TPS',
-		description: 'TPS Qc',
-		percentage: 5,
-		jurisdiction: 'QC',
-		inclusive: false,
-	});
-
 	const paymentIntent = await stripe.paymentIntents.create({
 		amount,
 		currency: 'cad',
+		metadata: {
+			cart_id: cartId,
+		},
 	});
 
 	const shippingRates = await stripe.shippingRates.list({

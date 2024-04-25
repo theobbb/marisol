@@ -49,20 +49,13 @@ export async function POST({ request, cookies }) {
 			print_ids.push(product._id);
 		}
 	}
-
-	//console.log('shop', shipping_classes);
+	console.log('item');
 	shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
 			checkIfDiscounted(product);
 
 			if (product.variants && product.variants.length) {
 				product.variants.forEach((variant) => {
-					const item = cart.items.find(
-						(i) =>
-							i.variant_id == variant?.variant?._id &&
-							i.product_id === product._id,
-					);
-					if (!item) return;
 					const shipping_key =
 						variant?.shipping ||
 						product.category?.category_shipping ||
@@ -70,6 +63,8 @@ export async function POST({ request, cookies }) {
 						branch.branch_shipping;
 					if (!shipping_key) return;
 					const price = findShippingClass(shipping_key);
+					console.log(price);
+					console.log(price);
 
 					shipping = Math.max(shipping, price);
 				});
@@ -81,6 +76,7 @@ export async function POST({ request, cookies }) {
 					product.category?.category_shipping || branch.branch_shipping;
 				if (!shipping_key) return;
 				const price = findShippingClass(shipping_key);
+				console.log(price);
 				//console.log(product.name.fr, price);
 				shipping = Math.max(shipping, price);
 			}

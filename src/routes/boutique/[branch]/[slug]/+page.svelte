@@ -105,8 +105,8 @@
 					{:else}
 						<Link
 							class="!p-0"
-							href="/{data.match.branch.slug[$lang]?.current ||
-								data.match.branch.slug.fr.current}"
+							href="/{$lang == 'fr' ? 'boutique' : 'en/shop'}/{data.match.branch
+								.slug[$lang]?.current || data.match.branch.slug.fr.current}"
 							>{data.match.branch.name[$lang] ||
 								data.match.branch.name.fr}</Link
 						>

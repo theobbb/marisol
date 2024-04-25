@@ -34,7 +34,7 @@
 	<div>
 		<div class="pt-3 text-lg">
 			{$lang == 'fr'
-				? 'Un email de confirmation vous a été envoyé.'
+				? 'Un courriel de confirmation vous a été envoyé.'
 				: 'A confirmation email has been sent to you.'}
 		</div>
 	</div>

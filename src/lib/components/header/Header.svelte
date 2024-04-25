@@ -11,12 +11,9 @@
 	export let data;
 
 	let dom = {};
-
-	let mobileMenuOpen = false;
 	$: $invert =
 		($page.url.pathname == '/' || $page.url.pathname == '/en') && !menuOpen;
 
-	$: console.log($invert);
 	onMount(() => {
 		window.addEventListener('scroll', onScroll);
 		window.addEventListener('resize', onResize);
@@ -173,6 +170,7 @@
 			>
 				<HeaderLinks {activeLinkIndex} {data} />
 			</div>
+
 			<div
 				class="min-[1120px]:pointer-events-auto {big
 					? ''

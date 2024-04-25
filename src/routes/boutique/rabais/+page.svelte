@@ -47,8 +47,8 @@
 		</div>
 		<div class="mt-8">
 			Achetez <a href="/boutique/impression-sur-papier-cartonne"
-				>2 impressions sur papier cartonnée</a
-			>et bénéficiez d'un rabais de <strong>20%</strong>.
+				>2 impressions sur papier cartonnée
+			</a>et bénéficiez d'un rabais de <strong>20%</strong>.
 		</div>
 	</div>
 
@@ -67,7 +67,7 @@
 		<div class="mt-10">
 			Achetez <a href="/boutique/impression-sur-papier-cartonne"
 				>3 impressions sur papier cartonnée ou plus
-			</a>et bénéficiez d'un rabais de <strong>20%</strong>.
+			</a>et bénéficiez d'un rabais de <strong>30%</strong>.
 		</div>
 	</div>
 </div>
