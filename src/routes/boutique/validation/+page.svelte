@@ -128,7 +128,7 @@
 			confirmParams: {
 				// Make sure to change this to your payment completion page
 				return_url:
-					'https://marisolsarrazin.com/boutique/validation/success?cart_id=' +
+					`https://marisolsarrazin.com/${$lang == 'fr' ? 'boutique/validation' : 'en/shop/checkout'}/success?cart_id=` +
 					$cart._id,
 			},
 		});

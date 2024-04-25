@@ -31,11 +31,6 @@ export async function load({ cookies }) {
 		},
 	});
 
-	const shippingRates = await stripe.shippingRates.list({
-		limit: 3,
-	});
-	console.log('shippingRates', shippingRates);
-
 	return {
 		checkout: {
 			ID: paymentIntent.id,

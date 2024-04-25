@@ -20,7 +20,7 @@
 				};
 			});
 		}
-
+		/*
 		if (link.fr.href == '/boutique') {
 			link.children = data.shop.branches.map((branch) => {
 				return {
@@ -34,7 +34,7 @@
 					},
 				};
 			});
-		}
+		}*/
 		return link;
 	});
 </script>
