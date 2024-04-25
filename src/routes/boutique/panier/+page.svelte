@@ -13,7 +13,7 @@
 		fr: '/boutique/panier',
 		en: '/shop/cart',
 	};
-	export let data;
+
 	let address = {};
 
 	let mounted = false;
