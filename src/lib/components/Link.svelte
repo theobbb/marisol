@@ -18,6 +18,3 @@
 >
 	<slot />
 </a>
-
-<style>
-</style>

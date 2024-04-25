@@ -27,7 +27,8 @@
 				> !
 			{:else}
 				Buy a <a href="/en/shop/books">book</a> and get a <strong>10%</strong>
-				discount on a <a href="/en/shop/print-on-cardstock">print on cardstock</a>!
+				discount on a
+				<a href="/en/shop/print-on-cardstock">print on cardstock</a>!
 			{/if}
 		</span>
 	</div>
