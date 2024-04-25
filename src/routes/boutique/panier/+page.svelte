@@ -73,10 +73,8 @@
 			calculateTotal();
 		}
 	}
-	$: console.log(data);
 
 	async function calculateTotal() {
-		console.log(address);
 		calculating = true;
 		try {
 			const res = await fetch('/boutique/api/cart-address', {

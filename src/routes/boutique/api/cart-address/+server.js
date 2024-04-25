@@ -49,7 +49,7 @@ export async function POST({ request, cookies }) {
 			print_ids.push(product._id);
 		}
 	}
-	console.log('item');
+
 	shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
 			checkIfDiscounted(product);
@@ -63,8 +63,6 @@ export async function POST({ request, cookies }) {
 						branch.branch_shipping;
 					if (!shipping_key) return;
 					const price = findShippingClass(shipping_key);
-					console.log(price);
-					console.log(price);
 
 					shipping = Math.max(shipping, price);
 				});
