@@ -4,6 +4,7 @@
 	import Total from '../panier/Total.svelte';
 	import Countries from './Countries.svelte';
 	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
 
 	import { lang_href } from '$lib/store';
 	$lang_href = {
@@ -28,15 +29,25 @@
 	let taxes = 0;
 	let shipping = 0;
 
+	let email = '';
+
 	onMount(async () => {
 		stripe = await loadStripe(
-			'pk_live_51OxX1nItENF0KQtoR9KZO4pKXyrc0KdWOLc5FPwYoagoJZORFCSWummzo3JX2s8gM8hFQv6Wic8NIjBnOLlBQ3gd00F7Oh1nna',
+			dev
+				? 'pk_test_51OxX1nItENF0KQtogq7Kpz1YE8fg3AwGUdnCP2sRi8ieFJiicSumoDAjFQ3srqrj4qdZAy5YZrWEzMRvEzgaL52200LfEACkwu'
+				: 'pk_live_51OxX1nItENF0KQtoR9KZO4pKXyrc0KdWOLc5FPwYoagoJZORFCSWummzo3JX2s8gM8hFQv6Wic8NIjBnOLlBQ3gd00F7Oh1nna',
 			{ locale: $lang },
 		);
 		elements = stripe.elements({ clientSecret: data.checkout.secret });
 
 		const paymentElementOptions = {
 			layout: 'tabs',
+			fields: {
+				billingDetails: {
+					name: 'auto',
+					email: 'auto',
+				},
+			},
 		};
 
 		const emailElement = elements.create('linkAuthentication');
@@ -58,6 +69,10 @@
 
 				address(event.value.address);
 			}
+		});
+
+		emailElement.on('change', (event) => {
+			email = event.value.email;
 		});
 
 		const res = await fetch(
@@ -120,7 +135,7 @@
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		console.log('submit');
+
 		loading = true;
 		//setLoading(true);
 		const res = await stripe.confirmPayment({
@@ -128,36 +143,20 @@
 			confirmParams: {
 				// Make sure to change this to your payment completion page
 				return_url:
-					`https://marisolsarrazin.com/${$lang == 'fr' ? 'boutique/validation' : 'en/shop/checkout'}/success?cart_id=` +
+					`${dev ? `http://localhost:5173` : `https://marisolsarrazin.com`}/${$lang == 'fr' ? 'boutique/validation' : 'en/shop/checkout'}/success?cart_id=` +
 					$cart._id,
+				receipt_email: email,
 			},
 		});
-		const { error, data } = res;
-		console.log(error);
+		const { error } = res;
+
 		if (error.type === 'card_error' || error.type === 'validation_error') {
 			errorMessage = error.message;
 		} else {
 			errorMessage = 'An unexpected error occurred.';
 		}
-		console.log('submit');
-		onSuccess();
 
 		loading = false;
-	}
-
-	async function onSuccess() {
-		const res = await fetch('/boutique/api/success', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				stripe_id: data.checkout.ID,
-				cart_id: $cart._id,
-			}),
-		});
-		console.log('submit');
-		console.log(res);
 	}
 	/*
 	// Fetches the payment intent status after payment submission

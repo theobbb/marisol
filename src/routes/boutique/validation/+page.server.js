@@ -13,7 +13,7 @@ export async function load({ cookies }) {
 			cart = JSON.parse(JSON.stringify(retrieved));
 		}
 	} else {
-		return error(404, 'No cart found');
+		error(404, 'No cart found');
 	}
 
 	let amount = 0;
