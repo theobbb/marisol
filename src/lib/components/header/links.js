@@ -42,11 +42,11 @@ export const links = [
 	{
 		fr: {
 			name: 'Boutique',
-			href: '/boutique-a-venir',
+			href: '/boutique',
 		},
 		en: {
 			name: 'Shop',
-			href: '/shop-coming-soon',
+			href: '/shop',
 		},
 	},
 	{
