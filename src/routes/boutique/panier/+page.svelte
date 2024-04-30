@@ -14,7 +14,6 @@
 		en: '/shop/cart',
 	};
 	export let data;
-	$: console.log(data);
 
 	let address = {};
 
@@ -30,7 +29,7 @@
 		);
 		const data = await res.json();
 
-		$cart.currency = data.country.currency;
+		if ($cart) $cart.currency = data.country.currency;
 
 		const codes = {
 			Canada: 'CA',

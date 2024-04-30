@@ -9,12 +9,12 @@
 	data.cart = null;
 
 	$lang_href = {
-		fr: '/boutique/validation/success',
+		fr: '/boutique/validation/succes',
 		en: '/shop/checkout/success',
 	};
 </script>
 
-<div class="m-auto w-fit pb-24">
+<div class="m-auto w-fit">
 	<div class="flex items-center gap-4 pt-20">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
 	<div>
 		<div class="pt-3 text-lg">
 			{$lang == 'fr'
-				? 'Un courriel de confirmation vous a été envoyé.'
+				? 'Un courriel de confirmation incluant cette facture vous a été envoyé.'
 				: 'A confirmation email has been sent to you.'}
 		</div>
 	</div>

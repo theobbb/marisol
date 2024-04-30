@@ -11,7 +11,9 @@
 
 	data.shop.branches.forEach((branch) => {
 		branch.products.forEach((product) => {
-			if (product?.category?.slug?.fr?.current == 'impression-sur-papier-cartonne') {
+			if (
+				product?.category?.slug?.fr?.current == 'impression-sur-papier-cartonne'
+			) {
 				affiches_ids.push(product._id);
 			}
 		});
@@ -73,7 +75,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-{#if $lang_href.fr != '/boutique/rabais' && $lang_href.fr != '/boutique/validation' && $lang_href.fr != '/boutique/validation/success'}
+{#if $lang_href.fr != '/boutique/rabais' && $lang_href.fr != '/boutique/validation' && $lang_href.fr != '/boutique/validation/succes'}
 	<DiscountNotice />
 {/if}
 

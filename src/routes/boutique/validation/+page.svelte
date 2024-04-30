@@ -1,6 +1,5 @@
 <script>
 	import { lang, cart } from '$lib/store';
-	import Cart from '../panier/+page.svelte';
 	import Total from '../panier/Total.svelte';
 	import Countries from './Countries.svelte';
 	import { onMount } from 'svelte';
@@ -13,7 +12,6 @@
 	};
 	import { loadStripe } from '@stripe/stripe-js/pure';
 	import Loader from '$lib/components/Loader.svelte';
-	import { updated } from '$app/stores';
 	import Link from '$lib/components/Link.svelte';
 
 	export let data;
@@ -143,7 +141,7 @@
 			confirmParams: {
 				// Make sure to change this to your payment completion page
 				return_url:
-					`${dev ? `http://localhost:5173` : `https://marisolsarrazin.com`}/${$lang == 'fr' ? 'boutique/validation' : 'en/shop/checkout'}/success?cart_id=` +
+					`${dev ? `http://localhost:5173` : `https://marisolsarrazin.com`}/${$lang == 'fr' ? 'boutique/validation/succes' : 'en/shop/checkout/success'}?cart_id=` +
 					$cart._id,
 				receipt_email: email,
 			},
