@@ -23,11 +23,18 @@ export async function load({ cookies }) {
 		amount += item.quantity * item.price * 100;
 	});
 
+	const metaItems = cart.items.map((item) => ({
+		nom: item.name,
+		quantity: item.quantity,
+		price: item.price,
+	}));
+
 	const paymentIntent = await stripe.paymentIntents.create({
 		amount,
 		currency: 'cad',
 		metadata: {
 			cart_id: cartId,
+			items: JSON.stringify(metaItems),
 		},
 	});
 

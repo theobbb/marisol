@@ -3,12 +3,15 @@ const cartSchema = new mongoose.Schema({
 	cart_id: String,
 	items: [
 		{
+			name: String,
 			product_id: String,
 			quantity: Number,
 			variant_id: String,
 			price: Number,
 			is_book: Boolean,
 			discount: Number,
+			url: String,
+			image: String,
 		},
 	],
 	status: String,

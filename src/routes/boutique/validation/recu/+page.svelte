@@ -1,6 +1,7 @@
 <script>
 	import { cart, lang, lang_href } from '$lib/store';
 	import { onMount } from 'svelte';
+	import Recu from './Recu.svelte';
 	$cart = null;
 
 	export let data;
@@ -13,7 +14,7 @@
 	};
 </script>
 
-<div class="m-auto w-fit">
+<div class="m-auto w-fit pb-24">
 	<div class="flex items-center gap-4 pt-20">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +26,7 @@
 				d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
 			/></svg
 		>
-		<div class="text-4xl">
+		<div class="text-3xl">
 			{$lang == 'fr'
 				? 'Merci pour votre achat!'
 				: 'Thank you for you purchase!'}
@@ -39,3 +40,5 @@
 		</div>
 	</div>
 </div>
+
+<Recu {data} />

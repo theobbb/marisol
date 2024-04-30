@@ -8,12 +8,12 @@
 	};
 </script>
 
-<div class="m-auto text-xl md:w-[600px]">
-	<div class="mb-8">
-		<div class="mb-3 text-3xl">
+<div class="m-auto text-lg md:w-[600px]">
+	<div class="mb-10">
+		<div class="mb-2 text-3xl">
 			{$lang == 'fr' ? 'Contactez Marisol' : 'Contact Marisol'}
 		</div>
-		<div class="text-base text-stone-400">
+		<div class=" text-stone-400">
 			{$lang == 'fr'
 				? `Pour toute question ou demande particulière, veuillez remplir ce formulaire.`
 				: `For any question or special request, please fill out this form. `}

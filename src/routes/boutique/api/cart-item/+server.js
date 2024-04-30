@@ -32,13 +32,13 @@ export async function POST({ request, locals }) {
 				category->{...}
 			}`,
 			);
+			let variant = null;
 
 			let price = 0;
 			if (!product.variants?.length) {
 				console.log('product', product);
 				price = product.category?.category_price;
 			} else {
-				let variant = null;
 				if (product.variants.length > 1) {
 					variant = product?.variants?.find(
 						(v) => v?.variant?._id === variant_id,
@@ -57,9 +57,13 @@ export async function POST({ request, locals }) {
 				}
 			}
 
-			// .log('price', product);
+			let name = product.name.fr;
+			if (variant?.variant?.name?.fr)
+				name += ` - ${variant?.variant?.name?.fr}`;
+			if (product.category?.fr) name += ` - ${product.category.name.fr}`;
 
 			const item = {
+				name,
 				variant_id,
 				product_id,
 				quantity: 1,
