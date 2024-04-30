@@ -17,7 +17,16 @@
 				const posted = await post_cart.json();
 				if (posted?._id) $cart = posted;
 			}
+			console.log(product);
 			if (!$cart?._id || !product?._id || !variant?.variant?._id) return;
+
+			let img = '';
+			if (product.isBook) {
+				img = product.book.images[0].asset.url;
+			} else {
+				img = product.imgs[0].url;
+			}
+
 			const res = await fetch('/boutique/api/cart-item', {
 				method: 'POST',
 				headers: {
@@ -27,6 +36,7 @@
 					cart_id: $cart._id,
 					product_id: product._id,
 					variant_id: variant.variant._id,
+					img,
 				}),
 			});
 			const data = await res.json();

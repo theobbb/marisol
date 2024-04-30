@@ -4,7 +4,7 @@ import { json, text } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
 export async function POST({ request, locals }) {
-	const { cart_id, variant_id, product_id } = await request.json();
+	const { cart_id, variant_id, product_id, img } = await request.json();
 
 	if (!cart_id || !variant_id || !product_id) {
 		return text(400, 'Invalid request');
@@ -36,7 +36,6 @@ export async function POST({ request, locals }) {
 
 			let price = 0;
 			if (!product.variants?.length) {
-				console.log('product', product);
 				price = product.category?.category_price;
 			} else {
 				if (product.variants.length > 1) {
@@ -62,6 +61,11 @@ export async function POST({ request, locals }) {
 				name += ` - ${variant?.variant?.name?.fr}`;
 			if (product.category?.fr) name += ` - ${product.category.name.fr}`;
 
+			const img_url = new URL(img);
+			const params = new URLSearchParams(img_url.search);
+			params.set('w', '100');
+			img_url.search = params.toString();
+
 			const item = {
 				name,
 				variant_id,
@@ -69,6 +73,7 @@ export async function POST({ request, locals }) {
 				quantity: 1,
 				price,
 				is_book: product.isBook,
+				image: img_url,
 			};
 			cart.items.push(item);
 		}

@@ -1,7 +1,8 @@
 <script>
+	import { dev } from '$app/environment';
 	import { lang, lang_href } from '$lib/store';
 	import { formatPrice } from '$lib/utils/formatPrice';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	export let data;
 
@@ -9,12 +10,46 @@
 
 	$: locale = $lang == 'fr' ? 'fr-CA' : 'en-US';
 
-	$: cart = data.success_cart;
+	const cart = data.success_cart;
 
 	$: taxesTotal = cart.taxes.reduce((acc, tax) => acc + tax.amount, 0);
 
+	cart.items.forEach((item) => {
+		item.href = $lang == 'fr' ? '/boutique/' : '/en/shop/';
+	});
+
+	const url = dev ? 'http://localhost:5173' : 'https://marisolsarrazin.com';
+
+	data.shop.branches.forEach((branch) =>
+		branch.products.forEach((product) => {
+			cart.items.forEach((item) => {
+				if (product._id === item.product_id) {
+					if (product.category?._id) {
+						const cat_slug = product.category.slug[$lang]
+							? product.category.slug[$lang].current
+							: product.category.slug.fr.current;
+						item.href += cat_slug + '/';
+					} else {
+						const branch_slug = branch.slug[$lang]
+							? branch.slug[$lang].current
+							: branch.slug.fr.current;
+						item.href += branch_slug + '/';
+					}
+
+					const product_slug = product.slug[$lang]
+						? product.slug[$lang].current
+						: product.slug.fr.current;
+					item.href += product_slug;
+
+					console.log(item.href);
+				}
+			});
+		}),
+	);
+
 	let dom = null;
 	onMount(async () => {
+		await tick();
 		if (data.success_cart.email_sent) return;
 
 		const html = dom.outerHTML;
@@ -88,23 +123,37 @@
 	</table>
 
 	<div
-		style="margin-top:48px; font-weight: 500; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.2)"
+		style="margin-top:48px; font-weight: 600; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.2)"
 	>
 		{$lang == 'fr' ? 'Résumé de la commande' : 'Order summary'}
 	</div>
 	<table style="width: 100%; margin-top: 24px;">
 		{#each cart.items as item}
 			<tr>
+				<td colspan="2" style="padding-right: 4px; height: 44px;"
+					><a target="_blank" href="{url}{item.href}">
+						<img
+							src={item.image}
+							alt={item.name}
+							style="max-width: 72px; padding-top: 32px; padding-bottom: 8px;"
+						/>
+					</a></td
+				>
+				<td colspan="1"> </td>
+			</tr>
+			<tr style="" target="_blank">
 				<td style="padding-right: 8px;">{item.quantity} x </td>
-				<td style="padding-right: 36px;">{item.name}</td>
+				<td style="padding-right: 36px;"
+					><a target="_blank" href="{url}{item.href}">{item.name}</a></td
+				>
 				<td style="text-align: right;">{formatPrice(item.price)}</td>
 			</tr>
 		{/each}
 		<tr>
-			<td style="opacity: 0;">dd</td>
+			<td colspan="3" style="opacity: 0;">dd</td>
 		</tr>
 		<tr>
-			<td style="opacity: 0;">dd</td>
+			<td colspan="3" style="opacity: 0;">dd</td>
 		</tr>
 
 		<tr>
@@ -126,8 +175,7 @@
 
 		{#each cart.taxes as tax}
 			<tr>
-				<td> </td>
-				<td style="text-align: right;">{tax.code}</td>
+				<td colspan="2" style="text-align: right;">{tax.code}</td>
 				<td style="text-align: right;"
 					>{formatPrice((tax.amount || 0) / 100)}</td
 				>
@@ -143,7 +191,7 @@
 			</td>
 			<td style="text-align: right;">{formatPrice(cart.shipping)}</td>
 		</tr>
-		<tr style="font-weight: 500;">
+		<tr style="font-weight: 600;">
 			<td colspan="2"> Total </td>
 			<td style="text-align: right;">{formatPrice(cart.total / 100)}</td>
 		</tr>

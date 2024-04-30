@@ -143,7 +143,6 @@
 				return_url:
 					`${dev ? `http://localhost:5173` : `https://marisolsarrazin.com`}/${$lang == 'fr' ? 'boutique/validation/succes' : 'en/shop/checkout/success'}?cart_id=` +
 					$cart._id,
-				receipt_email: email,
 			},
 		});
 		const { error } = res;

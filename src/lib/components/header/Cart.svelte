@@ -9,7 +9,10 @@
 	$: $cart, updateCartLen();
 	function updateCartLen() {
 		let len = 0;
-		if (!$cart?.items) return;
+		if (!$cart?.items) {
+			cartLen = 0;
+			return;
+		}
 		[...$cart.items].forEach((item) => {
 			len += item.quantity;
 		});
