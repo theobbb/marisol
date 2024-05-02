@@ -46,8 +46,6 @@
 		const endMonthIndex = months.indexOf(endMonth);
 		return (endYear - startYear) * 12 + (endMonthIndex - startMonthIndex);
 	}
-
-	$: console.log(range);
 </script>
 
 <div class="flex">
