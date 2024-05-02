@@ -1,0 +1,7 @@
+[build]
+	command = "npm run build"
+	publish = "build"
+[build.environment]
+    AUTH_SECRET="21ba42500c056858fe568dc363fb835g"
+    GOOGLE_CLIENT_ID="690668509792-3dp1pcqmg1su3k9oip8bu9b3fm1840u3.apps.googleusercontent.com"
+    GOOGLE_CLIENT_SECRET="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"
