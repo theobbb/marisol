@@ -18,23 +18,32 @@
 		fr: `/boutique/${data.match?.branch.slug.fr?.current}/${data.match?.slug?.fr?.current}`,
 		en: `/shop/${data.match?.branch.slug.en?.current}/${data.match?.slug?.en?.current || data.match?.slug?.fr?.current}`,
 	};
+	$: product = data.match;
 
 	async function addToCart(variant) {
 		$progress.start();
-		if (!variant) return;
-		//loading = true;
-		if (!$cart) {
-			const res = await fetch('/boutique/api/cart', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			const data = await res.json();
-			$cart = data;
-		}
 
 		try {
+			if (!$cart) {
+				const post_cart = await fetch('/boutique/api/cart', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+				const posted = await post_cart.json();
+				if (posted?._id) $cart = posted;
+			}
+
+			if (!$cart?._id || !product?._id || !variant?.variant?._id) return;
+
+			let img = '';
+			if (product.isBook) {
+				img = product.book.images[0].asset.url;
+			} else {
+				img = product.imgs[0].url;
+			}
+
 			const res = await fetch('/boutique/api/cart-item', {
 				method: 'POST',
 				headers: {
@@ -42,17 +51,17 @@
 				},
 				body: JSON.stringify({
 					cart_id: $cart._id,
-					product_id: match._id,
+					product_id: product._id,
 					variant_id: variant.variant._id,
+					img,
 				}),
 			});
 			const data = await res.json();
-
-			$cart = data;
+			if (data?._id) $cart = data;
 		} catch (error) {
 			console.error(error);
 		}
-		//loading = false;
+
 		$progress.done();
 	}
 	$: console.log(data.match);
