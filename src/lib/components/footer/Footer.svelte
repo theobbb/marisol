@@ -36,7 +36,7 @@
 			if (data.success) {
 				success =
 					$lang == 'fr'
-						? 'Merci, vous êtes abonnez!'
+						? 'Merci, vous êtes abonné!'
 						: 'Thank you for subscribing!';
 
 				sendEmail();
