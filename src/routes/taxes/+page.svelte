@@ -1,4 +1,8 @@
 <script>
+	import { dev } from '$app/environment';
+	import { enhance } from '$app/forms';
+	import { formatPrice } from '$lib/utils/formatPrice';
+
 	let currentYear = new Date().getFullYear();
 	let years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) => 2020 + i); // Range from 2020 to current year// From 10 years ago to 10 years in the future
 
@@ -30,8 +34,8 @@
 	let start = new Date();
 	let end = new Date();
 
-	$: start = new Date(Number(startYear), months.indexOf(startMonth));
-	$: end = new Date(Number(endYear), months.indexOf(endMonth));
+	$: start = new Date(Number(startYear), months.indexOf(startMonth), day);
+	$: end = new Date(Number(endYear), months.indexOf(endMonth), day);
 
 	$: if (startMonth && startYear && endMonth && endYear) {
 		if (start > end) error = 'La date de début doit être avant la date de fin';
@@ -45,6 +49,28 @@
 		const startMonthIndex = months.indexOf(startMonth);
 		const endMonthIndex = months.indexOf(endMonth);
 		return (endYear - startYear) * 12 + (endMonthIndex - startMonthIndex);
+	}
+
+	let data = null;
+
+	async function post() {
+		const url = `${dev ? 'http://localhost:5173' : 'https://marisolsarrazin.com'}/boutique/api/calculate-taxes`;
+		console.log(url);
+		console.log(start, end);
+		const res = await fetch('/taxes', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ start: formatDate(start), end: formatDate(end) })
+		});
+		data = await res.json();
+
+		console.log(data);
+	}
+
+	function formatDate(date) {
+		return Math.floor(date.getTime() / 1000);
 	}
 </script>
 
@@ -116,10 +142,42 @@
 			{endYear}
 			= {range} mois
 		</p>
+		<div class="mt-3">
+			<button on:click={post} class="bg-blue-500/50 text-white px-3 py-2 rounded">Calculer</button>
+		</div>
 	{/if}
 </div>
+{#if data}
+	<div class="mt-10">
+		<table>
+			<tr>
+				<td>Nombre de commandes</td>
+				<td>{data.n_orders}</td>
+			</tr>
+
+			{#each data.taxes as tax}
+				<tr>
+					<td>{tax.code}</td>
+
+					<td>{formatPrice(tax.amount / 100)}</td>
+				</tr>
+			{/each}
+			<tr>
+				<td>Sous total</td>
+				<td>{formatPrice(data.subtotal / 100)}</td>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<td>{formatPrice(data.total / 100)}</td>
+			</tr>
+		</table>
+	</div>
+{/if}
 
 <style>
+	td {
+		padding-right: 36px;
+	}
 	option,
 	input {
 		@apply bg-stone-800;

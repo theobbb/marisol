@@ -31,7 +31,7 @@
 </script>
 
 <div class="table-row relative">
-	<td class="w-full !py-8 !px-0" colspan="4">
+	<td class="w-full !py-8 !pb-20 !px-0" colspan="4">
 		{#await data.cart}
 			<p>Loading...</p>
 		{:then cart}

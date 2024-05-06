@@ -2,26 +2,72 @@
 	import { page } from '$app/stores';
 	import { formatDate } from '$lib/utils/formatDate';
 	import { formatPrice } from '$lib/utils/formatPrice';
+	import { signOut } from '@auth/sveltekit/client';
 	import '../style.css';
 	import Item from './Item.svelte';
 	import Link from './Link.svelte';
 
 	export let data;
 
-	$: console.log($page.url);
+	let total = 0;
+	let pending = 0;
+
+	let balance = 0;
+	$: calculateBalance();
+	function calculateBalance() {
+		balance = 0;
+
+		data.balance.pending.forEach((item) => {
+			balance += item.amount;
+		});
+		data.balance.available.forEach((item) => {
+			balance += item.amount;
+		});
+	}
+	$: console.log(data);
 </script>
 
 {#if $page.url.pathname != '/auth'}
-	<div class="flex gap-8 my-3 px-6">
-		<Link href="/">Commandes</Link>
-		<Link href="/taxes">Taxes</Link>
-		<Link href="https://dashboard.stripe.com/payments" target="_blank">Stripe</Link>
+	<div class="flex justify-between items-center my-3 px-6">
+		<div class="flex gap-8">
+			<Link href="/">Commandes</Link>
+			<Link href="/taxes">Taxes</Link>
+			<Link href="https://dashboard.stripe.com/payments" target="_blank">Stripe</Link>
+		</div>
+		<div>
+			<button on:click={signOut}> Se déconnecter </button>
+		</div>
 	</div>
 
 	<div class="m-auto w-fit py-24">
 		{#if $page.url.pathname != '/taxes'}
-			<div>
-				<button> Réussis </button>
+			<div class="border rounded dotted px-4 py-3 mb-20">
+				<div class="flex divide-x">
+					<div class="pr-6">
+						<div class="text-lg font-semibold">Balance</div>
+						<div>
+							{formatPrice(balance / 100)}
+						</div>
+					</div>
+					<div class="px-6">
+						<div class="text-lg font-semibold">Paiements en transit</div>
+						{#each data.payouts.data.filter((pay) => pay.status === 'in_transit') as item}
+							<div class="flex gap-6">
+								<div class="">
+									{formatDate(item.arrival_date * 1000)} :
+								</div>
+								<div>
+									{formatPrice(item.amount / 100)}
+								</div>
+							</div>
+						{/each}
+					</div>
+					<div class="pl-6">
+						<a href="https://dashboard.stripe.com/balance/overview" target="_blank" class=""
+							>voir les paiements</a
+						>
+					</div>
+				</div>
 			</div>
 			<table class="relative max-w-[700px]">
 				<tr class="sticky top-0 bg-stone-950 z-20">
@@ -42,7 +88,9 @@
 					>
 						<td>{formatPrice(item.amount / 100)}</td>
 
-						<td>{item.receipt_email || ''}</td>
+						<td>
+							{item.shipping.name}
+						</td>
 
 						<td
 							>{new Date(item.created * 1000).toLocaleDateString('fr-CA')}
