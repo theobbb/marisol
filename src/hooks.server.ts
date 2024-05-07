@@ -1,6 +1,6 @@
 import { sequence } from '@sveltejs/kit/hooks';
 import { handle as auth } from './auth';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 const allowedEmails = [
 	'theobaillargeon@hotmail.com',
@@ -9,22 +9,34 @@ const allowedEmails = [
 ];
 
 export const handle: Handle = sequence(auth, async ({ event, resolve }) => {
+	if (!event.locals || !event.locals.auth) {
+		error(500, 'Auth setup is missing in locals');
+	}
+
 	const session = await event.locals?.auth();
 
 	const url = event.url.pathname;
+
+	if (session?.user) {
+		if (!allowedEmails.includes(session.user.email)) {
+			if (url.startsWith('/auth')) {
+				return resolve(event);
+			}
+
+			throw redirect(307, '/auth');
+		}
+	}
 
 	if (url.startsWith('/auth')) {
 		if (session?.user) {
 			throw redirect(307, '/user');
 		}
-		return await resolve(event);
-	} else {
-		if (!session?.user) {
-			throw redirect(307, '/auth');
-		}
+		console.log('No session, URL:', url); // Updated log for clarity
+		return resolve(event);
 	}
-	if (!allowedEmails.includes(session?.user?.email)) {
-		//await event.locals?.signOut();
+
+	// For non-auth paths, ensure user is authenticated
+	if (!session?.user) {
 		throw redirect(307, '/auth');
 	}
 
