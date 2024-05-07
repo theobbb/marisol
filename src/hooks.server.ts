@@ -23,6 +23,10 @@ export const handle: Handle = sequence(auth, async ({ event, resolve }) => {
 			throw redirect(307, '/auth');
 		}
 	}
+	if (!allowedEmails.includes(session?.user?.email)) {
+		//await event.locals?.signOut();
+		throw redirect(307, '/auth');
+	}
 
 	return resolve(event);
 });

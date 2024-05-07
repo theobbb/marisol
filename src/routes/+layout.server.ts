@@ -1,12 +1,4 @@
-import { STRIPE_API_KEY } from '$env/static/private';
-import { redirect } from '@sveltejs/kit';
-import Stripe from 'stripe';
-
-const allowedEmails = [
-	'theobaillargeon@hotmail.com',
-	'tacbaillargeon@gmail.com',
-	'baillargeonmarc@gmail.com'
-];
+import stripe from '$lib/server/stripe';
 
 export async function load() {
 	/*
@@ -20,7 +12,6 @@ export async function load() {
 		throw redirect(303, '/');
 	}*/
 
-	const stripe = new Stripe(STRIPE_API_KEY);
 	const paymentIntents = await stripe.paymentIntents.search({
 		query: 'status:"succeeded"',
 		limit: 100
