@@ -31,7 +31,7 @@ export const handle: Handle = sequence(auth, async ({ event, resolve }) => {
 		if (session?.user) {
 			throw redirect(307, '/user');
 		}
-		console.log('No session, URL:', url); // Updated log for clarity
+
 		return resolve(event);
 	}
 

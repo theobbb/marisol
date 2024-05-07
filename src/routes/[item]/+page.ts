@@ -17,6 +17,10 @@ export async function load({ parent, params }) {
 
 async function getCart(id) {
 	const url = dev ? 'http://localhost:5173' : 'https://marisolsarrazin.com';
-	const res = await fetch(`${url}/boutique/api/cart/${id}`);
+	const res = await fetch(`${url}/boutique/api/cart/${id}`, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
 	return res.json();
 }
