@@ -6,5 +6,9 @@ import { json } from '@sveltejs/kit';
 export async function GET({ params }) {
 	const cart = await Cart.findById(params.id).lean();
 
-	return json(cart);
+	return json(cart, {
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+	});
 }
