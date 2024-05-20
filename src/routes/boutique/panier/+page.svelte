@@ -159,10 +159,7 @@
 					>
 						{#if variant.product}
 							<td class="h-[80px] w-[80px] min-w-[80px] pt-2 lg:py-4 lg:pt-4">
-								<a
-									href="{$lang == 'fr' ? '/boutique' : '/en/shop'}/{variant
-										.product.slug[$lang]?.current ||
-										variant.product.slug.fr.current}"
+								<a href={variant.product.constr_slug[$lang]}
 									><Img
 										class="max-h-[80px] rounded-sm"
 										src={variant.product.isBook

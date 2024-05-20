@@ -26,6 +26,7 @@ const cartSchema = new mongoose.Schema({
 	state: String,
 	email_sent: { type: Boolean, default: false },
 	receipt: String,
+	message: String,
 });
 
 export const Cart = mongoose.models?.Cart || mongoose.model('Cart', cartSchema);

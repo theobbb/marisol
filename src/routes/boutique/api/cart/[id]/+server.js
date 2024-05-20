@@ -12,3 +12,13 @@ export async function GET({ params }) {
 		},
 	});
 }
+export async function PUT({ params, request }) {
+	const body = await request.json();
+	const cart = await Cart.findByIdAndUpdate(params.id, body, {
+		new: true,
+	}).lean();
+
+	console.log(cart);
+
+	return json(cart);
+}

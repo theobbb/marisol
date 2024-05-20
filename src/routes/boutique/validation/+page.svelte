@@ -13,6 +13,7 @@
 	import { loadStripe } from '@stripe/stripe-js/pure';
 	import Loader from '$lib/components/Loader.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -111,6 +112,8 @@
 		});
 	});
 
+	let message = '';
+
 	async function address(address) {
 		try {
 			const res = await fetch('/boutique/api/cart-address', {
@@ -133,15 +136,29 @@
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-
+		console.log(message, $page.url.origin);
 		loading = true;
-		//setLoading(true);
+
+		const updateMessage = await fetch(`/boutique/api/cart/${$cart._id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				message: message,
+			}),
+		});
+		console.log(updateMessage);
+
 		const res = await stripe.confirmPayment({
 			elements: elements,
+			metadata: {
+				message,
+			},
 			confirmParams: {
 				// Make sure to change this to your payment completion page
 				return_url:
-					`${dev ? `http://localhost:5173` : `https://marisolsarrazin.com`}/${$lang == 'fr' ? 'boutique/validation/succes' : 'en/shop/checkout/success'}?cart_id=` +
+					`${$page.url.origin}/${$lang == 'fr' ? 'boutique/validation/succes' : 'en/shop/checkout/success'}?cart_id=` +
 					$cart._id,
 			},
 		});
@@ -155,46 +172,6 @@
 
 		loading = false;
 	}
-	/*
-	// Fetches the payment intent status after payment submission
-	async function checkStatus() {
-		const clientSecret = new URLSearchParams(window.location.search).get(
-			'payment_intent_client_secret',
-		);
-
-		if (!clientSecret) {
-			return;
-		}
-
-		const { paymentIntent } =
-			await loadStripe.retrievePaymentIntent(clientSecret);
-
-		switch (paymentIntent.status) {
-			case 'succeeded':
-				showMessage('Payment succeeded!');
-				break;
-			case 'processing':
-				showMessage('Your payment is processing.');
-				break;
-			case 'requires_payment_method':
-				showMessage('Your payment was not successful, please try again.');
-				break;
-			default:
-				showMessage('Something went wrong.');
-				break;
-		}
-	}
-	function showMessage(messageText) {
-		const messageContainer = document.querySelector('#payment-message');
-
-		messageContainer.classList.remove('hidden');
-		messageContainer.textContent = messageText;
-
-		setTimeout(function () {
-			messageContainer.classList.add('hidden');
-			messageContainer.textContent = '';
-		}, 4000);
-	}*/
 </script>
 
 <div class="mb-10">
@@ -246,6 +223,14 @@
 
 					<div id="payment-element"></div>
 					<!--Stripe.js injects the Payment Element-->
+				</div>
+
+				<div>
+					<div class="mb-1">Message</div>
+					<textarea
+						bind:value={message}
+						class="w-full rounded-sm border px-2 py-1 shadow-sm"
+					/>
 				</div>
 
 				<div>
