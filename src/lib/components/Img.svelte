@@ -63,7 +63,9 @@
 	bind:this={dom}
 	{alt}
 	{...$$restProps}
-	class="{loaded ? 'opacity-100' : ''} transition duration-500 {$$props.class}"
+	class="{loaded
+		? 'opacity-100'
+		: 'opacity-0'} transition duration-500 {$$props.class}"
 />
 {#if lazy && !loaded}
 	<div
