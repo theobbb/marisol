@@ -192,7 +192,10 @@
 					{#each data.match?.isBook ? data.match.book?.images : data.match.imgs as img, i}
 						{#if i != 0}
 							<div class="mb-4">
-								<Img class="rounded-sm" src={img.url} />
+								<Img
+									class="rounded-sm"
+									src={data.match?.isBook ? img.asset.url : img.url}
+								/>
 							</div>
 						{/if}
 					{/each}
