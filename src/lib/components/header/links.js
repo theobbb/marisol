@@ -31,6 +31,16 @@ export const links = [
 	},
 	{
 		fr: {
+			name: 'Murales',
+			href: '/murales',
+		},
+		en: {
+			name: 'Murals',
+			href: '/murals',
+		},
+	},
+	{
+		fr: {
 			name: 'À propos',
 			href: '/a-propos',
 		},
