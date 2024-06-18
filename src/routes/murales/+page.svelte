@@ -25,13 +25,13 @@
 						<div class="relative my-6">
 							<Img
 								src={img.asset.url}
-								class="m-auto max-h-[50svh] rounded-sm"
+								class="m-auto max-h-[80svh] rounded-sm"
 							/>
 						</div>
 					{/each}
 				</LightBox>
 				{#each mural.videos as video}
-					<div class="flex max-h-[50svh]">
+					<div class="flex max-h-[80svh]">
 						<video src={video?.asset?.url} loop autoplay muted />
 					</div>
 				{/each}

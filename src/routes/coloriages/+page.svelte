@@ -14,14 +14,14 @@
 	};
 </script>
 
-<div class="m-auto max-w-[700px]">
+<div class="m-auto max-w-[1100px]">
 	<div>
 		<SanityTextBlock blocks={data.text?.[$lang]} />
 	</div>
 
 	<div class="mt-20 grid gap-8 md:grid-cols-2">
 		{#each data.imgs as img, i}
-			<div class="group relative rounded">
+			<div class=" relative rounded">
 				<Img src={img.asset.url} class=" rounded-sm" />
 				<div class="mt-6 border-t px-3 py-2.5">
 					<a href="{img.asset.url}?dl=coloriage-{i}.jpg" download>
@@ -38,9 +38,6 @@
 						</svg>
 					</a>
 				</div>
-				<div
-					class="pointer-events-none invisible absolute left-0 top-0 h-full w-full bg-black/5 group-hover:visible"
-				></div>
 			</div>
 		{/each}
 	</div>
