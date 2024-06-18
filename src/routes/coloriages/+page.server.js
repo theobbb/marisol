@@ -10,7 +10,5 @@ export async function load() {
         
     }`);
 
-	console.log(data);
-
 	return data;
 }

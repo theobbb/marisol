@@ -9,7 +9,7 @@
 			: 'fr';
 </script>
 
-<div class="flex gap-6 text-2xl min-[1120px]:text-xl">
+<div class="flex gap-6 text-2xl min-[1220px]:text-xl">
 	<Link href={$lang_href?.fr} active={$lang == 'fr'}>Fr</Link>
 	<Link href="/en{$lang_href?.en}" active={$lang == 'en'}>En</Link>
 </div>

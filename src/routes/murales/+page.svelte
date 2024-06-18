@@ -11,8 +11,6 @@
 		fr: '/murales',
 		en: '/murals',
 	};
-
-	$: console.log(data);
 </script>
 
 <div class="m-auto max-w-[660px]">
@@ -25,12 +23,15 @@
 				<LightBox>
 					{#each mural.imgs as img}
 						<div class="relative my-6">
-							<Img src={img.asset.url} class="rounded-sm" />
+							<Img
+								src={img.asset.url}
+								class="m-auto max-h-[50svh] rounded-sm"
+							/>
 						</div>
 					{/each}
 				</LightBox>
 				{#each mural.videos as video}
-					<div class="flex">
+					<div class="flex max-h-[50svh]">
 						<video src={video?.asset?.url} loop autoplay muted />
 					</div>
 				{/each}
