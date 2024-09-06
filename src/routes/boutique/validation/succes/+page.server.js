@@ -1,10 +1,8 @@
-import { transporter } from '$lib/server/email.js';
 import { Cart } from '$lib/server/models/Cart.js';
 import stripe from '$lib/server/stripe.js';
 import { error } from '@sveltejs/kit';
-import { render } from '@sveltejs/kit';
 
-export async function load({ cookies, url, fetch }) {
+export async function load({ cookies, url }) {
 	const stripe_id = url.searchParams.get('payment_intent');
 
 	const order = await stripe.paymentIntents.retrieve(stripe_id);

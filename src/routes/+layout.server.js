@@ -159,7 +159,6 @@ export async function load({ cookies, locals }) {
 			cart = JSON.parse(JSON.stringify(retrieved));
 		}
 	}
-	console.log('cart', cart);
 
 	return {
 		books,

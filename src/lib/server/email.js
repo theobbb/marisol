@@ -1,5 +1,5 @@
 import smtpTransport from 'nodemailer-smtp-transport';
-import { EMAIL_HOST, EMAIL_PASSWORD } from '$env/static/private';
+import { EMAIL_ADDRESS, EMAIL_HOST, EMAIL_PASSWORD } from '$env/static/private';
 import nodemailer from 'nodemailer';
 
 export const transporter = nodemailer.createTransport(
@@ -9,7 +9,7 @@ export const transporter = nodemailer.createTransport(
 		port: '465',
 		secure: true, // true for 465, false for other ports
 		auth: {
-			user: EMAIL_HOST,
+			user: EMAIL_ADDRESS,
 			pass: EMAIL_PASSWORD,
 		},
 		tls: {

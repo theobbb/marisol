@@ -14,6 +14,5 @@ export async function POST({ request }) {
 
 	await cart.save();
 
-	console.log(cart_id);
 	return text('success');
 }
