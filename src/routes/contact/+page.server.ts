@@ -11,9 +11,9 @@ export const actions = {
 
 		try {
 			await transporter.sendMail({
-				from: body.name,
+				from: `"${body.name}" <${body.email}>`,
 				to: EMAIL_ADDRESS,
-				subject: `Contact Form site web: ${body.subject}`,
+				subject: `Contact Form site web de: ${body.name}. Object: ${body.object}`,
 				text: body.message,
 			});
 		} catch (error) {
