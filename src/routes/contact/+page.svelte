@@ -71,7 +71,6 @@
 						name="email"
 						class="w-full px-3 py-3 outline-none"
 						type="email"
-						value="theobaillargeon@hotmail.com"
 						placeholder={$lang == 'fr' ? 'Adresse courriel' : 'Email address'}
 					/>
 				</div>
