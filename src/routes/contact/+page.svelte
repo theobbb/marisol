@@ -92,7 +92,13 @@
 					></textarea>
 				</div>
 			</div>
-			<div class="mt-6 flex w-full justify-end">
+			<div class="mt-6 flex w-full items-center justify-between">
+				<div class="">
+					<a
+						class="text-stone-500 decoration-stone-300 underline-offset-2 hover:underline"
+						href="mailto:info@marisolsarrazin">info@marisolsarrazin</a
+					>
+				</div>
 				<button
 					class="rounded bg-accent px-3 py-2 font-medium tracking-wide text-white"
 					type="submit">{$lang == 'fr' ? 'Envoyer' : 'Send'}</button
