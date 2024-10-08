@@ -95,7 +95,7 @@
 				<div class="">
 					<a
 						class="text-stone-500 decoration-stone-300 underline-offset-2 hover:underline"
-						href="mailto:info@marisolsarrazin">info@marisolsarrazin</a
+						href="mailto:info@marisolsarrazin.com">info@marisolsarrazin.com</a
 					>
 				</div>
 				<button
