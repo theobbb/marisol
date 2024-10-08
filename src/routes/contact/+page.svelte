@@ -50,11 +50,17 @@
 			<div class="mb-2 text-3xl">
 				{$lang == 'fr' ? 'Contactez Marisol' : 'Contact Marisol'}
 			</div>
-			<div class=" text-stone-400">
+			<div class="inline text-stone-400">
 				{$lang == 'fr'
-					? `Pour toute question ou demande particulière, veuillez remplir ce formulaire.`
-					: `For any question or special request, please fill out this form. `}
+					? `Pour toute question ou demande particulière, veuillez remplir ce formulaire. Vous pouvez également envoyer directement un courriel à `
+					: `For any question or special request, please fill out this form. You can also send an email directly to `}
 			</div>
+			<a
+				class="inline text-stone-500 decoration-stone-300 underline-offset-2 hover:underline"
+				href="mailto:info@marisolsarrazin.com"
+			>
+				info@marisolsarrazin.com
+			</a>
 		</div>
 		<form use:enhance method="POST">
 			<div class="divide-y rounded-sm border">
@@ -93,10 +99,9 @@
 			</div>
 			<div class="mt-6 flex w-full items-center justify-between">
 				<div class="">
-					<a
-						class="text-stone-500 decoration-stone-300 underline-offset-2 hover:underline"
-						href="mailto:info@marisolsarrazin.com">info@marisolsarrazin.com</a
-					>
+					<div>
+						{$lang == 'fr' ? '' : ''}
+					</div>
 				</div>
 				<button
 					class="rounded bg-accent px-3 py-2 font-medium tracking-wide text-white"
