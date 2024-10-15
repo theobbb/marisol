@@ -18,7 +18,6 @@
 			image.style.cursor = 'pointer';
 			image.addEventListener('click', (e) => {
 				active = i;
-				console.log(active);
 				document.documentElement.style.overflowY = 'hidden';
 
 				dom.dialog.showModal();

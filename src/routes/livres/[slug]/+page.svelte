@@ -14,7 +14,7 @@
 	};
 </script>
 
-<div>
+<div class="">
 	<LightBox>
 		<div class="mb-10 text-5xl">{data.name[$lang] || data.name.fr}</div>
 		<div class=" flex flex-col lg:flex-row">
@@ -38,7 +38,6 @@
 							<div class="">
 								<Img
 									lightbox
-									lazy
 									src={image.asset.url}
 									class="mb-3.5 rounded-sm"
 									alt="{$lang == 'fr' ? 'Livre' : 'Book'} - {data.name[$lang] ||
